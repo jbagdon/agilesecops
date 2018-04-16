@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>IoT Security</title>
+
+    <!-- Site metadata description -->
+    <meta name="description" content="Enabling the Secure deployment of IoT devices.">
+    <meta name="keywords" content="OWASP, Puppet, SaltStack, Ansible, Python Fabric, penetration testing, vulnerability testing, phishing, static code analysis, automation, DevOps, CISO, Chief Information Officer as a Service, Cloud Security Alliance, CSA, self assessment, STAR, administration, NIST 800-53, ISO 27001, malware, governance, risk, compliance, pci, fireeye, security, threat, byod, mdm, mobile device management, Identity theft, Federal and/or civil liability, Exorbitant fines or lawsuits, Irreparable damage to an organization’s reputation, Loss in consumer confidence, Amazon Web Services"/>
+
+    <!-- favicon code -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.png"/>
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="IoT Security" />
+    <meta property="og:url" content="https://www.agilesecops.com/IoT.html" />
+    <meta property="og:description" content="Enabling the Secure deployment of IoT devices." />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="AgileSecOps">
+    <meta name="twitter:title" content="IoT Security">
+    <meta name="twitter:description" content="The overall security of IoT devices, in the end, falls upon the individual placing the device on the network.">
+    <meta name="twitter:image" content="https://www.agilesecops.com/images/iot.jpg">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">AgileSecOps</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="Cyber-Security-Solutions.html">Services</a></li>
+        <li><a href="by-industry.html">By Industry</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="qualifications.html">Qualifications</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="blog.html">Current Blog</a></li>
+            <li role="separator" class="divider"></li>
+                <li><a href="2018-march.html">Mar-2018</a></li>
+                <li><a href="2017-sep.html">Sep-2017</a></li>
+                <li><a href="2017-aug.html">Aug-2017</a></li>
+                <li><a href="2017-july.html">July-2017</a></li>
+                <li><a href="2017-may.html">May-2017</a></li>
+              <li><a href="2017-april.html">April-2017</a></li>
+        </ul>
+          </li>
+        </ul><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+    </div>
+    </nav>
+<div id="IoT-Security" class="container-fluid" style="padding:40px 40px;">
+    <img src="images/iot.jpg" alt="agilesecops" class="center-block img-responsive" style="padding:40px 40px;">
+    <h1>Internet of Things (IoT) Security</h1>
+    <p>The Internet of Things (IoT) isn't anything new. I first started working with the concept and devices back in 2008. The one thing that is new is how Security has taken a front row seat in the conversation of IoT. Talks are being held at all levels from the Security Industry to the US Government on what to do, and most important, who is responsible for the security of IoT devices.</p>
+
+    <p>No matter what is decided, as far as who is responsible for IoT security, it only makes sense that the individual placing the device on the Internet or internal network is responsible. Responsible for what you might ask? They are responsible for not causing harm to others on the Internet as well as they are responsible for the security of their own network.</p>
+
+    <p>That being said, what does an individual or corporation do about this? First, if you're unsure or call me and we can assist you in your deployment of IoT device(s). However here are some items that you should be doing to secure your IoT devices:</p>
+    <ul>
+        <li>Understand and profile the device to identify network connectivity needs.</li>
+        <ul>
+        <li>Does it need Internet access? If so, then what IPs or URLs does it need to connect with?</li>
+            <li><b>ACTION</b> - Put network rules in place to only allow the device to communicate on the Internet to the required IPs or URLs.</li>
+        </ul>
+        <li>Does it need to communicate to other devices on your local network? If so, then identify where on the network.</li>
+        <ul>
+            <li><b>ACTION</b> - Put network rules in place in order to segment the IoT devices from the remainder of your network and only allow communication to areas that are needed. Be very precise and strict with your network rules.</li>
+        </ul>
+        <li>Does the IoT device require a user login? If so, then these should be centrally managed either by the vendor for smaller scale deployments or by the IT department for larger scale deployments.</li>
+        <li>Are they wireless devices that could hold proprietary information? If so, then there is a risk of one of these devices getting lost.</li>
+        <ul>
+            <li><b>ACTION</b> - Employ monitoring of IoT devices with the ability to perform geolocation. There are several products on the market that will allow you to perform this depending on how the IoT device is connected. Alert when a device roams outside of its allowed location.</li>
+        </ul>
+    </ul>
+    <p>Finally, you should make sure that all of the IoT devices are patched with the most recent firmware.</p>
+
+    <p>Please contact <a href="email:info@agilesecops.com">info@agilesecops.com</a> with any questions or if you need help with your IoT deployment.</p>
+    </div>
+    <!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" async></script>
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Blog | August 2017</title>
+
+    <!-- Site metadata description -->
+    <meta name="description" content="Blog archives from July 2017">
+    <meta name="keywords" content="OWASP, Puppet, SaltStack, Ansible, Python Fabric, penetration testing, vulnerability testing, phishing, static code analysis, automation, DevOps, CISO, Chief Information Officer as a Service, Cloud Security Alliance, CSA, self assessment, STAR, administration, NIST 800-53, ISO 27001, malware, governance, risk, compliance, pci, fireeye, security, threat, byod, mdm, mobile device management, Identity theft, Federal and/or civil liability, Exorbitant fines or lawsuits, Irreparable damage to an organization’s reputation, Loss in consumer confidence, Amazon Web Services"/>
+
+    <!-- favicon code -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.png"/>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">AgileSecOps</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="Cyber-Security-Solutions.html">Services</a></li>
+        <li><a href="by-industry.html">By Industry</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="qualifications.html">Qualifications</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="blog.html">Current Blog</a></li>
+            <li role="separator" class="divider"></li>
+                <li><a href="2018-march.html">Mar-2018</a></li>
+                <li><a href="2017-sep.html">Sep-2017</a></li>
+                <li><a href="2017-aug.html">Aug-2017</a></li>
+                <li><a href="2017-july.html">July-2017</a></li>
+                <li><a href="2017-may.html">May-2017</a></li>
+              <li><a href="2017-april.html">April-2017</a></li>
+        </ul>
+          </li>
+        </ul><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+    </div>
+    </nav>
+
+<div class="container-fluid" style="padding:50px 40px;">
+        <div class="row">
+    <div class="col-sm-12">
+     <a name="bad_google_ciphers"></a>
+    <h1>Weak Ciphers being used by Google</h1>
+    <p>Aug 25, 2017</p>
+        </div>
+    <div class="col-sm-2" style="padding:20px 20px;">
+   <img src="images/sweet32.png" alt="sweet32" class="center-block img-responsive">
+        </div>
+
+    <div class="col-sm-10" style="padding-right: 20px;">
+        <p>This was first pointed out to me by a customer who just migrated to the Google Cloud. It appears that when you setup Google Cloud load balancers and SSL the default is to include a 3DES cipher. This cipher was found to be vulnerable to what is called a birthday attack and falls under notifications CVE-2016-2183, CVE-2016-6329. You can find more information regarding this vulnerability at the following page:</p>
+        <p><a href="https://sweet32.info/">https://sweet32.info/</a></p>
+        </div>
+         </div>
+    <div class="row">
+    <div class="col-sm-12" style="padding:0px 20px;">
+        <p>I wrote to Google and told them about the issue. Their response was:</p>
+
+        <img src="images/3des_email_1.JPG" alt="email from google security" class="center-block img-responsive">
+
+        <p>And my response:</p>
+
+        <img src="images/3des_email_2.JPG" alt="email to google security" class="center-block img-responsive">
+
+        <p>I also wondered about other Google pages such as https://mail.google.com and found that they have the same cipher enabled.</p>
+
+        <p>What's interesting is that the sweet32.info page states that not only has this been demonstrated but, "this attack is comparable to the recent attacks on RC4" which we have all abandoned that cipher.</p>
+
+        <p>Google has a team of security researchers called Project Zero. Google decided to form a full-time team dedicated to finding such vulnerabilities, not only in Google software but any software used by its users. On the initial Google blog post announcing the start of the Project Zero team they state, "Security is a top priority for Google. We've invested a lot in making our products secure, including strong SSL encryption by default for Search, Gmail, and Drive, as well as encrypting data moving between our data centers."</p>
+
+        <p>So my question is, if security is so important to Google, especially when they are pointing out SSL encryption, then why are they using vulnerable ciphers by default? Especially in products like Gmail of which no one has the ability to change.</p>
+
+        <p>Something to think about...</p>
+
+        <p>On the sweet32.info page they state, "In our proof-of-concept demo, this attack currently takes less than two days, using malicious Javascript to generate traffic. Keeping a web connection alive for two days may not seem very practical, but it worked easily in the lab."</p>
+
+        <p>So, how long do you have a session open to your Gmail account or possibly other Google products?</p>
+
+        <p>Contact <a href="mailto:info@agilesecops.com">AgileSecOps</a> if you need help ensuring your environment is setup correctly.</p>
+    </div>
+    </div>
+    <hr>
+        <div class="row">
+    <div class="col-sm-12">
+    <a name="poor_email_spoofing_protection"></a>
+    <h1>Roughly 17% of Email Servers Enable Anti Spoofing Measures</h1>
+    <p>Aug 24, 2017</p>
+        </div>
+    <div class="col-sm-4" style="padding:20px 20px;">
+   <img src="images/mailchimp.jpg" alt="mailchimp" class="center-block img-responsive">
+        </div>
+    <div class="col-sm-8" style="padding:0px 20px;">
+        <p>There are now a lot of articles out there regarding how people don't use DMARC to protect against email spoofing. However, the email server that is receiving the email must also be configured to check for proper SPF and DKIM records. I was curious as to how many servers out there were configured to perform such checks. So, I setup a quick advertising campaign using MailChimp. MailChimp sends email from their IP as if it was coming from your domain. At first, I did not setup the appropriate SPF and DKIM records in my DNS that allows MailChimp to send as my domain.</p>
+        <p>The results...</p>
+        <p>I only did a small sample of 230 emails and out of those, I had 40 bounces. The bounces could have been for any reason but I wondered if it was because the destination server was actually doing what they should be doing....checking the SPF and DKIM records.</p>
+
+        <p>Next, I setup MailChimp with the appropriate DNS settings to allow them to send from my domain. I then resent the same email to the original 40 bounced addresses and they all went through.</p>
+
+        <p>So, it appears in my small test, that roughly 17% of the destination servers were actually configured to check for spoofed inbound emails.</p>
+
+        <p>Contact <a href="mailto:info@agilesecops.com">AgileSecOps</a> if you need help ensuring your email environment is setup correctly.</p>
+        </div>
+      </div>
+    <hr>
+    <div class="row">
+    <div class="col-sm-12">
+     <a name="DMARC_Adoption_Low"></a>
+    <h1>DMARC Adoption Low in Fortune 500</h1>
+    <p>Aug 23, 2017</p>
+        </div>
+    <div class="col-sm-4" style="padding:20px 20px;">
+   <img src="images/DMARC.png" alt="dmark" class="center-block img-responsive">
+        </div>
+    <div class="col-sm-8" style="padding:0px 20px;">
+        <p>Many Fortune 500, FTSE 100 and ASX 100 companies have failed to properly implement the DMARC standard, exposing their customers and partners to phishing and other email-based attacks, according to email security firm Agari.</p>
+
+        <p>In a report titled “Global DMARC Adoption Report: Open Season for Phishers,” Agari, which in the past years has obtained tens of millions of dollars in funding, shared the results of its analysis into the adoption of DMARC.</p>
+
+        <p>DMARC (Domain-based Message Authentication, Reporting and Conformance) is an email authentication, policy, and reporting protocol designed to detect and prevent email spoofing.</p>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-12" style="padding:0px 20px;">
+    <p>This comes as a surprise since email has been the main vector of attack for many years. Additionally, implementing DMARC is so very simple. All it takes is one text record in your DNS. Looking at my DNS you can see that I have it setup and I receive daily reports of (mainly) successful email traffic. If you are on Linux, you can use the dig command to see if a domain is setup with DMARC and checkout their policy. Here is what my domain looks like:</p>
+    <img src="images/ag_dmark.JPG" alt="dmark" class="center-block img-responsive">
+    <p>Now when someone tries to send email from my domain and the originating address is different than the IP in my DNS the destination email server should reject the message. This protects my brand reputation, protects my company from receiving spoofed emails from our own domain, as well as protects others out on the Internet from receiving spoofed emails from my domain.</p>
+    <p>Let's take a look at another company. This is a large company that I've worked for in the past and I know that some of them read my blog. So, I bet they'll adopt DMARC soon.</p>
+    <img src="images/copart_dmark.JPG" alt="copart_dmark" class="center-block img-responsive">
+    <p>From the response, you can see that they have no policy. This is placing their company at a greater risk.</p>
+    <p>Contact <a href="mailto:info@agilesecops.com">AgileSecOps</a> if you have any questions or need help setting up DMARC for your organization.</p>
+    </div>
+    </div>
+    <hr>
+    <div class="row">
+    <div class="col-sm-12">
+     <a name="Security_Culture"></a>
+    <h1>Having a Security Culture</h1>
+    <p>Aug 21, 2017</p>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-2" style="padding:20px 20px;">
+   <img src="images/culture.png" alt="culture" class="center-block img-responsive">
+        </div>
+    <div class="col-sm-10" style="padding:0px 20px;">
+        <p>Information Security is changing in many ways. It is being incorporated into DevOps. IT Security Products are becoming more dynamic and capable. Additionally, the strategy of a good security defense has changed from only perimeter defense to a totally holistic approach that includes all employees. And, the worst part, there is a decline in qualified people to meet the job market demand in the IT Security community.</p>
+
+        <p>We still need all of the same practices that we had previously starting with security at the perimeter. However, we need to change our tactics to meet those of the attacker's. Now, as long as everything else is in place, the weakest link to a company is its people. This is why having Security part of the company culture is important.</p>
+        </div>
+    <div class="col-sm-12" style="padding:0px 20px;">
+        <p>The people that make up a company affect its security considerably. Everyone in the company comes into play. Email has become one of the biggest entry points for attacks in the recent years. Plus, developers need to develop secure code that is free from vulnerabilities. Another example, your Finance department needs good security guidance when setting up the transfer of funds. I've seen too many companies transfer funds to a malicious individual just because they were able to craft an email that made it look like it came from someone with the authority to make the transfer happen.</p>
+
+        <p>Depending on the size of the company it can be rather challenging to get Security embedded into the culture. Normally, I find it is easier with the small to medium businesses that are more open to change. However, training is key to making this transition and the support has to come from the top.</p>
+
+        <p>Training:</p>
+        <ul>
+            <li>All employees on email phishing</li>
+            <li>All employees on the use of cloud services. What is allowed and what is not.</li>
+            <li>All employees on data classification. How to handle and protect data at different levels.</li>
+            <li>Developers on secure coding practices</li>
+            <li>IT staff on properly securing hosts, cloud infrastructures, and applications, Networks, etc</li>
+        </ul>
+
+        <p>When people mention training the first thing that they think of is mandatory company training. This is boring and most people fade off thinking of other items. So, training should be spread out over time and should be creative. For example, use an email phishing tool and see how your business does in not clicking on the link. Redirect those that did click on the link to a simple training page. Report status of the phishing tool at the company meeting and state why it's important to not click on links in emails. Provide alternative solutions. Also, make the training and talk close to home. Talk from the perspective of, if this would have happened and someone got into your personal bank account, what could be the impact.</p>
+
+        <p>This type of training can be adapted to almost every different aspect of the security of the company.</p>
+
+        <p>For example:</p>
+        <ul>
+            <li>Call the helpdesk and try to reset a users password.</li>
+            <li>Send a crafted email to finance and try to get them to transfer some funds. If you do this then you might want to let someone know in charge of finance so the transfer doesn't actually occur.</li>
+        </ul>
+        <p>Get security ingrained into the minds of your leadership. They should always be thinking about it and asking questions.</p>
+
+        <p>If Security can become part of the culture of the company then this reduces the overall risk to the company and may even reduce the Security budget.</p>
+
+        <p>Contact <a href="mailto:info@agilesecops.com">AgileSecOps</a> to find out how we can help your company's culture.</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+     <a name="free_for_nonprofits"></a>
+    <h1>Free IT Security Services for Non-Profits in September</h1>
+    <p>Aug 18, 2017</p>
+    </div>
+    <div class="row">
+    <div class="col-sm-2" style="padding:20px 20px;">
+   <img src="images/nonprofit-services.jpg" alt="non-profit" class="center-block img-responsive">
+        </div>
+    <div class="col-sm-10" style="padding:0px 20px;">
+        <b>UPDATE (9/01/2017): I have a couple of clients that I will be working with. Thanks for the support.</b>
+
+        <p>September is a month of remembrance for me. Due to events that happened in the past, it's time to reflect on all of those people that sacrifice on a daily basis. Some do this as I did by serving in the military while others run non-profit organizations in order to help others.</p>
+
+        <p>I'd like to take the month of September and honor those non-profit organizations by providing free IT Security services.</p>
+
+        <p>For this to happen I need to know the non-profit organizations that need help. Please contact me at <a href="mailto:info@agilesecops.com">info@agilesecops.com</a></p>
+
+        <p>As a new business, this comes at an extreme cost to me. So, I started a GoFundMe at <a href="https://www.gofundme.com/agilesecops">https://www.gofundme.com/agilesecops</a> to help offset the cost of travel and any equipment that these companies may need.</p>
+
+        <p>The types of services that can be offered are dependent on if I'm able to perform them remotely or if the above funding comes in.</p>
+
+        <p>Thanks in advance to everyone that helps out.</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+     <a name="Ransomware_on_the_rise"></a>
+    <h1>Ransomware on the rise: how to prevent an attack</h1>
+    <p>Aug 15, 2017</p>
+          </div>
+    <div class="row">
+    <div class="col-sm-12" style="padding:0px 20px;">
+        <p>How can you prevent an attack?</p>
+        <p>Unfortunately, there is no silver bullet.  Cyber criminals are constantly innovating and every cyber-attack is constructed using well-defined phases, which are completed sequentially.  Rendering a cyber-attack unsuccessful is all about blocking one or more of these stages.</p>
+        <p>You therefore need to look at a layered approach to protection. This means:</p>
+        <ul>
+            <li>Securing your entry points.</li>
+            <li>Filtering web traffic and blocking malicious sites.</li>
+            <li>Blocking users from certain websites of which they should have no access.</li>
+            <li>Blocking macro’s and ActiveX along with not allowing external content from running inside office applications.</li>
+            <li>Scanning all emails and attachments for phishing.</li>
+            <li>Educating your employees to increase their awareness of phishing techniques and general vigilance.</li>
+            <li>Ensuring USB devices are scanned or even restricted in some parts, with auto play disabled at the very least.</li>
+            <li>Locking down users’ own (BYOD) devices on secured separate networks from production systems.</li>
+            <li>Deploying ransom behavioural tools and scanning your network traffic.</li>
+        </ul>
+        <p>With this layered approach, research has shown that most ransomware attacks can be stopped at the gateway level, through email and URL blocking. The last line of defence is endpoint anti-ransomware behavioural monitoring, designed to proactively detect and block ransomware execution.  However, you want to stop this at the gateway and so ensure that your intrusion prevention, email and web scanning solutions are suitably robust to protect your edge networks.</p>
+
+        <p>The one item I would add is to ensure you are applying patches as soon as they come out</p>
+
+    <p>This article was originally published by <a href="http://www.itsecurityguru.org/2017/08/15/ransomware-rise-prevent-attack-3/">IT SECURITY GURU</a> please visit their site to read the entire article.</p>
+    </div>
+    </div>
+    <hr>
+    <div class="row">
+     <a name="Redundant_Website_on_the_Cheap"></a>
+    <h1>Redundant Website on the Cheap</h1>
+    <p>Aug 14, 2017</p>
+    </div>
+    <div class="row">
+    <div class="col-sm-12" style="padding:0px 20px;">
+    <p>Disclaimer: You need to know how to code to create a website this way. Remember, the title is on the cheap not easy.
+
+    <p>First, you'll want to write your site. I use a combination of jQuery and a slimmed down version of Bootstrap to help control the look and feel of the site. The rest of the site is just static HTML pages. With the exception of the addition of the Google search toolbar on the main blog page. Instead of using a database and providing my own search capability I'm leveraging Google to do this for me.</p>
+
+    <p>All of my site is on Github in a public repository jbagdon/agilesecops. Github has this fantastic feature called Github pages. This allows you to publish a repository to a website.</p>
+
+    <img src="images/github-repo.JPG" alt="Github repo" class="center-block img-responsive"><br><br>
+    <img src="images/github-page.JPG" alt="Github repo" class="center-block img-responsive"><br>
+
+    <p> From there I hook up Cloudflare to add a little acceleration and magic with page rules to ensure everything is working as I like.</p>
+
+    <p>If I stopped right now I would have a relatively good site with some pretty good uptime and speed. However, Github does go down from time to time. So, Cloudflare has a great service called load balancing that does many things. I'm only using it to perform checks on two sites and if one goes down then serve traffic out of the other site.</p>
+
+    <img src="images/lb.JPG" alt="Github repo" class="center-block img-responsive"><br>
+
+    <p>So, yes, I have a mirrored site hosted somewhere else (for free) and if Github does go down then the Cloudflare load balancer would redirect traffic to the secondary site. Once Github is back up then it becomes primary again.</p>
+
+    <p>Hmm, what it Cloudflare goes down? Well, I have two choices... I can ride it out or if it looks like it's going to be a long outage I can change my DNS to only resolve to my backup site. The change in DNS settings would take some time to propagate through the Internet but it would be a last resort and at least it's an option.</p>
+
+    <p>All of this is managed with Python Fabric. I have automation for committing and pushing code to Github as well as pushing code to the secondary site. I also have automation for purging either a single file or the entire cache within Cloudflare using their API.</p>
+
+    <img src="images/git-commit-push.JPG" alt="Github repo" class="center-block img-responsive"><br><br>
+    <img src="images/purge-cache.JPG" alt="Github repo" class="center-block img-responsive"><br>
+
+    <p>All of this automation, multiple sites, load balancing comes in real handy. Normally, I will push updates to the secondary site and take a look to see if everything looks good and nothing broke. However, last week I was brave, and just pushed right out to Github. Well, my site broke... Good news, all I had to do was take Github out of the Cloudflare load balancer and clear the cache and I was up and running. I fixed my error, pushed the new code to Github, tested it, then put Github back in the load balancer as primary.</p>
+
+    <p>There is some real power out there and it can be harnessed if you know what you're doing. All of this is costing me $5 a month. That's less money than any non-redundant site builder out there. I also have more features, although you need to be techy to use them.</p>
+
+    <p>If you like what you read and you want other ideas like this then send me an email. I'd be happy to talk to you.</p>
+
+    </div>
+    </div>
+    <hr>
+    <h1>10 GDPR myths debunked</h1>
+    <p>Aug 11, 2017</p>
+    <div class="row">
+    <div class="col-sm-12" style="padding:0px 20px;">
+    <p>Don’t be fooled. GDPR implementation is a complex undertaking and being unprepared could have significant and expensive repercussions.</p>
+        <b>Myth 1: GDPR is like Y2K</b>
+
+        <p>Some firms are tackling GDPR with the same hysteria prevalent during the Y2K millennium bug, approaching GDPR as a single project with a defined end date. But GDPR is not just a “point in time” activity. Also, many firms believe that phenomena like Y2K and now GDPR are overblown. But compliance with GDPR should be the default position for legitimate firms.</p>
+
+        <b>Myth 2: No one will get fined</b>
+        <p>Some think the risks of heavy fines are over-exaggerated.  But targeted enforcement is likely, and authorities may go after high-profile companies or companies with particularly egregious data processing faults. Assuming no one will get fined may pose high-impact risks.</p>
+        <b>Myth 3: Everyone will get fined 4 percent</b>
+        <p>Certain factors — the types of data affected, degree of negligence, a company’s prior infringements, and others — will affect fines. Two tiers of fines, either 2 percent or 4 percent based on the previous year’s revenues, will apply, depending on which rule has been infringed.</p>
+        <b>Myth 4: Noncompliance is equivalent to a security breach</b>
+        <p>Compliance with all the GDPR’s fundamental personal data processing principles will be important. It is likely that some authorities will seek to send a message by imposing high fines on firms that infringe those or other principles, especially if they are doing so deliberately — even if a security breach is not involved.</p>
+        <b>Myth 5: For security breaches, the fine is only 2 percent</b>
+        <p>“Controllers,” companies that determine the purposes and means of the processing of personal data, can receive higher-tier fines for security breaches. “Processors,” companies that process personal data, can receive lower-tier fines for security breaches, but can still be sued. Risks could be large if non-governmental organizations (NGOs) sue on behalf of numerous affected individuals.</p>
+        <b>Myth 6: All security breaches must be reported within 72 hours</b>
+        <p>In fact, only personal data breaches will have to be reported, and reporting obligations will vary with a firm’s role as controller or processor. Controllers’ reporting obligations and timing depend on the risk. Processors will have to notify their controllers of personal data breaches without delay.</p>
+        <b>Myth 7: It will be safest not to report security breaches</b>
+        <p>Some firms may think that if they conceal security breaches from authorities, they will not get fined. This is untrue: they could be found out anyway, and could be fined for failing to report data breaches.</p>
+        <b>Myth 8: To comply with GDPR, we should encrypt everything</b>
+        <p>GDPR requires companies to implement measures to ensure a level of security appropriate to the likelihood and severity of risks among individuals for every situation, including storage and transmission. Security measures should be risk-based depending on the available technology and the costs involved.</p>
+        <b>Myth 9: Companies will be able to outsource GDPR liability for security to third parties</b>
+        <p>In fact, it will be critical to make sure that contracts sufficiently cover risks. Processors will want to carry out due diligence on both customers and subcontractors. Insurance merits investigation — not just cyber-insurance but also liability insurance, though regulatory fines may not be insurable.</p>
+        <b>Myth 10: Data location is not a security issue</b>
+        <p>While data location may not be a technical security issue, it is one factor that may be relevant to overall security. Some firms may think that properly encrypted personal data may safely be stored outside the EU if they alone can access the keys. However, the geographic location of personal data is highly regulated under data protection laws as a legal compliance matter. Also, many EU regulators take the view that data location is a security issue.</p>
+
+    </div>
+    </div>
+    <hr>
+    <h1>Today's Top News</h1>
+    <p>Aug 10, 2017</p>
+    <div class="row">
+    <div class="col-sm-12" style="padding:0px 20px;">
+        <b>The following links are to some of the hot topic for today. This page will be updated throughout the day.</b><br><br>
+        <ul>
+        <li><a href="https://www.darkreading.com/threat-intelligence/60--of-infosec-execs-are-boosting-soc-deployments/d/d-id/1329615">60% of Infosec Execs Are Boosting SOC Deployments</a> - A survey of security executives and managers finds a majority are expanding or upgrading their current SOC readiness.</li>
+            <ul><li>I think it's about time that companies start to ramp up on Security tallent. I hope they can find the workers.</li></ul>
+        <br>
+        <li><a href="http://www.techrepublic.com/article/why-the-majority-of-msps-struggle-to-find-enough-cybersecurity-pros-to-hire/">Why the majority of MSPs struggle to find enough cybersecurity pros to hire</a> - Some 92% of MSPs now offer cybersecurity services, but a shortage of qualified staff may put customers at risk of ransomware attacks, according to a Kaspersky Lab report.</li>
+            <ul><li>I really think this is due to the overall shortage of qualified Security Professionals that are currently in the market. If I can recall correctly, reading past posts, the trend is for it to get even worse as time goes by.</li></ul>
+        <br>
+        <li><a href="http://www.zdnet.com/article/destructive-disk-encrypting-mamba-ransomware-springs-back-to-life/">Destructive, disk-encrypting Mamba ransomware springs back to life</a> - A powerful form of ransomware which encrypts whole hard drives instead of just files has suddenly returned - and there's no way for victims to decrypt the data.</li>
+         <ul><li>If you didn't learn before to have good backups and a response to ransomware then you better start planning now.</li></ul>
+        <br>
+        <li><a href="https://www.theregister.co.uk/2017/08/10/talktalk_fined_100k_for_exposing_personal_sensitive_info/">TalkTalk fined £100k for exposing personal sensitive info</a> - 21,000 accounts handled by Indian outsourcing biz exposed</li>
+        <br>
+        <li><a href="http://www.techrepublic.com/article/10-bad-habits-cybersecurity-professionals-must-break/">Cybersecurity workers face many challenges on the job.</a> - Here are 10 bad habits they must avoid in order to be most effective.</li>
+        <br>
+        <li><a href="http://it.toolbox.com/blogs/scingularity/5-best-security-practices-when-building-applications-78227">5 Best Security Practices When Building Applications</a></li>
+        <br>
+        <li><a href="https://nakedsecurity.sophos.com/2017/08/10/debian-move-marks-beginning-of-the-end-for-tls-1-0-and-1-1/">Debian move marks beginning of the end for TLS 1.0 and 1.1</a> - TLS 1.20 fixes a vulnerability so now's the time to check that the software you use and the software you manage supports it</li>
+        </ul>
+
+    </div>
+    </div>
+    <hr>
+    <h1>SMBs Practice Better IoT Security Than Large Enterprises Do</h1>
+    <p>Aug 09, 2017</p>
+    <div class="row">
+    <div class="col-sm-3" >
+          <img src="images/smbs.jpg" alt="SMBs" class="center-block img-responsive" style="padding:5px 5px;">
+        </div>
+        <div class="col-sm-9" style="padding:0px 20px;">
+            <p>Small-to midsized businesses are more prepared than big ones to face the next IoT attack: good news given the sharp rise in IoT botnet attacks in the first half of 2017, new reports released today show.</p>
+            <a href="https://www.darkreading.com/vulnerabilities---threats/smbs-practice-better-iot-security-than-large-enterprises-do/d/d-id/1329606">DARKReading</a><br>
+        </div>
+    </div>
+    <hr>
+    <h1>Email Etiquette Gone Wrong</h1>
+    <p>Aug 09, 2017</p>
+    <div class="row">
+    <div class="col-sm-3" >
+          <img src="images/email.jpg" alt="The Patch Cycle" class="center-block img-responsive" style="padding:5px 5px;">
+        </div>
+        <div class="col-sm-9" style="padding:0px 20px;">
+            <p>I felt the need to point out to a few people the correct way of using email. This isn't anything new but for some, it tends to be very difficult.</p>
+
+            <p>This morning a recruiter sent out an email to a bunch of people by placing all of the individual's email addresses in the CC field. This was the first mistake. When emailing many people that don't know each other put them all in the BCC field. This way the recipients don't know who else the email went to. This is the original email from the recruiter:</p>
+        </div>
+        </div>
+    <div class="row">
+    <div class="col-sm-12" >
+        <img src="images/email-1.JPG" alt="From the recruiter" class="center-block img-responsive" style="padding:5px 20px;">
+        <p>Next, when replying to such an email don't reply to all. This can cause other problems like people not liking your response or something else. In this case, it was that an individual had passed his CISSP test but hadn't yet been signed off by another CISSP and had his new cert in his signature line. The following was the first reply to all sent from who I believe is part of a local ISC Chapter:</p>
+        <img src="images/email-2.JPG" alt="From ISC member" class="center-block img-responsive" style="padding:5px 20px;">
+        <p>What happened from here was a local ISC2 chapter president started an email chain (reply to all...didn't I say not to do that) dragging this young man over the coals for putting his cert in his signature block prior to being officially signed off. Now, I know what the young man did was not correct. However, an ISC2 chapter president acting high and mighty to all in the email list probably isn't the best way to mentor a new CISSP. The following is from the President of a local ISC Chapter (this was also a reply to all):</p>
+        <img src="images/email-3.JPG" alt="From ISC Chapter President" class="center-block img-responsive" style="padding:5px 20px;">
+        <p>Finally, don't put in writing what you don't want others to see. When I asked to stop the reply to all or I would complain to the ISC Mr. President told me that my threats hold no weight. Having everything in writing I wrote a formal complaint, had it notarized (they really should make the process easier), and sent it priority mail to the ISC2 complaints department.</p>
+        <img src="images/email-4.JPG" alt="From ISC Chapter President" class="center-block img-responsive" style="padding:5px 20px;">
+        <p>Lessons learned:</p>
+        <ol><li>Use BCC and not CC when emailing a bunch of strangers or a group of people within your organization.</li>
+        <li>Don't reply to all if you are only talking to one person.</li>
+        <li> Don't put in a written format something that might come back to bite you in the end.</li>
+        <li>AND, people in the position of authority should mentor others and not drag them over the coals when they make a mistake.</li></ol>
+    </div>
+    </div>
+    <hr>
+    <h1>The Patch Cycle</h1>
+    <p>Aug 08, 2017</p>
+    <div class="row">
+    <div class="col-sm-3" >
+          <img src="images/patch_cycle.jpg" alt="The Patch Cycle" class="center-block img-responsive" style="padding:5px 20px;">
+        </div>
+        <div class="col-sm-9" style="padding:0px 20px;">
+            <p>Historically, corporations have patched on a scheduled timeline. Following detailed policies and procedures. Some of which have been dictated by the industry they are within. For example, PCI states that critical updates/patches must be applied within 30 days. This might work in an environment under the control of PCI. However, a lot of organizations take this as their company wide standard.</p>
+
+            <p>We have seen an ever increasing threat landscape hitting the end user within organizations world wide. While patching a controlled production environment every 30 days may be sufficient, it's proving to not be sufficient in the user environment. Companies need to adapt to the increased threat and patch more often.</p>
+        </div>
+        <div class="row">
+    <div class="col-sm-12" >
+        <p>How often should you patch?</p>
+        <p>Organizations need to take a risk based approach and analyze all patches that may apply to their user environment. This includes both the operating system as well as all other applications that reside on user systems. Given the current threat landscape, and how fast we have seen malware spread, I would suggest the following patch schedule for user systems:</p>
+        <ol>
+        <li>Operating System or applications that have remote code execution vulnerabilities need to be patched within 24 hours of a patch being released.</li>
+        <li>Operating System or applications that have privilege escalation vulnerabilities should be patched within 7 days.</li>
+        <li>All other patches should be applied within 30 days.</li>
+        </ol>
+        <p>All of this should tie into your corporate vulnerability management program. Vulnerability scanning of your external production environment should occur on a weekly basis. This should ensure you are catching and remediating any unwanted changes performed that increase your attack surface. Internal authenticated scanning of your user environment should also take place on a weekly basis. This should provide two things:</p>
+        <ol>
+        <li>It verifies that the correct patches are installed.</li>
+        <li>It identifies any additional vulnerable applications that have been installed by your users.</li>
+        </ol>
+        <p>To some, this might seem like a lot. However, we need to stay ahead of the malicious actors and protect our overall infrastructure.</p>
+    </div>
+    </div>
+    <hr>
+    <h1>71% of SMBs are not prepared for cybersecurity risks</h1>
+    <p>Aug 01, 2017</p>
+    <div class="row">
+    <div class="col-sm-5" >
+          <img src="images/smb.jpg" alt="Small to Medium Businesses" class="center-block img-responsive" style="padding:10px 20px;">
+        </div>
+        <div class="col-sm-7" style="padding:0px 40px;">
+            <p>A report published by <a href="https://s3-us-west-1.amazonaws.com/webroot-cms-cdn/2114/9911/0468/SMB-MSP_Survey_US.pdf">WEBROOT</a> states that over 70% of small to medium businesses they surveyed were not ready to defend themselves against an attack in 2017. This is not too surprising considering the lack of security talent out there and the ability of businesses to retain this talent.</p>
+
+            <p>AgileSecOps can help SMBs with their security issues and concerns. We have roughly 30 years of experience and can either provide consultation services or do the work for you. Our pricing is fair and all you need to do is email or call to get started.</p>
+    </div>
+    </div>
+    </div>
+    <hr>
+    <h1>Enhancing Security With Artificial Intelligence</h1>
+      <p>Aug 01, 2017</p>
+    <div class="row">
+    <div class="col-sm-5" >
+          <img src="images/ai.jpg" alt="Artificial Intelligence" class="center-block img-responsive" style="padding:10px 20px;">
+        </div>
+        <div class="col-sm-7" style="padding:0px 40px;">
+            <p>I'm constantly intrigued about the potential capabilities in Artificial Intelligence (AI). This year at DefCon, there were two speakers that showed how AI could help in an attacking role. I see a tremendous possibility for AI in a security defense role. This would be by no means a way to reduce the workforce but to make things so much more accurate. If we could build something that could learn what normal logging looked like, or what normal email looked like, or anything else...then AI could take automated (with assuming 99.99% accuracy) steps to protect businesses and users against the malicious attacks.</p>
+
+        <p>This article was inspired by <a href="https://www.helpnetsecurity.com/2017/08/01/machine-learning-cyber-defense/">HELPNETSECURITY</a>.</p>
+    </div>
+    </div>
+    </div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" async></script>
+</body>
+</html>

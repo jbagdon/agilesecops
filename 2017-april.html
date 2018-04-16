@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Blog | April 2017</title>
+
+    <!-- Site metadata description -->
+    <meta name="description" content="Blog archives from April 2017">
+    <meta name="keywords" content="OWASP, Puppet, SaltStack, Ansible, Python Fabric, penetration testing, vulnerability testing, phishing, static code analysis, automation, DevOps, CISO, Chief Information Officer as a Service, Cloud Security Alliance, CSA, self assessment, STAR, administration, NIST 800-53, ISO 27001, malware, governance, risk, compliance, pci, fireeye, security, threat, byod, mdm, mobile device management, Identity theft, Federal and/or civil liability, Exorbitant fines or lawsuits, Irreparable damage to an organization’s reputation, Loss in consumer confidence, Amazon Web Services"/>
+
+    <!-- favicon code -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.png"/>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">AgileSecOps</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="Cyber-Security-Solutions.html">Services</a></li>
+        <li><a href="by-industry.html">By Industry</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="qualifications.html">Qualifications</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="blog.html">Current Blog</a></li>
+            <li role="separator" class="divider"></li>
+                <li><a href="2018-march.html">Mar-2018</a></li>
+                <li><a href="2017-sep.html">Sep-2017</a></li>
+                <li><a href="2017-aug.html">Aug-2017</a></li>
+                <li><a href="2017-july.html">July-2017</a></li>
+                <li><a href="2017-may.html">May-2017</a></li>
+              <li><a href="2017-april.html">April-2017</a></li>
+        </ul>
+          </li>
+        </ul><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+    </div>
+    </nav>
+<div id="openvpn" class="container-fluid" style="padding:50px 40px;">
+      <h1>Create an OpenVPN Server in 5 Minutes</h1>
+      <p>April 28, 2017</p>
+      <div class="col-sm-12">
+          <img src="images/vpn.png" alt="openvpn" class="center-block img-responsive" style="padding:40px 40px;">
+          <p>Security and privacy are very important and there have been several blog posts out there talking about the importance of a VPN. I thought I would put together something to automate the creation of an OpenVPN server and the first client configuration.</p>
+          <p>I'm using Python Fabric to do all the work and the install is based on a current version of Ubuntu. So, you could use this internally in order to get into your business or home environment or spin up a cloud instance at a place like Digital Ocean and secure all of your outbound traffic from the soon to be eyes of your ISP.</p>
+          <p>All of the code and files are up on GitHub <a href="https://github.com/jbagdon/openvpn">here</a></p>
+          <p>A quick peek at the Fabric script:</p>
+          <pre>from fabric.api import *
+from fabric.contrib.files import sed
+
+def deploy_openvpn():
+    sudo('apt-get update')
+    sudo('apt-get -y install openvpn easy-rsa')
+    run('make-cadir ~/openvpn-ca')
+    put('vars', '~/openvpn-ca/vars', mode=0644)
+    with cd('~/openvpn-ca'):
+        with prefix('source vars'):
+            run('./clean-all')
+            run('./build-ca')
+            run('./build-key-server server')
+            run('./build-dh')
+            run('openvpn --genkey --secret keys/ta.key')
+            run('./build-key client1')
+    with cd('~/openvpn-ca/keys'):
+        sudo('cp ca.crt ca.key server.crt server.key ta.key dh2048.pem /etc/openvpn')
+    put('server.conf', '/etc/openvpn/server.conf', mode=0644, use_sudo=True)
+    sed('/etc/sysctl.conf', '#net.ipv4.ip_forward=1', 'net.ipv4.ip_forward=1', use_sudo=True)
+    sudo('sysctl -p')
+    put('before.rules', '/etc/ufw/before.rules', mode=0640, use_sudo=True)
+    sed('/etc/default/ufw', 'DEFAULT_FORWARD_POLICY=.*', 'DEFAULT_FORWARD_POLICY="ACCEPT"', use_sudo=True)
+    sudo('ufw allow 1194/udp')
+    sudo('ufw allow OpenSSH')
+    sudo('ufw disable')
+    sudo('ufw enable')
+    sudo('systemctl enable openvpn@server')
+    sudo('systemctl start openvpn@server')
+    run('mkdir -p ~/client-configs/files')
+    run('chmod 700 ~/client-configs/files')
+    put('base.conf', '~/client-configs', mode=0644)
+    put('make_config.sh','~/client-configs', mode=0700)
+    with cd('~/client-configs'):
+        run('./make_config.sh client1')</pre>
+
+          <p>You will first have to change a couple of settings. In the vars file, there is a section that sets the settings for the certificate, change these to match your name and email if you want. The other item that is rather important is in the base.conf file you need to change the server IP. This is the file that the OpenVPN config file is generated from and you'll want to connect to the correct IP.</p>
+          <p>Then just run the Fabric script:</p>
+
+          <pre>fab -H 172.16.0.4 -u root -i ~/.ssh/id_rsa deploy_openvpn</pre>
+
+          <p>The -H option is the IP address of the destination server that you are deploying to.</p>
+          <p>The -u is the username that you are logging in with.</p>
+          <p>The -i is the ssh key that you are using to login with.</p>
+          <p>And, the deploy_openvpn is the name of the function within the Fabric script that you are deploying.</p>
+          <p>Don't go too quickly and read the prompts. There will be a few critical prompts to answer yes to or it will not work.
+
+          <p>After it has ran you should end up with a client config file located in your user directory at ~/client-configs/files/client1.ovpn</p>
+
+          <p>Download the client config and import it into your favorite VPN client. Connect and surf securely</p>
+      </div>
+    </div>
+    <hr>
+<div id="startups" class="container-fluid" style="padding:50px 40px;">
+  <h1>Security Guidance for Startups</h1>
+      <p>April 27, 2017</p>
+      <div class="col-sm-12">
+          <img src="images/startup.jpg" alt="startup" class="center-block img-responsive" style="padding:40px 40px;">
+          <p>Security is a very hot topic today. It can ruin a company if not done correctly. Most startups don't really think about security until the later stages and then it's bolted on in a way that looks and feels messy. AgileSecOps specializes in helping companies with security direction and guidance. I call it CISO as a Service.</p>
+          <p>CISO as a Service is like having an attorney on call. You don't need one full-time yet, but you could really use the advice at certain times. We can help you position yourself, in regards to security and compliance, to get ahead of your competition.</p>
+          <p>We would love to just entertain the initial phone conversation on how we can help.</p>
+      </div>
+    </div>
+    <hr>
+<div id="patching" class="container-fluid" style="padding:50px 40px;">
+      <h1>Why is patching so difficult?</h1>
+      <p>April 25, 2017</p>
+      <div class="col-sm-12">
+           <p>I don't know how many companies that I have worked for in the past that haven't patched in years. Patching systems is not only one of the best things you can do in defense of malware and hackers, but it is also a requirement of many compliances such as PCI-DSS. It is very important to not only patch the main Operating System but the additional applications installed. Many companies find this difficult since they don't track what's out there on individual user systems. There are applications that can audit an environment and even assist in applying patches.
+          </p>
+          <p>My recommendations...</p>
+          <ol>
+          <li>Come up with a patch management plan that includes all company systems.</li>
+          <li>Test. Start with a test user group, and for your server environment, start with the development environment.</li>
+          <li>Keep widening your target areas until full patch coverage is achieved.</li>
+          <li>Plan on performing a full patch cycle at least once a month.</li></ol>
+          <p>A lot of this can be automated and done with little intervention from the human once it's setup.</p>
+          <p>Please let me know if you need any assistance as I'd be more than happy to help.</p>
+      </div>
+    </div>
+    <hr>
+    <div id="CISOaaS" class="container-fluid" style="padding:50px 40px;">
+      <h1>CISO as a Service</h1>
+      <p>April 21, 2017</p>
+      <div class="col-sm-12">
+           <p>How do CISOs make companies successful? By ensuring the company they are supporting has all the correct security and compliance in place to completely satisfy the companies customer's expectations. I have worked for multiple SaaS companies in the past and you can win business by having the right levels of compliance in place. It can actually be a determining factor over your competition.
+          </p>
+          <p>The point in a companies life cycle that a CISO becomes important is NOW! If you don't have one then get one. If you are a startup then the CISO can help position the company's security and compliance in such a way to make the company overcome the competition.</p>
+          <p>I don't believe that a CISO position is always a full-time position. This could be true no matter what size your company is. You might just need guidance and direction for a point in time or a few hours a month. It's kind of like having an attorney available for advising on legal matters.</p>
+          <p>So, the CISO as a Service is one that a qualified individual performs the CISO role for several companies. This individual, performing as a CISO for several companies must be a very sharp and talented individual that is willing to invest their time in learning your company operations and culture.</p>
+          <p>This type of arrangement fits very well in the startup community and the mid-sized companies. These companies normally don't either have any security support or they have security personnel with a lack of good guidance and direction. Placing a CISO as a Service in one of these types of organizations can help them quickly grow their security and compliance programs and may translate into an increase in customer growth.</p>
+          <p>There are also financial cost benefits for working in this CISO relationship. Instead of hiring a full-time employ that demands a high dollar salary, you could end up paying a fraction of that with the similar guidance and direction of a qualified individual.</p>
+          <p>On the downside, not having a CISO could get your company into hot water with regulatory bodies and end up paying hefty fines. Security breaches are on the rise and good security personnel is hard to find.</p>
+          <p>This type of service relationship might be the best for your company to start with and then grow into a full-time position if needed.</p>
+      </div>
+    </div>
+    <hr>
+<div id="CISO" class="container-fluid" style="padding:50px 40px;">
+      <h1>What Makes a Good CISO</h1>
+      <p>April 20, 2017</p>
+      <div class="row">
+    <div class="col-sm-3">
+      <img src="images/ciso_leadership.png" alt="CISO Leadership" class="center-block img-responsive">
+     </div>
+      <div class="col-sm-9">
+          <p>The Chief Information Security Officer is the individual within the company that is responsible for all things security related for the company to include logical and physical security. The CISO's duties may include conducting employee security awareness training, developing secure business and communication practices, identifying security objectives and metrics, choosing and purchasing security products from vendors, ensuring that the company is in regulatory compliance with the rules for relevant bodies, and enforcing adherence to security practices.</p>
+          </div>
+          <div class="col-sm-12"><p>What makes a good CISO?</p>
+              <ol>
+              <li>An individual who is able to effectively lead and manage employees.</li>
+              <li>Has a strong understanding of information technology and security.</li>
+              <li>Can communicate complicated security concepts to technical and nontechnical employees.</li>
+              <li>Experience with risk management and auditing.</li>
+              <li>Ability to set the standard for and to interpret what's needed to make the company successful.</li>
+              <li>The ability to ensure the company they are supporting has all the correct security and compliance in place to completely satisfy the companies customer's expectations.</li>
+              </ol>
+              <p>I have worked for multiple SaaS companies in the past and you can win business by having the right levels of compliance in place. It can actually be a determining factor over your competition.</p>
+          </div>
+      </div>
+    </div>
+<hr>
+<div id="brickerbot" class="container-fluid" style="padding:50px 40px;">
+      <h1>BrickerBot Permanent Denial-of-Service Attack</h1>
+      <p>April 15, 2017</p>
+      <div class="row">
+    <div class="col-sm-5">
+      <img src="images/brickerbot.jpg" alt="brickerbot" class="img-rounded img-responsive">
+     </div>
+      <div class="col-sm-7">
+          <p>CERT it warning about a new botnet that is distributing a Permanent Denial of Service (PDoS) to Internet of Things (IOT). According to CERT, the botnet is trying to gain access to devices with default passwords through SSH and Telnet.</p>
+          <p>BrickerBot.1 and BrickerBot.2 exploit hard-coded passwords and brute-force Telnet or exposed Port 22/SSH. According to open source reporting, the following details regarding BrickerBot.1 and BrickerBot.2 are available:</p>
+          <ul>
+          <li>BrickerBot.1 targets devices running BusyBox with an exposed SSH command window and an older version of Dropbear SSH server. Most of these devices were also identified as Ubiquiti network devices, some of which are access points or bridges with beam directivity.</li>
+          <li>BrickerBot.2 targets Linux-based devices which may or may not run BusyBox or use Dropbear SSH server. However, Brickerbot.2 can only access devices which expose a Telnet service protected by default or hard-coded passwords.</li>
+          </ul>
+          </div>
+          <div class="col-sm-12">
+          <p>The first two mitigation recommendations from CERT are to 1) Change the device's factory default credentials and 2) Disable Telnet access to the device.</p>
+          <p>While these are good recommendations, I feel that these should be some of the first things you perform prior to adding a new device to any network. The Center for Internet Security has templates for just about any type of device to assist in the security and hardening process.</p>
+          </div>
+          </div>
+  </div>
+    <hr>
+<div id="facebook" class="container-fluid" style="padding:50px 40px;">
+      <h1>Facebook gets better at spotting fake accounts, spammers</h1>
+      <p>April 15, 2017</p>
+      <div class="row">
+    <div class="col-sm-5">
+      <img src="images/facebook.jpg" alt="Facebook" class="img-rounded img-responsive">
+     </div>
+      <div class="col-sm-7">
+      <p>According to Techradar.com, Facebook is continuing to clean up duplicate profiles and spammers. While Facebook is very popular for those that want to keep in touch with each other, it's also a good place for malicious people to prowl around and collect data about you that can be used in other attacks on the Internet.</p>
+     <p>A word of advice, secure your Facebook account and only share items with those people that you know. If you detect that your account has been duplicated or there is someone impersonating you then contact Facebook and report it right away.</p>
+      <a href="http://www.techradar.com/news/facebook-gets-better-at-spotting-fake-accounts-spammers">Read the entire story on techradar.com</a>
+          </div>
+  </div>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" async></script>
+</body>
+</html>

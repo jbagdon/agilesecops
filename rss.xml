@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/res/preview.xsl"?>
+<rss version="2.0">
+  <channel>
+    <title>AgileSecOps - Blog</title>
+    <link>https://www.agilesecops.com/blog.html</link>
+    <description>IT and IT Security Related Topics</description>
+    <ttl>360</ttl>
+    <image>
+        <url>https://www.agilesecops.com/images/agilesecops.jpg</url>
+        <title>IT and IT Security Related Topics</title>
+        <link>https://www.agilesecops.com</link>
+        <width>32</width>
+        <height>32</height>
+    </image> 
+      <item>
+          <title>Weak Ciphers being used by Google</title>
+          <link>https://www.agilesecops.com/blog.html#bad_google_ciphers</link>
+          <description>Google is utilizing 3DES Ciphers which where found to be vulnerable to what is called a birthday attack and falls under notifications CVE-2016-2183, CVE-2016-6329.
+          </description>
+      </item>
+      <item>
+          <title>Roughly 17% of Email Servers Enable Anti Spoofing Measures</title>
+          <link>https://www.agilesecops.com/blog.html#poor_email_spoofing_protection</link>
+          <description>It appears in my small test, that roughly 17% of the destination servers were actually configured to check for spoofed inbound emails.
+          </description>
+      </item>
+      <item>
+          <title>DMARC Adoption Low in Fortune 500</title>
+          <link>https://www.agilesecops.com/blog.html#DMARC_Adoption_Low</link>
+          <description>Many Fortune 500, FTSE 100 and ASX 100 companies have failed to properly implement the DMARC standard, exposing their customers and partners to phishing and other email-based attacks, according to email security firm Agari.
+          </description>
+      </item>
+      <item>
+          <title>Having a Security Culture</title>
+          <link>https://www.agilesecops.com/blog.html#Security_Culture</link>
+          <description>Information Security is changing in many ways. It is being incorporated into DevOps. IT Security Products are becoming more dynamic and capable. Additionally, the strategy of a good security defense has changed from only perimeter defense to a totally holistic approach that includes all employees. And, the worst part, there is a decline in qualified people to meet the job market demand in the IT Security community.
+          </description>
+      </item>
+      <item>
+          <title>Free IT Security Services for Non-Profits in September</title>
+          <link>https://www.agilesecops.com/blog.html#free_for_nonprofits</link>
+          <description>September is a month of remembrance for me. Due to events that happened in the past, it's time to reflect on all of those people that sacrifice on a daily basis. Some do this as I did by serving in the military while others run non-profit organizations in order to help others.
+          </description>
+      </item>
+      <item>
+          <title>Ransomware on the rise: how to prevent an attack</title>
+          <link>https://www.agilesecops.com/blog.html#Ransomware_on_the_rise</link>
+          <description>Unfortunately, there is no silver bullet. Cyber criminals are constantly innovating and every cyber-attack is constructed using well-defined phases, which are completed sequentially. Rendering a cyber-attack unsuccessful is all about blocking one or more of these stages.
+          </description>
+      </item>
+      <item>
+          <title>Redundant Website on the Cheap</title>
+          <link>https://www.agilesecops.com/blog.html#Redundant_Website_on_the_Cheap</link>
+          <description>First, you'll want to write your site. I use a combination of jQuery and a slimmed down version of Bootstrap to help control the look and feel of the site. The rest of the site is just static HTML pages. With the exception of the addition of the Google search toolbar on the main blog page. Instead of using a database and providing my own search capability I'm leveraging Google to do this for me. All of my site is on Github in a public repository jbagdon/agilesecops. Github has this fantastic feature called Github pages. This allows you to publish a repository to a website.
+          </description>
+      </item>
+  </channel>
+</rss>

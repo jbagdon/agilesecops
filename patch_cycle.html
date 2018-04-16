@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>The Patch Cycle</title>
+
+    <!-- Site metadata description -->
+    <meta name="description" content="Companies need to improve their patching capabilities in the wake of an increased malware threat.">
+    <meta name="keywords" content="OWASP, Puppet, SaltStack, Ansible, Python Fabric, penetration testing, vulnerability testing, phishing, static code analysis, automation, DevOps, CISO, Chief Information Officer as a Service, Cloud Security Alliance, CSA, self assessment, STAR, administration, NIST 800-53, ISO 27001, malware, governance, risk, compliance, pci, fireeye, security, threat, byod, mdm, mobile device management, Identity theft, Federal and/or civil liability, Exorbitant fines or lawsuits, Irreparable damage to an organization’s reputation, Loss in consumer confidence, Amazon Web Services"/>
+
+    <!-- favicon code -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.png"/>
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="The Patch Cycle" />
+    <meta property="og:url" content="https://www.agilesecops.com/patch_cycle.html" />
+    <meta property="og:image" content="https://www.agilesecops.com/images/patch_cycle.jpg" />
+    <meta property="og:description" content="Corporations need to look at changing their patch cycle due to changes in the threat landscape" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="AgileSecOps">
+    <meta name="twitter:title" content="The Patch Cycle">
+    <meta name="twitter:description" content="Corporations need to look at changing their patch cycle due to changes in the threat landscape.">
+    <meta name="twitter:image" content="https://www.agilesecops.com/images/patch_cycle.jpg">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>   
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">AgileSecOps</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="Cyber-Security-Solutions.html">Services</a></li>
+        <li><a href="by-industry.html">By Industry</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="qualifications.html">Qualifications</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="blog.html">Current Blog</a></li>
+            <li role="separator" class="divider"></li>
+                <li><a href="2018-march.html">Mar-2018</a></li>
+                <li><a href="2017-sep.html">Sep-2017</a></li>
+                <li><a href="2017-aug.html">Aug-2017</a></li>
+                <li><a href="2017-july.html">July-2017</a></li>
+                <li><a href="2017-may.html">May-2017</a></li>
+              <li><a href="2017-april.html">April-2017</a></li>
+        </ul>
+          </li>
+        </ul><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+    </div>
+    </nav>
+<div class="container-fluid" style="padding:50px 40px;">
+      <h1>The Patch Cycle</h1>
+      <p>Aug 08, 2017</p>
+    <div class="row">  
+    <div class="col-sm-3" >
+          <img src="images/patch_cycle.jpg" alt="The Patch Cycle" class="center-block img-responsive" style="padding:5px 20px;">
+        </div>
+        <div class="col-sm-9" style="padding:0px 20px;">
+            <p>Historically, corporations have patched on a scheduled timeline. Following detailed policies and procedures. Some of which have been dictated by the industry they are within. For example, PCI states that critical updates/patches must be applied within 30 days. This might work in an environment under the control of PCI. However, a lot of organizations take this as their company wide standard.</p>
+            
+            <p>We have seen an ever increasing threat landscape hitting the end user within organizations world wide. While patching a controlled production environment every 30 days may be sufficient, it's proving to not be sufficient in the user environment. Companies need to adapt to the increased threat and patch more often.</p>
+        </div>
+    </div>
+    <div class="row">  
+    <div class="col-sm-12" >      
+        <p>How often should you patch?</p>
+        <p>Organizations need to take a risk based approach and analyze all patches that may apply to their user environment. This includes both the operating system as well as all other applications that reside on user systems. Given the current threat landscape, and how fast we have seen malware spread, I would suggest the following patch schedule for user systems:</p>
+        <ol>
+        <li>Operating System or applications that have remote code execution vulnerabilities need to be patched within 24 hours of a patch being released.</li>
+        <li>Operating System or applications that have privilege escalation vulnerabilities should be patched within 7 days.</li>
+        <li>All other patches should be applied within 30 days.</li>
+        </ol>
+        <p>All of this should tie into your corporate vulnerability management program. Vulnerability scanning of your external production environment should occur on a weekly basis. This should ensure you are catching and remediating any unwanted changes performed that increase your attack surface. Internal authenticated scanning of your user environment should also take place on a weekly basis. This should provide two things:</p>
+        <ol>
+        <li>It verifies that the correct patches are installed.</li>
+        <li>It identifies any additional vulnerable applications that have been installed by your users.</li>
+        </ol>
+        <p>To some, this might seem like a lot. However, we need to stay ahead of the malicious actors and protect our overall infrastructure.</p>
+    </div>
+    </div>
+    </div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" async></script>
+</body>
+</html>
