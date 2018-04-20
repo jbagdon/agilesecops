@@ -14,54 +14,18 @@
     <!-- favicon code -->
     <link rel="icon" type="image/x-icon" href="images/favicon.png"/>
 
-    <style>
-        body, html {
-        height: 100%;
-        margin: 0;
-        color: #777;
-        }
-
-        .bgimg{
-          position: relative;
-          opacity: 0.70;
-          background-attachment: fixed;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-image: url("images/grand_canyon.jpg");
-          min-height: 40%;
-        }
-
-        .caption {
-          position: absolute;
-          left: 0;
-          top: 40%;
-          width: 100%;
-          text-align: center;
-          color: #000;
-        }
-
-        .caption span.border {
-          background-color: #111;
-          color: #fff;
-          padding: 18px;
-          font-size: 25px;
-          letter-spacing: 10px;
-        }
-
-        /* Turn off parallax scrolling for tablets and phones */
-        @media only screen and (max-device-width: 1024px) {
-            .bgimg {
-                background-attachment: scroll;
-            }
-        }
-    </style>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 
+<style>
+    hr {
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #BDBDBD; /* old IE */
+    background-color: #BDBDBD; /* Modern Browsers */
+}</style>   
 </head>
 <body>
 
@@ -85,7 +49,6 @@
         <li><a href="by-industry.html">By Industry</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="qualifications.html">Qualifications</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -103,18 +66,16 @@
   </div><!-- /.container-fluid -->
     </div>
     </nav>
+<div class="container-fluid" style="padding-top:50px;">
+        <div class="col-sm-12" style="padding:20px;">
+        <h1 align="center">About</h1>
+        </div>
 
-<div class="bgimg">
-  <div class="caption">
-    <span class="border" style="background-color:transparent;font-size:25px;color: #FFFFFF;">About</span>
-  </div>
-</div>
-
-<div style="position:relative;">
-  <div class="container-fluid" style="padding:25px 40px;">
-        <p>Our company is based out of Dallas, Texas and believes in providing the best services possible. If you're not happy then we're not happy!</p>
-      <p>While our main focus is on security we enjoy performing work from assessments of all sorts, automation, cloud development, and system administration.</p>
-      <p>We understand and believe that there is a difference in culture between the startup and fortune 100. We will work within your business guidelines and direction to finish projects to absolute satisfaction.</p>
+   <div class="col-sm-12">    
+    <div id="company" class="col-sm-6">
+        <hr>
+        <h3 style="color: darkred">The Company</h3>
+        <p>Our company is based out of Dallas, Texas and believes in providing the best services possible. If you're not happy then we're not happy! While our main focus is on security we enjoy performing work from assessments of all sorts, automation, cloud development, and system administration. We understand and believe that there is a difference in culture between the startup and fortune 100. We will work within your business guidelines and direction to finish projects to absolute satisfaction.</p>
         <p>We have a strong belief in integrity first, excellence in all we do, and a commitment to customer success.</p>
             <p>Our name speaks for itself.</p>
             <p>Agile =>  An ability to think quickly; mentally acute or aware; quick and well-coordinated in movement.</p>
@@ -124,7 +85,44 @@
             <img src="images/flag.jpg" alt="Veteran Flag" height="132" width="230"><br>
             <small>AgileSecOps, LLC is a Disabled Veteran run business.</small><br><br>
             <p>We provide discounted services to non-profit and Christian organizations.</p>
+  </div>    
+    <div id="qualifications" class="col-sm-6">
+        <hr>
+        <h3 align="center" style="color: darkred">Qualifications</h3>
+        <div style="text-align:center;">
+    
+    <p>30 years of experience providing digital Security and Administration</p>
+    <p>13 years with the DoD performing Network Defense and Network Attack</p>
+    <p>Proven track record as a Security Officer for for a SaaS Company</p>
+    <p><strong>Certifications:</strong></p>
+    <p>Certified Information Systems Security Professional (CISSP)</p>
+    <p>Information Systems Security Architecture Professional (ISSAP)</p>
+    <p>Global Computer Incident Response Team (GCIRT) manager</p>
+    <p>ISSAP (Information Systems Security Architecture Professional)</p>
+    <p>CIFI (Certified Information Forensics Investigator)</p>
+    <p>AWS Business Professional</p>
+    <p>AWS Technical Professional</p>
+    <p>GIAC Certified Incident Handler (GCIH)</p>
+    <p>GIAC Security Essentials (GSEC)</p>
+    <p><strong>Courses taken:</strong></p>
+    <p>SANS Security 401 - Security Essentials</p>
+    <p>SANS Security 502 - Perimeter Protection In-Depth</p>
+    <p>SANS Security 504 - Hacker Techniques, Exploits and Incident Handling</p>
+    <p>SANS Security 542 - Web App Penetration Testing and Ethical Hacking</p>
+    <p>Payment Card Industry Qualified Security Assessor (PCI QSA)</p>
+    </div>
   </div>
+    
+</div>    
+
+</div>
+<div class="col-sm-12" style="padding:10px 40px 40px;">
+<hr>
+  <p>For additional information on how AgileSecOps can help your business, or to schedule a discovery call, contact us at the phone number or email below.</p>
+    <b>Contact us:</b>
+    <a href="mailto:info@agilesecops.com">info@agilesecops.com</a>
+    <b>:</b>
+    <abbr title="Phone">P:</abbr> 866.330.2206
 </div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
