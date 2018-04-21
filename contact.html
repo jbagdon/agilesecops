@@ -14,54 +14,18 @@
     <!-- favicon code -->
     <link rel="icon" type="image/x-icon" href="images/favicon.png"/>
 
-    <style>
-        body, html {
-        height: 100%;
-        margin: 0;
-        color: #777;
-        }
-
-        .bgimg{
-          position: relative;
-          opacity: 0.70;
-          background-attachment: fixed;
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-image: url("images/grand_canyon.jpg");
-          min-height: 40%;
-        }
-
-        .caption {
-          position: absolute;
-          left: 0;
-          top: 40%;
-          width: 100%;
-          text-align: center;
-          color: #000;
-        }
-
-        .caption span.border {
-          background-color: #111;
-          color: #fff;
-          padding: 18px;
-          font-size: 25px;
-          letter-spacing: 10px;
-        }
-
-        /* Turn off parallax scrolling for tablets and phones */
-        @media only screen and (max-device-width: 1024px) {
-            .bgimg {
-                background-attachment: scroll;
-            }
-        }
-    </style>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 
+<style>
+    hr {
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #BDBDBD; /* old IE */
+    background-color: #BDBDBD; /* Modern Browsers */
+}</style>
 </head>
 <body>
 
@@ -102,16 +66,28 @@
   </div><!-- /.container-fluid -->
     </div>
     </nav>
-<div class="bgimg">
-  <div class="caption">
-    <span class="border" style="background-color:transparent;font-size:25px;color: #FFFFFF;">Connect with us!</span>
-  </div>
-</div>
-
-<div class="container-fluid" style="padding:25px 40px;">
-  <h3 style="text-align:center;">Contacts</h3>
+<div class="container-fluid" style="padding-top:50px;">
+        <div class="col-sm-12" style="padding:20px;">
+            <div style="text-align:center;">
+        <h4 style="color: darkred">Contact</h4>
+            <h1 style="font-family:calluna;">Let's chat.</h1>
+        </div>
+    </div>
+  <div class="col-sm-12">    
+    <div id="rates" class="col-sm-6">
+    <h3>Contact us for rates</h3>
+    <p>Depending on the engagement, we offer an hourly rate or a flat rate. Our consultants keep detailed logs of the time they spend on your engagement. We bill to the closest 15 minutes of work completed. All bills include the detailed work logs and are sent to the client on a monthly basis. We only work for as long as an engagement requires, so you’ll never be overbilled for unproductive time.</p>
+    <h3>Book an appointment</h3>
+    <p>Use the form below to schedule an appointment with us. Please be as detailed as possible in the meeting description area. The form will automatically send meeting invites to AgileSecOps and one to you. </p>
+      </div>
+    
+      
+<div id="contacts" class="col-sm-6" style="padding-top:20px;">
+  <h3 align="center" style="color: darkred">Contacts</h3>
     <div style="text-align:center;">
     <b>For general inquiries and sales:</b><br>
+    <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#97;&#103;&#105;&#108;&#101;&#115;&#101;&#99;&#111;&#112;&#115;&#46;&#99;&#111;&#109;">&#105;&#110;&#102;&#111;&#64;&#97;&#103;&#105;&#108;&#101;&#115;&#101;&#99;&#111;&#112;&#115;&#46;&#99;&#111;&#109;</a>
+    <br>
     <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#103;&#105;&#108;&#101;&#115;&#101;&#99;&#111;&#112;&#115;&#46;&#99;&#111;&#109;">&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#103;&#105;&#108;&#101;&#115;&#101;&#99;&#111;&#112;&#115;&#46;&#99;&#111;&#109;</a>
     <br>
     <br>
@@ -124,6 +100,21 @@
     <a href="https://www.linkedin.com/in/joebagdon/"><img src="images/linkedin.png" alt="LinkedIn" width="22" height="22"></a>
     <a href="https://twitter.com/AgileSecOps"><img src="images/twitter.png" alt="Twitter" width="22" height="22"></a>
 </div>
+</div>
+    </div>
+    <div class="col-sm-6">
+<!-- Calendly inline widget begin -->
+<div class="calendly-inline-widget" data-url="https://calendly.com/joebagdon" style="min-width:320px;height:480px;"></div>
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
+<!-- Calendly inline widget end -->
+    </div>
+<div class="col-sm-12" style="padding:10px 40px 40px;">
+<hr>
+  <p>For additional information on how AgileSecOps can help your business, or to schedule a discovery call, contact us at the phone number or email below.</p>
+    <b>Contact us:</b>
+    <a href="mailto:info@agilesecops.com">info@agilesecops.com</a>
+    <b>:</b>
+    <abbr title="Phone">P:</abbr> 866.330.2206
 </div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
