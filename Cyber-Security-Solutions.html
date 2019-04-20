@@ -14,10 +14,10 @@
     <!-- favicon code -->
     <link rel="icon" type="image/x-icon" href="images/favicon.png"/>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.slim.min.js"></script>
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <style>
     hr {
     border: none;
@@ -28,40 +28,31 @@
 }</style>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top" style="background-color: #fff;">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">AgileSecOps</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="index.html">AgileSecOps</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="Cyber-Security-Solutions.html">Services</a>
+      <a class="nav-item nav-link" href="by-industry.html">By Industry</a>
+      <a class="nav-item nav-link" href="contact.html">Contact</a>
+      <a class="nav-item nav-link" href="about.html">About</a>
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="navbar">
-      <ul class="nav navbar-nav">
-        <li><a href="Cyber-Security-Solutions.html">Services</a></li>
-        <li><a href="by-industry.html">By Industry</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="about.html">About</a></li>
-        </ul><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-    </div>
-    </nav>
-    <div class="container-fluid" style="padding-top:50px;">
-        <div class="col-sm-12" style="padding:20px;">
+  </div>
+</nav>
+    <div class="container-fluid" style="padding:40px 40px;">
+        <div class="row">
+        <div class="col" style="padding:20px;">
             <div style="text-align:center;">
         <h1>IT and Cybersecurity Services</h1>
         <h4 style="color: darkred">This is a short list of our capabilities. Contact us to see exactly how we can help you.</h4>
             </div>
         </div>
-
-    <div class="col-sm-12">
-    <div id="ciso" class="col-sm-6">
+        </div>
+    <div class="row">
+    <div class="col">
         <hr>
         <h3 style="color: darkred">CISO as a Service</h3>
       <p>The CISO advises the executive team on how the organization needs to meet security requirements to do business in their given industry. The CISO oversees a team that has a view of the risks facing the enterprise and puts in place the necessary security technologies and processes to minimize the risks to the organization. They are empowered to communicate risks to decisions makers and take action independently when necessary. They also advocate for investment and resources to ensure security practices are given appropriate attention.</p>
@@ -72,9 +63,9 @@
             <li>Introducing guidance and direction related to all things security while keeping key business objectives in mind.</li>
             <li>Working on policies, procedures, compliance initiatives, and technical implementations or any other project needed by the company.</li>
         </ul>
-        <img src="images/v_ciso.jpg" alt="virtual_cisco" class="center-block img-responsive" style="padding: 10px;">
+        <img src="images/v_ciso.jpg" alt="virtual_cisco" class="img-fluid" style="padding: 50px;">
   </div>
-    <div id="managed" class="col-sm-6">
+    <div class="col">
         <hr>
         <h3 style="color: darkred">Managed Services</h3>
          <p>Many companies today are saving money by outsourcing aspects of their IT support. AgileSecOps offers a wide variety of managed services. The following is just an example of what we can do for your company.</p>
@@ -106,10 +97,9 @@
           </ul>
      </div>
         </div>
-    <div class="col-sm-12">
-        <div id="vulnerability" class="col-sm-4">
+    <div class="row">
+    <div class="col-sm">
           <hr>
-
         <h3 style="color: darkred">Vulnerability Management</h3>
           <p>Vulnerability management is the process in which vulnerabilities in IT are identified and the risks of these vulnerabilities are evaluated. This evaluation leads to correcting the vulnerabilities and removing the risk or a formal risk acceptance by the management of an organization.</p>
           <h4>We'll help you find the vulnerabilities before they become a problem and assist or perform the remediation service.</h4>
@@ -120,7 +110,7 @@
             <li>We follow OWASP best practices and assist in educating developers and IT staff.</li>
         </ul><br>
       </div>
-    <div id="devops" class="col-sm-4">
+    <div class="col-sm">
     <hr>
         <h3 style="color: darkred">DevOps</h3>
          <p>We love to automate almost anything.</p>
@@ -131,18 +121,17 @@
       <h4>Let's not forget to involve Security.</h4>
       <p>Security is normally a team that works in a silo or something that is bolted on after the fact. We like to include Security into the DevOps process.</p>
    </div>
-        <div id="hardening" class="col-sm-4">
+        <div class="col-sm">
         <hr>
        <h3 style="color: darkred">System Hardening</h3>
       <p>Hardening is the process of limiting the attack surface of a system or device by tuning or disabling services to meet the best security stance. This is usually done by following recommended standards or industry best practices. Normally, we following the Center for Internet Security (CIS) benchmarks. We can also utilize DISA's Security Technical Implementation Guide (STIG) as requested by the customer or if the customer is mandated by the DoD.</p>
     <p>We utilize configuration management utilities such as Puppet or Ansible to ensure every system meets the same security baseline. These templates can either be passed onto the customer for further implementation or we can continue to assist as needed.</p>
         </div>
         </div>
-    <div class="col-sm-12">
-    <div id="compliance" class="col-sm-6">
+    <div class="row">
+    <div class="col-sm">
         <hr>
         <h3 style="color: darkred">Compliance</h3>
-
       <p>Almost every organization has to deal with some sort of compliance. It may be mandated upon them by an overseeing body. This might be something along the lines of the Payment Card Industry and their PCI-DSS compliance. Or, an organization may want to become compliant in order to have the advantage on their competition. Customers like the feeling that their data is being secured to the best of the industries abilities and they tend to go with companies that can prove it.</p>
       <p>There are so many different compliances out there. Regardless of what sector your business operates in we can help. We will help you meet the regulation or guideline that your industry and customers demand.</p>
       <p>The following are some of the assessments we perform:</p>
@@ -156,10 +145,9 @@
         <li>PCI-DSS</li>
       </ul>
         </div>
-        <div id="cloud" class="col-sm-6">
+        <div class="col-sm">
         <hr>
         <h3 style="color: darkred">Cloud Services</h3>
-
       <p>AgileSecOps can provide the guidance needed to help you make a smooth transition to the cloud. We can provide:</p>
       <ul>
       <li>Guidance on setup and implementation</li>
@@ -170,16 +158,17 @@
       <p>Even if you want to outsource you entire solution we can handle it.</p>
       </div>
         </div>
-<div class="col-sm-12" style="padding:10px 40px 40px;">
 <hr>
-  <p>For additional information on how AgileSecOps can help your business, or to schedule a discovery call, contact us at the email below.</p>
-    <b>Contact us:</b>
+<div class="container-fluid" style="padding-left: 40px; padding-bottom: 40px;">
+  <b>Contact us:</b>
     <a href="mailto:info@agilesecops.com">info@agilesecops.com</a>
     
-</div>
+    <a href="https://www.linkedin.com/in/joebagdon/"><img src="images/linkedin.png" alt="LinkedIn" width="22" height="22"></a>
+  </div>
+    </div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" async></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" async></script>
 </body>
 </html>
