@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
  <loc>https://www.agilesecops.com/index.html</loc>
- <lastmod>2019-04-19</lastmod>
+ <lastmod>2019-04-20</lastmod>
  <changefreq>monthly</changefreq>
  <priority>0.8</priority> 
 </url>
@@ -13,109 +13,10 @@
  <loc>https://www.agilesecops.com/ciso.html</loc>
 </url>
 <url>
- <loc>https://www.agilesecops.com/cloud.html</loc>
-</url>
-<url>
  <loc>https://www.agilesecops.com/contact.html</loc>
 </url>
 <url>
- <loc>https://www.agilesecops.com/devops.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/qualifications.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/vulnerability_management.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/2017-april.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/caas.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/patching.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/system-hardening.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/security-guidance-for-startups.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/5-minute-vpn.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/managed-services.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/2017-may.html</loc>
-</url>
-<url>
  <loc>https://www.agilesecops.com/startups.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/Ransomware-Defense.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/ansible-encryption.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/hipaa-compliance.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/education.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/financial.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/healthcare.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/small-medium-business.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/sweden_leak.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/2017-july.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/trickbot.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/data_threats.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/ssn_databreach.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/g_suite.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/the_end_of_flash.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/encrypting_email.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/securing_containers.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/devops_and_security.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/patch_cycle.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/2017-aug.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/2017-sep.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/2018-march.html</loc>
 </url>
 <url>
  <loc>https://www.agilesecops.com/Cyber-Security-Solutions.html</loc>
