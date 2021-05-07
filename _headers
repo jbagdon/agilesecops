@@ -6,3 +6,4 @@
   Content-Security-Policy: script-src 'self'
   X-Content-Type-Options: nosniff
   referrer-policy: strict-origin-when-cross-origin
+  permissions-policy: fullscreen=(self)
