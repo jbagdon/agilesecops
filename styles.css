@@ -7,12 +7,11 @@ body, html {
 
 .bgimg{
     position: relative;
-    background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url("images/keyboard_2.jpg");
-    min-height: 50%;
+    min-height: 40%;
 }
 
 .caption {
