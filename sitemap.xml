@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
  <loc>https://www.agilesecops.com/index.html</loc>
- <lastmod>2019-04-20</lastmod>
+ <lastmod>2020-02-03</lastmod>
  <changefreq>monthly</changefreq>
  <priority>0.8</priority> 
 </url>
@@ -17,8 +17,5 @@
 </url>
 <url>
  <loc>https://www.agilesecops.com/Cyber-Security-Solutions.html</loc>
-</url>
-<url>
- <loc>https://www.agilesecops.com/by-industry.html</loc>
 </url>
 </urlset>

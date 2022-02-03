@@ -1,0 +1,55 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: black;
+    color: lightgray
+}
+
+.bgimg{
+    position: relative;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("images/keyboard_2.jpg");
+    min-height: 50%;
+}
+
+.caption {
+    position: absolute;
+    background-color:transparent;
+    left: 0;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.caption span.border {
+    background-color: #111;
+    color: #fff;
+    padding: 10px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+h1 {
+    font-size: 25px;
+    color: lightgray
+}
+
+
+hr {
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #BDBDBD; /* old IE */
+    background-color: #BDBDBD; /* Modern Browsers */
+    }
+
+/* Turn off parallax scrolling for tablets and phones */
+@media only screen and (max-device-width: 1024px) {
+    .bgimg {
+        background-attachment: scroll;
+    }
+}

@@ -1,9 +1,0 @@
-# a path:
-/*
-  # headers for that path:
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  content-security-policy: upgrade-insecure-requests
-  X-Content-Type-Options: nosniff
-  referrer-policy: strict-origin-when-cross-origin
-  permissions-policy: fullscreen=(self)
