@@ -1,8 +1,8 @@
 body, html {
     height: 100%;
     margin: 0;
-    background-color: black;
-    color: lightgray
+    background-color: white;
+    color: black
 }
 
 .bgimg{
@@ -34,7 +34,7 @@ body, html {
 
 h1 {
     font-size: 25px;
-    color: lightgray
+    color: black
 }
 
 
