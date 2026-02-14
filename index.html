@@ -5,13 +5,23 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>AgileSecOps</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <title>AgileSecOps - Penetration Testing & Information Security Consulting</title>
+  <meta content="AgileSecOps provides penetration testing, WAF implementation, and virtual CISO services for startups and small businesses. Protect your company with expert remote security professionals." name="description">
+  <meta content="penetration testing, information security, cybersecurity, WAF, virtual CISO, security consulting, HIPAA, SOC2, PCI compliance" name="keywords">
+
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AgileSecOps - Penetration Testing & Security Consulting">
+  <meta property="og:description" content="Expert penetration testing, WAF implementation, and virtual CISO services for startups and small businesses.">
+  <meta property="og:url" content="https://www.agilesecops.com/">
+  <meta property="og:image" content="https://www.agilesecops.com/assets/img/4.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AgileSecOps - Penetration Testing & Security Consulting">
+  <meta name="twitter:description" content="Expert penetration testing, WAF implementation, and virtual CISO services for startups and small businesses.">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
-  <!--<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
+  <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -20,14 +30,26 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <!--<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">-->
-  <!--<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">-->
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-  <!-- Preload the LCP image with a high fetchpriority so it starts loading with the stylesheet. -->
-  <link rel="preload" fetchpriority="high" as="image" href="../img/hero-bg.png" type="image/webp">
+  <!-- Preload the LCP image -->
+  <link rel="preload" fetchpriority="high" as="image" href="assets/img/hero-bg.png" type="image/png">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "AgileSecOps",
+    "description": "Information security consulting firm providing penetration testing, WAF implementation, and virtual CISO services.",
+    "url": "https://www.agilesecops.com",
+    "email": "info@agilesecops.com",
+    "serviceType": ["Penetration Testing", "Web Application Firewall", "Virtual CISO"],
+    "areaServed": "US",
+    "priceRange": "$$"
+  }
+  </script>
 </head>
 
 <body>
@@ -45,6 +67,8 @@
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
+          <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
+          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -59,17 +83,19 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">We offer comprehensive penetration testing and information security services</h1>
-          <h2 data-aos="fade-up" data-aos-delay="400">We are a team of talented IT Security Professionals.</h2>
+          <h1 data-aos="fade-up">Protect your startup without hiring a full-time security team</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Expert penetration testing, WAF management, and virtual CISO services — built for startups and small businesses.</h2>
           <div data-aos="fade-up" data-aos-delay="600">
             <div class="text-center text-lg-start">
-              <a href="#about" class="scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+              <a href="#contact" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Get a Free Consultation</span>
+                <i class="bi bi-arrow-right"></i>
               </a>
             </div>
           </div>
         </div>
         <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-          <img src="assets/img/4.webp" class="img-fluid" alt="">
+          <img src="assets/img/4.webp" class="img-fluid" alt="Information security services illustration">
         </div>
       </div>
     </div>
@@ -90,11 +116,16 @@
               <p>
                 AgileSecOps believes in providing the best remote services possible. While our primary focus is Security, we enjoy performing work from assessments, automation, cloud development, and system administration. We understand and believe a cultural difference exists between the startup and Fortune 100. We will work within your business guidelines and direction to complete projects satisfactorily.
               </p>
+              <div class="trust-badges">
+                <span class="badge-item"><i class="bi bi-shield-check"></i> OWASP Methodology</span>
+                <span class="badge-item"><i class="bi bi-patch-check"></i> HIPAA Compliant</span>
+                <span class="badge-item"><i class="bi bi-award"></i> SOC2 &amp; PCI Ready</span>
+              </div>
             </div>
           </div>
 
           <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src="assets/img/1.jpg" class="img-fluid" alt="">
+            <img src="assets/img/1.jpg" class="img-fluid" alt="AgileSecOps team">
           </div>
 
         </div>
@@ -141,8 +172,6 @@
 
     </section><!-- End Values Section -->
 
-    
-
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
 
@@ -150,7 +179,7 @@
 
         <header class="section-header">
           <h2>Services</h2>
-          <p>What we do the best</p>
+          <p>What we do best</p>
         </header>
 
         <div class="row">
@@ -208,6 +237,7 @@
 
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
             <div class="box">
+              <span class="featured">Most Popular</span>
               <h3 style="color: #65c600;">Penetration Testing</h3>
               <div class="price"><sup>$</sup>8,500</div>
               <ul>
@@ -221,7 +251,7 @@
 
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
             <div class="box">
-              <h3 style="color: #ff901c;">Web Applicaiton Firewall</h3>
+              <h3 style="color: #ff901c;">Web Application Firewall</h3>
               <div class="price"><sup>$</sup>150<span> / hr</span></div>
               <ul>
                 <li>Implementation</li>
@@ -250,6 +280,150 @@
 
     </section><!-- End Pricing Section -->
 
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>What Our Clients Say</h2>
+          <p>Trusted by Growing Companies</p>
+        </header>
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="testimonial-item">
+              <div class="stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+              <p>AgileSecOps helped us achieve SOC2 compliance in under 3 months. Their team integrated seamlessly with our developers and made the entire process painless.</p>
+              <div class="profile">
+                <h3>Series A Healthcare Startup</h3>
+                <span>SOC2 Compliance &amp; Penetration Testing</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="testimonial-item">
+              <div class="stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+              <p>Their virtual CISO service gave us the security leadership we needed without the six-figure salary. Invaluable for a company our size.</p>
+              <div class="profile">
+                <h3>Mid-Size SaaS Company</h3>
+                <span>Virtual CISO Services</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="600">
+            <div class="testimonial-item">
+              <div class="stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+              <p>The WAF implementation and ongoing tuning has dramatically reduced our attack surface. Their response time and expertise are outstanding.</p>
+              <div class="profile">
+                <h3>E-Commerce Platform</h3>
+                <span>WAF Implementation &amp; Monitoring</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section><!-- End Testimonials Section -->
+
+    <!-- ======= FAQ Section ======= -->
+    <section id="faq" class="faq">
+
+      <div class="container" data-aos="fade-up">
+
+        <header class="section-header">
+          <h2>Frequently Asked Questions</h2>
+          <p>Common Questions</p>
+        </header>
+
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="accordion accordion-flush" id="faqAccordion">
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-1">
+                    How long does a typical penetration test take?
+                  </button>
+                </h3>
+                <div id="faq-1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    A typical black box penetration test takes 1-2 weeks per application. White box tests with authenticated access generally take 2-3 weeks depending on the complexity of the application. We provide a detailed timeline during our initial scoping call.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-2">
+                    What compliance frameworks do you support?
+                  </button>
+                </h3>
+                <div id="faq-2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    We support HIPAA, PCI DSS, SOC2, and other major compliance frameworks. Our penetration testing reports are designed to satisfy auditor requirements for these standards, and our virtual CISO service can guide you through the full compliance process.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-3">
+                    What is a Virtual CISO and do I need one?
+                  </button>
+                </h3>
+                <div id="faq-3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    A Virtual CISO provides executive-level security leadership on a fractional basis. If your company handles sensitive data, needs to meet compliance requirements, or is growing beyond the point where ad-hoc security is sufficient, a vCISO can build your security program without the overhead of a full-time hire.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-4">
+                    How does your engagement model work?
+                  </button>
+                </h3>
+                <div id="faq-4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    We start with a free consultation to understand your needs. For penetration testing, we offer fixed-price per-application engagements. WAF and Virtual CISO services are billed hourly with flexible monthly commitments. All engagements are fully remote.
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-5">
+                    Do you work with startups and small teams?
+                  </button>
+                </h3>
+                <div id="faq-5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    Absolutely. Startups and small businesses are our primary focus. We understand the unique challenges of working with lean teams and tight budgets. Our services are designed to scale with your company as it grows.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- End FAQ Section -->
+
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
 
@@ -257,23 +431,21 @@
 
         <header class="section-header">
           <h2>Contact</h2>
-          <p>Contact Us</p>
+          <p>Get in Touch</p>
         </header>
 
         <div class="row gy-4">
 
           <div class="col-lg-12">
-
             <div class="row gy-4">
               <div class="col-md-12 text-center">
                 <div class="info-box">
                   <i class="bi bi-envelope"></i>
                   <h3>Email Us</h3>
-                  <a href = "mailto: info@agilesecops.com">info@agilesecops.com</a>
+                  <p><a href="mailto:info@agilesecops.com">info@agilesecops.com</a></p>
                 </div>
               </div>
             </div>
-
           </div>
 
         </div>
@@ -284,14 +456,45 @@
 
   </main><!-- End #main -->
 
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6">
+          <a href="index.html" class="logo d-flex align-items-center mb-3">
+            <span>AgileSecOps</span>
+          </a>
+          <p>Expert information security consulting for startups and small businesses. Penetration testing, WAF, and Virtual CISO services.</p>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#about" class="scrollto">About</a></li>
+            <li><a href="#services" class="scrollto">Services</a></li>
+            <li><a href="#pricing" class="scrollto">Pricing</a></li>
+            <li><a href="#contact" class="scrollto">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <h4>Our Services</h4>
+          <ul class="footer-links">
+            <li><a href="#services" class="scrollto">Penetration Testing</a></li>
+            <li><a href="#services" class="scrollto">Web Application Firewall</a></li>
+            <li><a href="#services" class="scrollto">Virtual CISO</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright mt-4 text-center">
+        &copy; <span id="currentYear"></span> <strong>AgileSecOps</strong>. All Rights Reserved.
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center scrollto"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
