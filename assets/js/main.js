@@ -1,180 +1,123 @@
-/**
-* Template Name: FlexStart
-* Updated: Mar 10 2023 with Bootstrap v5.2.3
-* Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
 (function() {
   "use strict";
 
   /**
-   * Easy selector helper function
+   * Navbar scroll effect - add .scrolled class on scroll
    */
-  const select = (el, all = false) => {
-    el = el.trim()
-    if (all) {
-      return [...document.querySelectorAll(el)]
-    } else {
-      return document.querySelector(el)
-    }
-  }
-
-  /**
-   * Easy event listener function
-   */
-  const on = (type, el, listener, all = false) => {
-    if (all) {
-      select(el, all).forEach(e => e.addEventListener(type, listener))
-    } else {
-      select(el, all).addEventListener(type, listener)
-    }
-  }
-
-  /**
-   * Easy on scroll event listener
-   */
-  const onscroll = (el, listener) => {
-    el.addEventListener('scroll', listener)
-  }
-
-  /**
-   * Navbar links active state on scroll
-   */
-  let navbarlinks = select('#navbar .scrollto', true)
-  const navbarlinksActive = () => {
-    let position = window.scrollY + 200
-    navbarlinks.forEach(navbarlink => {
-      if (!navbarlink.hash) return
-      let section = select(navbarlink.hash)
-      if (!section) return
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        navbarlink.classList.add('active')
+  const navbar = document.querySelector('.navbar');
+  if (navbar) {
+    const toggleNavbarScroll = () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
       } else {
-        navbarlink.classList.remove('active')
+        navbar.classList.remove('scrolled');
       }
-    })
-  }
-  window.addEventListener('load', navbarlinksActive)
-  onscroll(document, navbarlinksActive)
-
-  /**
-   * Scrolls to an element with header offset
-   */
-  const scrollto = (el) => {
-    let header = select('#header')
-    let offset = header.offsetHeight
-
-    if (!header.classList.contains('header-scrolled')) {
-      offset -= 10
-    }
-
-    let elementPos = select(el).offsetTop
-    window.scrollTo({
-      top: elementPos - offset,
-      behavior: 'smooth'
-    })
+    };
+    window.addEventListener('load', toggleNavbarScroll);
+    document.addEventListener('scroll', toggleNavbarScroll);
   }
 
   /**
-   * Toggle .header-scrolled class to #header when page is scrolled
+   * Navbar active state on scroll
    */
-  let selectHeader = select('#header')
-  if (selectHeader) {
-    const headerScrolled = () => {
-      if (window.scrollY > 100) {
-        selectHeader.classList.add('header-scrolled')
+  const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]');
+  const updateActiveLink = () => {
+    const scrollPos = window.scrollY + 200;
+    navLinks.forEach(link => {
+      const hash = link.getAttribute('href');
+      if (!hash || hash === '#') return;
+      const section = document.querySelector(hash);
+      if (!section) return;
+      if (scrollPos >= section.offsetTop && scrollPos <= section.offsetTop + section.offsetHeight) {
+        link.classList.add('active');
       } else {
-        selectHeader.classList.remove('header-scrolled')
+        link.classList.remove('active');
       }
-    }
-    window.addEventListener('load', headerScrolled)
-    onscroll(document, headerScrolled)
-  }
+    });
+  };
+  window.addEventListener('load', updateActiveLink);
+  document.addEventListener('scroll', updateActiveLink);
+
+  /**
+   * Smooth scroll for nav links
+   */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const hash = this.getAttribute('href');
+      if (!hash || hash === '#') return;
+      const target = document.querySelector(hash);
+      if (!target) return;
+
+      e.preventDefault();
+
+      // Close mobile nav if open
+      const navCollapse = document.querySelector('.navbar-collapse.show');
+      if (navCollapse) {
+        const bsCollapse = bootstrap.Collapse.getInstance(navCollapse);
+        if (bsCollapse) bsCollapse.hide();
+      }
+
+      const navbarHeight = navbar ? navbar.offsetHeight : 0;
+      const targetPos = target.offsetTop - navbarHeight - 10;
+      window.scrollTo({
+        top: targetPos,
+        behavior: 'smooth'
+      });
+    });
+  });
 
   /**
    * Back to top button
    */
-  let backtotop = select('.back-to-top')
-  if (backtotop) {
-    const toggleBacktotop = () => {
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    const toggleBackToTop = () => {
       if (window.scrollY > 100) {
-        backtotop.classList.add('active')
+        backToTop.classList.add('active');
       } else {
-        backtotop.classList.remove('active')
+        backToTop.classList.remove('active');
       }
-    }
-    window.addEventListener('load', toggleBacktotop)
-    onscroll(document, toggleBacktotop)
+    };
+    window.addEventListener('load', toggleBackToTop);
+    document.addEventListener('scroll', toggleBackToTop);
   }
 
   /**
-   * Mobile nav toggle
-   */
-  on('click', '.mobile-nav-toggle', function(e) {
-    select('#navbar').classList.toggle('navbar-mobile')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
-
-  /**
-   * Mobile nav dropdowns activate
-   */
-  on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
-    }
-  }, true)
-
-  /**
-   * Scroll with offset on links with a class name .scrollto
-   */
-  on('click', '.scrollto', function(e) {
-    if (select(this.hash)) {
-      e.preventDefault()
-
-      let navbar = select('#navbar')
-      if (navbar.classList.contains('navbar-mobile')) {
-        navbar.classList.remove('navbar-mobile')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
-      }
-      scrollto(this.hash)
-    }
-  }, true)
-
-  /**
-   * Scroll with offset on page load with hash links in the url
+   * Scroll with offset on page load with hash in URL
    */
   window.addEventListener('load', () => {
     if (window.location.hash) {
-      if (select(window.location.hash)) {
-        scrollto(window.location.hash)
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        const navbarHeight = navbar ? navbar.offsetHeight : 0;
+        setTimeout(() => {
+          window.scrollTo({
+            top: target.offsetTop - navbarHeight - 10,
+            behavior: 'smooth'
+          });
+        }, 100);
       }
     }
   });
 
   /**
-   * Animation on scroll
+   * AOS (Animate on Scroll) initialization
    */
-  function aos_init() {
-    AOS.init({
-      duration: 1000,
-      easing: "ease-in-out",
-      once: true,
-      mirror: false
-    });
-  }
   window.addEventListener('load', () => {
-    aos_init();
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 800,
+        easing: "ease-in-out",
+        once: true,
+        mirror: false
+      });
+    }
   });
 
   /**
    * Set current year in footer
    */
-  const yearSpan = select('#currentYear');
+  const yearSpan = document.querySelector('#currentYear');
   if (yearSpan) {
     yearSpan.textContent = new Date().getFullYear();
   }

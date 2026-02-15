@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
   <meta charset="utf-8">
@@ -23,8 +23,9 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <!-- Google Fonts (Disrupt theme: Inter + Outfit) -->
+  <link href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Outfit:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -33,8 +34,6 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-  <!-- Preload the LCP image -->
-  <link rel="preload" fetchpriority="high" as="image" href="assets/img/hero-bg.png" type="image/png">
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -52,303 +51,319 @@
   </script>
 </head>
 
-<body>
+<body class="bg-gradient-body">
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top">
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-        <span>AgileSecOps</span>
+  <!-- ======= Header / Navbar ======= -->
+  <nav class="navbar navbar-expand-lg py-3" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img src="assets/img/logo.jpg" alt="AgileSecOps" width="50" height="50" class="rounded-circle me-2">
+        <span class="fw-bold fs-4 text-white">AgileSecOps</span>
       </a>
-
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
-          <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-main">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-main">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-success btn-sm px-3 nav-cta" href="#contact">Free Consultation</a></li>
         </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-
+      </div>
     </div>
-  </header><!-- End Header -->
+  </nav>
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="hero d-flex align-items-center">
-
+  <header id="hero" class="hero-section">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">Protect your startup without hiring a full-time security team</h1>
-          <h2 data-aos="fade-up" data-aos-delay="400">Expert penetration testing, WAF management, and virtual CISO services — built for startups and small businesses.</h2>
-          <div data-aos="fade-up" data-aos-delay="600">
-            <div class="text-center text-lg-start">
-              <a href="#contact" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
-                <span>Get a Free Consultation</span>
-                <i class="bi bi-arrow-right"></i>
-              </a>
+      <div class="row align-items-center">
+        <div class="col-lg-7" data-aos="fade-right">
+          <div>
+            <h1 class="display-1 heading fw-bold mb-4">Protect your startup without hiring a full-time security team</h1>
+            <p class="lead fw-lighter mb-4 hero-subtitle">Expert penetration testing, WAF management, and virtual CISO services &mdash; built for startups and small businesses.</p>
+            <div>
+              <a href="#contact" class="btn btn-success btn-lg px-4">Get a Free Consultation</a>
             </div>
           </div>
         </div>
-        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-          <img src="assets/img/4.webp" class="img-fluid" alt="Information security services illustration">
+        <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
+          <img src="assets/img/4.webp" class="img-fluid hero-img" alt="Information security services illustration">
         </div>
       </div>
     </div>
-
-  </section><!-- End Hero -->
+  </header>
 
   <main id="main">
+
+    <!-- ======= Stats Bar ======= -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="row text-center gy-4">
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-item">
+              <i class="bi bi-globe2"></i>
+              <h4 class="fw-bold mb-0">100%</h4>
+              <p class="text-muted mb-0">Remote</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-item">
+              <i class="bi bi-shield-lock"></i>
+              <h4 class="fw-bold mb-0">OWASP</h4>
+              <p class="text-muted mb-0">Methodology</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-item">
+              <i class="bi bi-building-check"></i>
+              <h4 class="fw-bold mb-0">SOC2 / PCI</h4>
+              <p class="text-muted mb-0">Compliant Reports</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+            <div class="stat-item">
+              <i class="bi bi-heart-pulse"></i>
+              <h4 class="fw-bold mb-0">HIPAA</h4>
+              <p class="text-muted mb-0">Ready</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ======= About Section ======= -->
-    <section id="about" class="about">
-
+    <section id="about" class="about-section">
       <div class="container" data-aos="fade-up">
-        <div class="row gx-0">
-
-          <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="content">
-              <h3>Who We Are</h3>
-              <h2>Hardworking and honest Information Security professionals who bring value to small companies.</h2>
-              <p>
+        <div class="row gx-5 align-items-center">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+            <div class="about-content">
+              <h3 class="text-uppercase fw-bold text-success mb-2">Who We Are</h3>
+              <h2 class="heading fw-bold mb-3">Hardworking and honest Information Security professionals who bring value to small companies.</h2>
+              <p class="text-muted">
                 AgileSecOps believes in providing the best remote services possible. While our primary focus is Security, we enjoy performing work from assessments, automation, cloud development, and system administration. We understand and believe a cultural difference exists between the startup and Fortune 100. We will work within your business guidelines and direction to complete projects satisfactorily.
               </p>
-              <div class="trust-badges">
+              <div class="trust-badges mt-4">
                 <span class="badge-item"><i class="bi bi-shield-check"></i> OWASP Methodology</span>
                 <span class="badge-item"><i class="bi bi-patch-check"></i> HIPAA Compliant</span>
                 <span class="badge-item"><i class="bi bi-award"></i> SOC2 &amp; PCI Ready</span>
               </div>
             </div>
           </div>
-
-          <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src="assets/img/1.jpg" class="img-fluid" alt="AgileSecOps team">
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
+            <img src="assets/img/1.jpg" class="img-fluid rounded-3" alt="AgileSecOps team">
           </div>
-
         </div>
       </div>
+    </section>
 
-    </section><!-- End About Section -->
-
-    <!-- ======= Values Section ======= -->
-    <section id="values" class="values">
-
+    <!-- ======= Services / Features Cards Section ======= -->
+    <section id="services" class="features-section">
       <div class="container" data-aos="fade-up">
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <h3 class="heading fw-bold text-uppercase">What We Do Best</h3>
+          </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-3">
 
-        <header class="section-header">
-          <h2>Our Values</h2>
-          <p>Things we believe</p>
-        </header>
-
-        <div class="row">
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="box">
-              <h3>Be Agile</h3>
-              <p>An ability to think quickly; mentally acute or aware; quick and well-coordinated in movement.</p>
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-shield-shaded"></i>
+                </div>
+                <h5 class="card-title fw-bold">Penetration Testing</h5>
+                <p class="card-text text-muted mb-0">Testing networks and applications (mobile or web), black/grey/white box approaches, while following OWASP testing methodology.</p>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
-            <div class="box">
-              <h3>Provide the utmost Security</h3>
-              <p>Offering the highest level of protection and safety possible.</p>
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-bricks"></i>
+                </div>
+                <h5 class="card-title fw-bold">Web Application Firewall (WAF)</h5>
+                <p class="card-text text-muted mb-0">Implement and maintain several different WAF platforms. Continuous monitoring and tuning to maintain ultimate effectiveness.</p>
+              </div>
             </div>
           </div>
 
-          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
-            <div class="box">
-              <h3>Integrate with Operations</h3>
-              <p>An act or instance, process, or manner of functioning or operating.</p>
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-person-badge"></i>
+                </div>
+                <h5 class="card-title fw-bold">Virtual CISO</h5>
+                <p class="card-text text-muted mb-0">Fill that gap and provide guidance and direction for C-Level executives, security engineers, operations staff, and developers.</p>
+              </div>
             </div>
           </div>
 
         </div>
-
       </div>
-
-    </section><!-- End Values Section -->
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services">
-
-      <div class="container" data-aos="fade-up">
-
-        <header class="section-header">
-          <h2>Services</h2>
-          <p>What we do best</p>
-        </header>
-
-        <div class="row">
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="box">
-              <h3>Penetration Testing</h3>
-              <p>Testing networks and applications (mobile or web), black/grey/white box approaches, while following OWASP testing methodology.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
-            <div class="box">
-              <h3>Web Application Firewall (WAF)</h3>
-              <p>Implement and maintain several different WAF platforms. Continuous monitoring and tuning to maintain ultimate effectiveness.</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
-            <div class="box">
-              <h3>Virtual CISO</h3>
-              <p>Fill that gap and provide guidance and direction for C-Level executives, security engineers, operations staff, and developers.</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- End Services Section -->
+    </section>
 
     <!-- ======= Pricing Section ======= -->
-    <section id="pricing" class="pricing">
-
+    <section id="pricing" class="pricing-section">
       <div class="container" data-aos="fade-up">
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <h3 class="heading fw-bold text-uppercase">Pricing</h3>
+            <p class="text-muted">Transparent pricing for growing companies.</p>
+          </div>
+        </div>
 
-        <header class="section-header">
-          <h2>Pricing</h2>
-          <p>Check our Pricing</p>
-        </header>
-
-        <div class="row gy-4" data-aos="fade-left">
+        <div class="row gy-4">
 
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-            <div class="box">
-              <h3 style="color: #07d5c0;">Penetration Testing</h3>
-              <div class="price"><sup>$</sup>5,000</div>
-              <ul>
-                <li>Per application</li>
-                <li>Black Box</li>
-                <li>HIPAA</li>
-              </ul>
+            <div class="card pricing-card h-100">
+              <div class="card-body text-center">
+                <div class="pricing-icon mb-3"><i class="bi bi-search" style="color: #07d5c0;"></i></div>
+                <h5 class="fw-bold" style="color: #07d5c0;">Penetration Testing</h5>
+                <div class="price"><sup>$</sup>5,000</div>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Per application</li>
+                  <li>Black Box</li>
+                  <li>HIPAA</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline-success">Get Started</a>
+              </div>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-            <div class="box">
-              <span class="featured">Most Popular</span>
-              <h3 style="color: #65c600;">Penetration Testing</h3>
-              <div class="price"><sup>$</sup>8,500</div>
-              <ul>
-                <li>Per Application</li>
-                <li>White Box</li>
-                <li>Authenticated</li>
-                <li>PCI / HIPAA / SOC2</li>
-              </ul>
+            <div class="card pricing-card featured h-100">
+              <div class="featured-badge">Most Popular</div>
+              <div class="card-body text-center">
+                <div class="pricing-icon mb-3"><i class="bi bi-shield-check" style="color: #65c600;"></i></div>
+                <h5 class="fw-bold" style="color: #65c600;">Penetration Testing</h5>
+                <div class="price"><sup>$</sup>8,500</div>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Per Application</li>
+                  <li>White Box</li>
+                  <li>Authenticated</li>
+                  <li>PCI / HIPAA / SOC2</li>
+                </ul>
+                <a href="#contact" class="btn btn-success">Get Started</a>
+              </div>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-            <div class="box">
-              <h3 style="color: #ff901c;">Web Application Firewall</h3>
-              <div class="price"><sup>$</sup>150<span> / hr</span></div>
-              <ul>
-                <li>Implementation</li>
-                <li>Support</li>
-                <li>Monitoring</li>
-                <li>Tuning</li>
-              </ul>
+            <div class="card pricing-card h-100">
+              <div class="card-body text-center">
+                <div class="pricing-icon mb-3"><i class="bi bi-bricks" style="color: #ff901c;"></i></div>
+                <h5 class="fw-bold" style="color: #ff901c;">Web Application Firewall</h5>
+                <div class="price"><sup>$</sup>150<span> / hr</span></div>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Implementation</li>
+                  <li>Support</li>
+                  <li>Monitoring</li>
+                  <li>Tuning</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline-success">Get Started</a>
+              </div>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="400">
-            <div class="box">
-              <h3 style="color: #ff0071;">Virtual CISO</h3>
-              <div class="price"><sup>$</sup>175<span> / hr</span></div>
-              <ul>
-                <li>Guidance and direction</li>
-                <li>Building Security Teams and Programs</li>
-                <li>Security presence to external customers</li>
-              </ul>
+            <div class="card pricing-card h-100">
+              <div class="card-body text-center">
+                <div class="pricing-icon mb-3"><i class="bi bi-person-badge" style="color: #ff0071;"></i></div>
+                <h5 class="fw-bold" style="color: #ff0071;">Virtual CISO</h5>
+                <div class="price"><sup>$</sup>175<span> / hr</span></div>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Guidance and direction</li>
+                  <li>Building Security Teams and Programs</li>
+                  <li>Security presence to external customers</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline-success">Get Started</a>
+              </div>
             </div>
           </div>
 
         </div>
-
       </div>
-
-    </section><!-- End Pricing Section -->
+    </section>
 
     <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials">
-
+    <section id="testimonials" class="testimonials-section">
       <div class="container" data-aos="fade-up">
-
-        <header class="section-header">
-          <h2>What Our Clients Say</h2>
-          <p>Trusted by Growing Companies</p>
-        </header>
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <h3 class="heading fw-bold text-uppercase">What Our Clients Say</h3>
+            <p class="text-muted">Trusted by growing companies.</p>
+          </div>
+        </div>
 
         <div class="row gy-4">
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-            <div class="testimonial-item">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              </div>
-              <p>AgileSecOps helped us achieve SOC2 compliance in under 3 months. Their team integrated seamlessly with our developers and made the entire process painless.</p>
-              <div class="profile">
-                <h3>Series A Healthcare Startup</h3>
-                <span>SOC2 Compliance &amp; Penetration Testing</span>
+            <div class="card testimonial-card h-100">
+              <div class="card-body">
+                <div class="stars mb-3">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p class="card-text">AgileSecOps helped us achieve SOC2 compliance in under 3 months. Their team integrated seamlessly with our developers and made the entire process painless.</p>
+                <div class="mt-auto">
+                  <h6 class="fw-bold mb-0">Series A Healthcare Startup</h6>
+                  <small class="text-muted">SOC2 Compliance &amp; Penetration Testing</small>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
-            <div class="testimonial-item">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              </div>
-              <p>Their virtual CISO service gave us the security leadership we needed without the six-figure salary. Invaluable for a company our size.</p>
-              <div class="profile">
-                <h3>Mid-Size SaaS Company</h3>
-                <span>Virtual CISO Services</span>
+            <div class="card testimonial-card h-100">
+              <div class="card-body">
+                <div class="stars mb-3">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p class="card-text">Their virtual CISO service gave us the security leadership we needed without the six-figure salary. Invaluable for a company our size.</p>
+                <div class="mt-auto">
+                  <h6 class="fw-bold mb-0">Mid-Size SaaS Company</h6>
+                  <small class="text-muted">Virtual CISO Services</small>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="600">
-            <div class="testimonial-item">
-              <div class="stars">
-                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              </div>
-              <p>The WAF implementation and ongoing tuning has dramatically reduced our attack surface. Their response time and expertise are outstanding.</p>
-              <div class="profile">
-                <h3>E-Commerce Platform</h3>
-                <span>WAF Implementation &amp; Monitoring</span>
+            <div class="card testimonial-card h-100">
+              <div class="card-body">
+                <div class="stars mb-3">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p class="card-text">The WAF implementation and ongoing tuning has dramatically reduced our attack surface. Their response time and expertise are outstanding.</p>
+                <div class="mt-auto">
+                  <h6 class="fw-bold mb-0">E-Commerce Platform</h6>
+                  <small class="text-muted">WAF Implementation &amp; Monitoring</small>
+                </div>
               </div>
             </div>
           </div>
 
         </div>
-
       </div>
-
-    </section><!-- End Testimonials Section -->
+    </section>
 
     <!-- ======= FAQ Section ======= -->
-    <section id="faq" class="faq">
-
+    <section id="faq" class="faq-section">
       <div class="container" data-aos="fade-up">
-
-        <header class="section-header">
-          <h2>Frequently Asked Questions</h2>
-          <p>Common Questions</p>
-        </header>
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <h3 class="heading fw-bold text-uppercase">Frequently Asked Questions</h3>
+          </div>
+        </div>
 
         <div class="row">
-          <div class="col-lg-8 mx-auto">
+          <div class="col-lg-8">
             <div class="accordion accordion-flush" id="faqAccordion">
 
               <div class="accordion-item">
@@ -419,78 +434,50 @@
             </div>
           </div>
         </div>
-
       </div>
+    </section>
 
-    </section><!-- End FAQ Section -->
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-
+    <!-- ======= Contact CTA Section ======= -->
+    <section id="contact" class="contact-cta-section">
       <div class="container" data-aos="fade-up">
-
-        <header class="section-header">
-          <h2>Contact</h2>
-          <p>Get in Touch</p>
-        </header>
-
-        <div class="row gy-4">
-
-          <div class="col-lg-12">
-            <div class="row gy-4">
-              <div class="col-md-12 text-center">
-                <div class="info-box">
-                  <i class="bi bi-envelope"></i>
-                  <h3>Email Us</h3>
-                  <p><a href="mailto:info@agilesecops.com">info@agilesecops.com</a></p>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <div class="cta-block text-center">
+          <h2 class="heading fw-bold mb-3">Ready to secure your business?</h2>
+          <p class="text-muted mb-4 mx-auto" style="max-width: 600px;">Get a free consultation with our security experts. We'll assess your needs and recommend the right services for your team and budget.</p>
+          <a href="mailto:info@agilesecops.com" class="btn btn-success btn-lg px-5 mb-3">
+            <i class="bi bi-envelope me-2"></i>Get a Free Consultation
+          </a>
+          <p class="text-muted mt-2 mb-0"><small><i class="bi bi-envelope me-1"></i> info@agilesecops.com</small></p>
         </div>
-
       </div>
+    </section>
 
-    </section><!-- End Contact Section -->
-
-  </main><!-- End #main -->
+  </main>
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
+  <footer class="footer-section">
     <div class="container">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6">
-          <a href="index.html" class="logo d-flex align-items-center mb-3">
-            <span>AgileSecOps</span>
+      <div class="row align-items-center">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <a href="/" class="d-flex align-items-center text-decoration-none mb-3">
+            <img src="assets/img/logo.jpg" alt="AgileSecOps" width="50" height="50" class="rounded-circle me-2">
+            <span class="text-light fw-bold fs-4">AgileSecOps</span>
           </a>
-          <p>Expert information security consulting for startups and small businesses. Penetration testing, WAF, and Virtual CISO services.</p>
+          <p class="text-muted mb-3">Expert information security consulting for startups and small businesses. Penetration testing, WAF, and Virtual CISO services.</p>
+          <p class="mb-0"><a href="mailto:info@agilesecops.com" class="text-success"><i class="bi bi-envelope me-1"></i> info@agilesecops.com</a></p>
         </div>
-        <div class="col-lg-4 col-md-6">
-          <h4>Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="#about" class="scrollto">About</a></li>
-            <li><a href="#services" class="scrollto">Services</a></li>
-            <li><a href="#pricing" class="scrollto">Pricing</a></li>
-            <li><a href="#contact" class="scrollto">Contact</a></li>
-          </ul>
+        <div class="col-lg-7">
+          <nav class="nav footer-nav justify-content-lg-end mb-3">
+            <a class="nav-link" href="#hero">Home</a>
+            <a class="nav-link" href="#about">About</a>
+            <a class="nav-link" href="#services">Services</a>
+            <a class="nav-link" href="#pricing">Pricing</a>
+            <a class="nav-link" href="#contact">Contact</a>
+          </nav>
+          <p class="text-muted mb-0 text-lg-end">&copy; <span id="currentYear"></span> AgileSecOps. All Rights Reserved.</p>
         </div>
-        <div class="col-lg-4 col-md-6">
-          <h4>Our Services</h4>
-          <ul class="footer-links">
-            <li><a href="#services" class="scrollto">Penetration Testing</a></li>
-            <li><a href="#services" class="scrollto">Web Application Firewall</a></li>
-            <li><a href="#services" class="scrollto">Virtual CISO</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="copyright mt-4 text-center">
-        &copy; <span id="currentYear"></span> <strong>AgileSecOps</strong>. All Rights Reserved.
       </div>
     </div>
-  </footer><!-- End Footer -->
-
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center scrollto"><i class="bi bi-arrow-up-short"></i></a>
+  </footer>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/aos/aos.js"></script>
