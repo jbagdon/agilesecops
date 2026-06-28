@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://www.agilesecops.com/warden.html">
+
+  <title>Warden &mdash; Secure Browser Terminals for SSH &amp; AWS ECS by AgileSecOps</title>
+  <meta content="Warden is a self-hosted, browser-based terminal for SSH servers and AWS ECS Fargate by AgileSecOps. Passkey auth, time-boxed access approvals, encrypted session recording, and live session sharing — no browser extensions." name="description">
+  <meta content="browser terminal, SSH, AWS ECS, Fargate, passkey, WebAuthn, session recording, access approvals, self-hosted, Warden, AgileSecOps, Go security" name="keywords">
+
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AgileSecOps">
+  <meta property="og:title" content="Warden — Secure Browser Terminals for SSH & AWS ECS by AgileSecOps">
+  <meta property="og:description" content="Self-hosted browser terminals for SSH & AWS ECS Fargate. Passkey auth, time-boxed access approvals, encrypted session recording, and live session sharing. Written in Go.">
+  <meta property="og:url" content="https://www.agilesecops.com/warden.html">
+  <meta property="og:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
+  <meta property="og:image:width" content="543">
+  <meta property="og:image:height" content="362">
+  <meta property="og:image:alt" content="Warden secure browser terminals by AgileSecOps">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Warden — Secure Browser Terminals for SSH & AWS ECS by AgileSecOps">
+  <meta name="twitter:description" content="Self-hosted browser terminals for SSH & AWS ECS Fargate with passkey auth, access approvals, and encrypted session recording.">
+  <meta name="twitter:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
+
+  <!-- Google Fonts (Disrupt theme: Inter + Outfit, plus JetBrains Mono for the terminal) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Warden",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Linux, Docker",
+    "description": "A self-hosted, browser-based terminal for SSH servers and AWS ECS Fargate with passkey authentication, time-boxed access approvals, encrypted session recording, and live session sharing.",
+    "url": "https://www.agilesecops.com/warden.html",
+    "image": "https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp",
+    "screenshot": "https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp",
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.agilesecops.com/warden.html#contact",
+      "availability": "https://schema.org/InStock",
+      "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+      "description": "Price on request"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AgileSecOps",
+      "url": "https://www.agilesecops.com/",
+      "logo": "https://www.agilesecops.com/assets/img/logo.jpg"
+    }
+  }
+  </script>
+
+  <!-- Breadcrumb Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.agilesecops.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Software",
+        "item": "https://www.agilesecops.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Warden",
+        "item": "https://www.agilesecops.com/warden.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Warden terminal + code components (re-themed to the Disrupt green/blue palette) -->
+  <style>
+    :root {
+      --wd-bg:        #0b0f19;
+      --wd-surface:   #131a2b;
+      --wd-surface2:  #0f1623;
+      --wd-border:    rgba(255, 255, 255, 0.08);
+      --wd-accent:    #20c073;
+      --wd-accent-hi: #2bd585;
+      --wd-teal:      #4FB8C4;
+      --wd-green:     #3FB980;
+      --wd-red:       #DC5050;
+      --wd-amber:     #E0A830;
+      --wd-text:      #f7f8f9;
+      --wd-text2:     #9a9cab;
+      --wd-text3:     #6b7488;
+      --wd-mono:      'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* ── HERO PRODUCT LOCKUP ──────────────── */
+    .prod-lockup {
+      display: inline-flex; align-items: center; gap: 0.85rem;
+      margin: 0.35rem 0 1.1rem;
+    }
+    .prod-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 56px; height: 56px; border-radius: 15px;
+      background: linear-gradient(135deg, #2bd585, #178a55);
+      color: #fff; font-size: 1.65rem; line-height: 1; flex-shrink: 0;
+      box-shadow: 0 10px 26px rgba(32, 192, 115, 0.32),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+    .prod-name {
+      font-family: 'Outfit', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 4.4vw, 2.8rem); line-height: 1;
+      letter-spacing: -0.015em; color: #f7f8f9;
+    }
+
+    /* ── TERMINAL MOCKUP ──────────────────── */
+    .term-window {
+      background: var(--wd-surface2);
+      border-radius: 12px;
+      border: 1px solid var(--wd-border);
+      box-shadow: 0 0 0 1px rgba(32, 192, 115, 0.06), 0 28px 70px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      font-family: var(--wd-mono);
+      font-size: 12px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .term-bar {
+      background: var(--wd-surface);
+      border-bottom: 1px solid var(--wd-border);
+      padding: 9px 13px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .t-dots { display: flex; gap: 5px; }
+    .t-dots span { width: 10px; height: 10px; border-radius: 50%; display: block; }
+    .t-dots span:nth-child(1) { background: #DC5050; }
+    .t-dots span:nth-child(2) { background: #E0A830; }
+    .t-dots span:nth-child(3) { background: #3FB980; }
+    .t-brand { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.09em; color: #6b7488; flex: 1; }
+    .t-tabs { display: flex; gap: 4px; }
+    .t-tab { font-size: 10.5px; padding: 2px 9px; border-radius: 4px; color: #6b7488; background: var(--wd-surface); }
+    .t-tab.on { background: rgba(32, 192, 115, 0.13); color: var(--wd-accent-hi); }
+    .term-body { display: grid; grid-template-columns: 155px 1fr; min-height: 270px; }
+    .t-sidebar { background: var(--wd-bg); border-right: 1px solid var(--wd-border); padding: 10px 0; }
+    .t-label { font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.1em; color: #6b7488; padding: 6px 11px 3px; }
+    .t-session { display: flex; align-items: center; gap: 6px; padding: 4px 11px; font-size: 10.5px; color: var(--wd-text2); cursor: pointer; }
+    .t-session.on { background: rgba(32, 192, 115, 0.09); color: var(--wd-accent-hi); }
+    .t-session .live { width: 6px; height: 6px; border-radius: 50%; background: var(--wd-green); flex-shrink: 0; }
+    .t-div { margin: 8px 0 4px; padding: 6px 11px 2px; border-top: 1px solid var(--wd-border); font-size: 8.5px; color: #6b7488; }
+    .t-saved { padding: 3px 11px; font-size: 10.5px; color: #6b7488; }
+    .t-output { padding: 13px 15px; position: relative; overflow: hidden; }
+    .t-hostline { font-size: 9.5px; color: #6b7488; margin-bottom: 9px; padding-bottom: 8px; border-bottom: 1px solid var(--wd-border); }
+    .t-line { line-height: 1.55; white-space: pre; min-height: 1em; }
+    .t-prompt { color: var(--wd-green); }
+    .t-cmd { color: var(--wd-text); }
+    .t-out { color: var(--wd-text2); }
+    #t-cursor { display: inline-block; color: var(--wd-green); animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .t-notif {
+      position: absolute; bottom: 11px; right: 11px;
+      background: var(--wd-surface); border: 1px solid rgba(79, 184, 196, 0.3);
+      border-radius: 6px; padding: 7px 11px; font-size: 10px; color: var(--wd-teal);
+      display: flex; align-items: center; gap: 6px;
+      opacity: 0; transform: translateY(5px);
+      transition: opacity .4s ease, transform .4s ease;
+    }
+    .t-notif.show { opacity: 1; transform: translateY(0); }
+    .t-notif::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--wd-teal); flex-shrink: 0; }
+
+    /* ── CODE BLOCK (quick start + audit trail) ── */
+    .code-block { background: var(--wd-surface2); border: 1px solid var(--wd-border); border-radius: 12px; overflow: hidden; }
+    .code-hd { background: var(--wd-surface); border-bottom: 1px solid var(--wd-border); padding: 9px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .code-label { font-family: var(--wd-mono); font-size: 0.66rem; letter-spacing: 0.06em; color: var(--wd-text2); }
+    .code-copy-btn { font-family: 'Inter', sans-serif; font-size: 0.72rem; color: #6b7488; background: none; border: 1px solid var(--wd-border); border-radius: 4px; padding: 2px 9px; cursor: pointer; transition: color .15s, border-color .15s; }
+    .code-copy-btn:hover { color: var(--wd-text); border-color: var(--wd-accent); }
+    .code-body { padding: 18px 20px; font-family: var(--wd-mono); font-size: 0.78rem; line-height: 1.75; overflow-x: auto; }
+    .c-comment { color: #6b7488; }
+    .c-cmd { color: var(--wd-text); }
+    .c-key { color: var(--wd-teal); }
+    .c-val { color: var(--wd-green); }
+    .c-time { color: #6b7488; }
+    .c-ok { color: var(--wd-green); }
+    .c-warn { color: var(--wd-red); }
+    .code-note { margin-top: 14px; font-size: 0.8rem; color: #8a8d9c; line-height: 1.6; }
+
+    /* ── SECTION ATOMS ──────────────────────── */
+    main code { font-family: var(--wd-mono); color: var(--wd-teal); font-size: 0.85em; }
+    .qs-ico {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: var(--wd-surface); border: 1px solid var(--wd-border);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1.15rem; color: var(--wd-accent-hi); flex-shrink: 0;
+    }
+    .feat-pill {
+      display: inline-block; margin-top: 0.9rem;
+      font-family: var(--wd-mono); font-size: 0.62rem; font-weight: 500;
+      letter-spacing: 0.04em; color: var(--wd-teal);
+      background: rgba(79, 184, 196, 0.1); border: 1px solid rgba(79, 184, 196, 0.2);
+      padding: 0.16rem 0.55rem; border-radius: 4px;
+    }
+    .flow-num { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.9rem; letter-spacing: 0.12em; color: var(--wd-accent-hi); }
+
+    @media (max-width: 520px) {
+      .term-body { grid-template-columns: 110px 1fr; }
+      .term-window { font-size: 11px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #t-cursor { animation: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-body">
+
+  <!-- ======= Header / Navbar ======= -->
+  <nav class="navbar navbar-expand-lg py-3" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/img/logo.jpg" alt="AgileSecOps" width="50" height="50" class="rounded-circle me-2">
+        <span class="fw-bold fs-4 text-white">AgileSecOps</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-main">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-main">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="softwareDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Software</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="softwareDropdown">
+              <li><a class="dropdown-item" href="constable.html">Constable</a></li>
+              <li><a class="dropdown-item active" href="warden.html">Warden</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="index.html#pricing">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#faq">FAQ</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-success btn-sm px-3 nav-cta" href="index.html#contact">Free Consultation</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======= Hero Section ======= -->
+  <header id="hero" class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div>
+            <p class="text-uppercase fw-bold text-success mb-2" style="letter-spacing: 2px; font-size: 0.85rem;">SSH &middot; AWS ECS Fargate &middot; Browser-Native</p>
+            <div class="prod-lockup">
+              <span class="prod-mark"><i class="bi bi-terminal-fill"></i></span>
+              <span class="prod-name">Warden</span>
+            </div>
+            <h1 class="h2 heading fw-bold mb-4">Terminal access that knows <span class="text-success">who&rsquo;s watching.</span></h1>
+            <p class="lead fw-lighter mb-4 hero-subtitle">
+              A self-hosted, browser-based terminal for SSH servers and AWS ECS containers. Passkey auth, time-boxed access approvals, encrypted session recording, and live session sharing &mdash; no browser extensions required.
+            </p>
+            <div class="d-flex flex-wrap gap-3 mb-4">
+              <a href="#contact" class="btn btn-success btn-lg px-4">Get a Demo</a>
+              <a href="#quickstart" class="btn btn-outline-success btn-lg px-4">Quick Start</a>
+            </div>
+            <div class="trust-badges">
+              <span class="badge-item"><i class="bi bi-fingerprint"></i> Passkey Auth</span>
+              <span class="badge-item"><i class="bi bi-window"></i> No Browser Extensions</span>
+              <span class="badge-item"><i class="bi bi-hdd-network"></i> Your Infra, Your Data</span>
+              <span class="badge-item"><i class="bi bi-code-slash"></i> Written in Go</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+          <div class="term-window">
+            <div class="term-bar">
+              <div class="t-dots"><span></span><span></span><span></span></div>
+              <div class="t-brand">WARDEN</div>
+              <div class="t-tabs">
+                <span class="t-tab on">prod</span>
+                <span class="t-tab">dev</span>
+                <span class="t-tab">+</span>
+              </div>
+            </div>
+            <div class="term-body">
+              <div class="t-sidebar">
+                <div class="t-label">Running</div>
+                <div class="t-session on"><span class="live"></span>ubuntu@prod-01</div>
+                <div class="t-div">Saved</div>
+                <div class="t-saved">&#9656; Prod Server</div>
+                <div class="t-saved">&#9656; Dev Server</div>
+                <div class="t-saved">&#9656; Staging DB</div>
+                <div class="t-div">&mdash;&mdash; New &mdash;&mdash;</div>
+                <div class="t-saved">SSH &middot; ECS</div>
+              </div>
+              <div class="t-output">
+                <div class="t-hostline">ubuntu@prod-01.internal:22 &mdash; session id a3f9c</div>
+                <div id="t-content"></div>
+                <div id="t-notif" class="t-notif">alice@acme.com is viewing this session</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ======= Stats Bar ======= -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="row text-center gy-4">
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-item">
+              <i class="bi bi-box-seam"></i>
+              <h4 class="fw-bold mb-0">1</h4>
+              <p class="text-muted mb-0">Docker Compose File to Deploy</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-item">
+              <i class="bi bi-fingerprint"></i>
+              <h4 class="fw-bold mb-0">0</h4>
+              <p class="text-muted mb-0">Passwords &mdash; Passkey Auth</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-item">
+              <i class="bi bi-record-circle"></i>
+              <h4 class="fw-bold mb-0">AES-256</h4>
+              <p class="text-muted mb-0">Encrypted Session Recording</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+            <div class="stat-item">
+              <i class="bi bi-hdd-network"></i>
+              <h4 class="fw-bold mb-0">100%</h4>
+              <p class="text-muted mb-0">Self-Hosted on Your Infrastructure</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= About / Overview Section ======= -->
+    <section id="about" class="about-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-5 align-items-center">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+            <div class="about-content">
+              <p class="text-uppercase fw-bold text-success mb-2">What Is Warden</p>
+              <h2 class="heading fw-bold mb-3">A controlled access layer for production infrastructure.</h2>
+              <p class="text-muted">
+                Warden isn&rsquo;t a terminal stapled to a login page. It&rsquo;s a self-hosted access layer between your team and your servers &mdash; one Docker Compose file and a PostgreSQL database. Sessions, recordings, and credentials never leave your network. No SaaS, no callbacks, no phone-home.
+              </p>
+              <div class="trust-badges mt-4">
+                <span class="badge-item"><i class="bi bi-hdd-network"></i> Fully Self-Hosted</span>
+                <span class="badge-item"><i class="bi bi-fingerprint"></i> Passkey Authentication</span>
+                <span class="badge-item"><i class="bi bi-window"></i> Zero Client Requirements</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-4 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+            <div class="code-block">
+              <div class="code-hd">
+                <span class="code-label">access grant &middot; audit trail</span>
+                <span class="code-label" style="color: var(--wd-green);">&#9679; live</span>
+              </div>
+              <div class="code-body">
+                <div><span class="c-comment"># environment: prod-cluster &middot; restricted</span></div>
+                <br>
+                <div><span class="c-time">[09:12:01]</span> <span class="c-key">REQUEST</span>&nbsp; alice@acme.com &middot; 2h &middot; <span class="c-val">"deploy hotfix"</span></div>
+                <div><span class="c-time">[09:12:18]</span> <span class="c-ok">APPROVED</span> by joe@agilesecops.com</div>
+                <div><span class="c-time">[09:12:20]</span> <span class="c-key">CONNECT</span>&nbsp; ubuntu@prod-01 &middot; session a3f9c</div>
+                <div><span class="c-time">[11:12:20]</span> <span class="c-warn">EXPIRED</span>&nbsp; grant window closed</div>
+                <div><span class="c-time">[11:12:20]</span> <span class="c-warn">KILLED</span>&nbsp;&nbsp; 1 active session terminated</div>
+                <br>
+                <div><span class="c-comment"># every request, decision &amp; connection is auditable</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Features Cards Section ======= -->
+    <section id="features" class="features-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <h3 class="heading fw-bold text-uppercase">Everything Your Security Team Actually Asked For</h3>
+          </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-3">
+
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3"><i class="bi bi-stopwatch"></i></div>
+                <h5 class="card-title fw-bold">Time-Boxed Access Approvals</h5>
+                <p class="card-text text-muted mb-0">Gate environments behind approver-granted, time-limited grants. Users submit justification; approvers approve or deny. The gate re-validates on every reconnect &mdash; and terminates sessions the moment a grant expires.</p>
+                <span class="feat-pill">full audit trail</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3"><i class="bi bi-record-circle"></i></div>
+                <h5 class="card-title fw-bold">Encrypted Session Recording</h5>
+                <p class="card-text text-muted mb-0">Opt-in per environment. Sessions captured as asciicast v2, AES-256-GCM encrypted on disk. Admins get full playback with speed control and scrubbing in the admin UI, plus the option to download.</p>
+                <span class="feat-pill">asciicast v2 &middot; aes-256-gcm</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3"><i class="bi bi-arrow-repeat"></i></div>
+                <h5 class="card-title fw-bold">Resumable Sessions</h5>
+                <p class="card-text text-muted mb-0">Close the tab, shut the laptop &mdash; the session keeps running server-side. Reattach from any browser and the full scrollback replays. Sessions idle out after a configurable window if no one reconnects.</p>
+                <span class="feat-pill">configurable idle timeout</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3"><i class="bi bi-eye-fill"></i></div>
+                <h5 class="card-title fw-bold">Live Session Sharing</h5>
+                <p class="card-text text-muted mb-0">Share a running terminal as view-only or give full control. Viewers can request control and be upgraded live by the session owner &mdash; for incident response, pair debugging, and onboarding walkthroughs.</p>
+                <span class="feat-pill">view-only or full control</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3"><i class="bi bi-cloud"></i></div>
+                <h5 class="card-title fw-bold">AWS ECS Exec</h5>
+                <p class="card-text text-muted mb-0">Exec into Fargate containers without handing AWS credentials to users. Admin-managed accounts are stored AES-256-GCM encrypted; users pick by name. Browse running tasks in-UI before connecting.</p>
+                <span class="feat-pill">Fargate &middot; SSM &middot; least privilege</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3"><i class="bi bi-grid-1x2"></i></div>
+                <h5 class="card-title fw-bold">Multi-Tab, Tile &amp; Broadcast</h5>
+                <p class="card-text text-muted mb-0">Many connections at once, side-by-side in tile layout. Optional broadcast mode sends keystrokes to all open terminals simultaneously &mdash; useful for coordinated deploys and fleet operations.</p>
+                <span class="feat-pill">broadcast input</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Access Approvals Section ======= -->
+    <section id="approvals" class="about-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-7">
+            <p class="text-uppercase fw-bold text-success mb-2">Access Approvals</p>
+            <h2 class="heading fw-bold mb-3">Least privilege, enforced automatically.</h2>
+            <p class="text-muted">Define environments &mdash; a prod cluster, an SSH host pattern, an ECS account &mdash; mark them restricted, and attach approvers. Warden handles every step from request banner to grant expiry.</p>
+          </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-lg-3">
+
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="flow-num mb-2">01</div>
+                <h5 class="card-title fw-bold">User Requests Access</h5>
+                <p class="card-text text-muted mb-0">From the terminal page, the user selects an environment, specifies a duration and justification, and submits.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="flow-num mb-2">02</div>
+                <h5 class="card-title fw-bold">Approver Is Notified</h5>
+                <p class="card-text text-muted mb-0">Approvers see a live banner on their terminal page. Admins can also grant directly from the Access Grants table.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="flow-num mb-2">03</div>
+                <h5 class="card-title fw-bold">Grant Issued</h5>
+                <p class="card-text text-muted mb-0">An approved, time-boxed grant is recorded &mdash; who approved, when, for how long, and the original justification.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="flow-num mb-2">04</div>
+                <h5 class="card-title fw-bold">Gate Checked at Connect</h5>
+                <p class="card-text text-muted mb-0">Warden validates the grant before every new connection and on every reattach. No stale access persists.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="flow-num mb-2">05</div>
+                <h5 class="card-title fw-bold">Grant Expires &rarr; Session Killed</h5>
+                <p class="card-text text-muted mb-0">When the grant window closes, running sessions in that environment are terminated automatically &mdash; no exceptions.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="flow-num mb-2">06</div>
+                <h5 class="card-title fw-bold">Everything Is Auditable</h5>
+                <p class="card-text text-muted mb-0">Admin &rarr; Access Grants shows every request, decision, and connection against each grant, exportable at any time.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Quick Start Section ======= -->
+    <section id="quickstart" class="about-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <p class="text-uppercase fw-bold text-success mb-2">Quick Start</p>
+            <h2 class="heading fw-bold mb-3">Up in three commands.</h2>
+            <p class="text-muted">Docker Compose bundles the Go binary, PostgreSQL, and the AWS CLI + session-manager-plugin needed for ECS connections.</p>
+          </div>
+        </div>
+        <div class="row gx-5 gy-4 align-items-start">
+          <div class="col-lg-5" data-aos="fade-right" data-aos-delay="200">
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="qs-ico"><i class="bi bi-box-seam"></i></div>
+              <div>
+                <strong class="d-block text-light mb-1">Docker + Compose</strong>
+                <span class="text-muted">Recommended &mdash; AWS CLI and SSM plugin bundled automatically in the image.</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-start gap-3 mb-4">
+              <div class="qs-ico"><i class="bi bi-key-fill"></i></div>
+              <div>
+                <strong class="d-block text-light mb-1">An Encryption Key</strong>
+                <span class="text-muted"><code>openssl rand -base64 32</code> &mdash; set in .env before first run; guards stored credentials and recordings.</span>
+              </div>
+            </div>
+            <div class="d-flex align-items-start gap-3">
+              <div class="qs-ico"><i class="bi bi-database"></i></div>
+              <div>
+                <strong class="d-block text-light mb-1">PostgreSQL 14+</strong>
+                <span class="text-muted">Included in the Compose stack &mdash; or point <code>DATABASE_URL</code> at your own instance.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
+            <div class="code-block">
+              <div class="code-hd">
+                <span class="code-label">docker compose &middot; recommended</span>
+                <button class="code-copy-btn" onclick="doCopy(this)">Copy</button>
+              </div>
+              <div class="code-body">
+                <div><span class="c-comment"># 1. Configure your environment</span></div>
+                <div><span class="c-cmd">cp</span> .env.example .env</div>
+                <br>
+                <div><span class="c-comment"># 2. Generate ENCRYPTION_KEY</span></div>
+                <div><span class="c-key">ENCRYPTION_KEY</span>=<span class="c-val">"$(openssl rand -base64 32)"</span></div>
+                <br>
+                <div><span class="c-comment"># 3. Start Warden + PostgreSQL</span></div>
+                <div><span class="c-cmd">docker compose up --build</span></div>
+                <br>
+                <div><span class="c-comment"># Warden prints a setup link on first run:</span></div>
+                <div><span class="c-comment"># &rarr; http://localhost:8080/setup/&hellip;</span></div>
+                <div><span class="c-comment"># Open it to create the initial admin account.</span></div>
+              </div>
+            </div>
+            <p class="code-note">
+              For production: put TLS in front with the included Caddyfile and set
+              <code>SECURE_COOKIES=true</code> + <code>TRUST_PROXY=true</code>.
+              The Docker image runs as non-root user <code>warden</code> (UID 1000) with a read-only root filesystem.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Contact CTA Section ======= -->
+    <section id="contact" class="contact-cta-section">
+      <div class="container" data-aos="fade-up">
+        <div class="cta-block text-center">
+          <h2 class="heading fw-bold mb-3">Put Warden in front of your infrastructure.</h2>
+          <p class="text-muted mb-4 mx-auto" style="max-width: 600px;">Runs entirely on your own infrastructure &mdash; a single Go binary and a static UI, with no build step. Get in touch with the AgileSecOps team for a walkthrough and a deployment plan tailored to your environment.</p>
+          <a href="mailto:info@agilesecops.com?subject=Warden%20Demo" class="btn btn-success btn-lg px-5 mb-3">
+            <i class="bi bi-envelope me-2"></i>Get a Demo
+          </a>
+          <p class="text-muted mt-2 mb-0"><small><i class="bi bi-envelope me-1"></i> info@agilesecops.com</small></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <a href="index.html" class="d-flex align-items-center text-decoration-none mb-3">
+            <img src="assets/img/logo.jpg" alt="AgileSecOps" width="50" height="50" class="rounded-circle me-2">
+            <span class="text-light fw-bold fs-4">AgileSecOps</span>
+          </a>
+          <p class="text-muted mb-3">Warden &mdash; self-hosted browser terminals for SSH &amp; AWS ECS by AgileSecOps, LLC &middot; Knoxville, TN. Passkey auth, access approvals, and encrypted session recording, written in Go.</p>
+          <p class="mb-0"><a href="mailto:info@agilesecops.com" class="text-success"><i class="bi bi-envelope me-1"></i> info@agilesecops.com</a></p>
+        </div>
+        <div class="col-lg-7">
+          <nav class="nav footer-nav justify-content-lg-end mb-3">
+            <a class="nav-link" href="#hero">Home</a>
+            <a class="nav-link" href="#features">Features</a>
+            <a class="nav-link" href="#quickstart">Quick Start</a>
+            <a class="nav-link" href="#contact">Contact</a>
+            <a class="nav-link" href="index.html">AgileSecOps</a>
+          </nav>
+          <p class="text-muted mb-0 text-lg-end">&copy; <span id="currentYear"></span> AgileSecOps. All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <a href="#hero" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Warden Terminal Animation -->
+  <script>
+  (function(){
+    const root = document.getElementById('t-content');
+    const notif = document.getElementById('t-notif');
+    if (!root) return;
+
+    const pause = ms => new Promise(r => setTimeout(r, ms));
+
+    function addLine() {
+      const el = document.createElement('div');
+      el.className = 't-line';
+      root.appendChild(el);
+      return el;
+    }
+    function addSpan(parent, cls, text) {
+      const s = document.createElement('span');
+      s.className = cls;
+      s.textContent = text;
+      parent.appendChild(s);
+      return s;
+    }
+    async function typeText(span, text, charDelay) {
+      for (const ch of text) {
+        span.textContent += ch;
+        await pause(charDelay);
+      }
+    }
+
+    async function run() {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const l = addLine();
+        addSpan(l, 't-prompt', 'ubuntu@prod-01:~$ ');
+        addSpan(l, 't-cmd', 'tail -n 5 /var/log/nginx/access.log');
+        notif.classList.add('show');
+        return;
+      }
+
+      await pause(700);
+
+      const l1 = addLine();
+      addSpan(l1, 't-prompt', 'ubuntu@prod-01:~$ ');
+      const cmd = addSpan(l1, 't-cmd', '');
+      await pause(300);
+      await typeText(cmd, 'tail -n 5 /var/log/nginx/access.log', 48);
+      await pause(180);
+
+      const outputs = [
+        '192.168.4.12 - - [28/Jun/2026:09:12:01] "GET /api/health HTTP/1.1" 200 42',
+        '10.0.1.55   - - [28/Jun/2026:09:12:03] "POST /api/deploy HTTP/1.1" 201 128',
+        '10.0.1.55   - - [28/Jun/2026:09:12:03] "GET /api/status HTTP/1.1" 200 89',
+        '192.168.4.9 - - [28/Jun/2026:09:12:07] "GET /metrics HTTP/1.1" 200 2048',
+        '10.0.1.55   - - [28/Jun/2026:09:12:09] "GET /api/health HTTP/1.1" 200 42'
+      ];
+      for (const txt of outputs) {
+        const ln = addLine();
+        addSpan(ln, 't-out', txt);
+        await pause(55);
+      }
+
+      await pause(200);
+      const l2 = addLine();
+      addSpan(l2, 't-prompt', 'ubuntu@prod-01:~$ ');
+      const cursorEl = document.createElement('span');
+      cursorEl.id = 't-cursor';
+      cursorEl.textContent = '█';
+      l2.appendChild(cursorEl);
+
+      await pause(1400);
+      notif.classList.add('show');
+    }
+
+    run();
+  })();
+
+  /* Copy button (global — invoked via inline onclick) */
+  function doCopy(btn) {
+    const text = [
+      'cp .env.example .env',
+      'ENCRYPTION_KEY="$(openssl rand -base64 32)"',
+      'docker compose up --build'
+    ].join('\n');
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    }).catch(() => {
+      btn.textContent = 'Copy failed';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+  </script>
+
+</body>
+
+</html>
