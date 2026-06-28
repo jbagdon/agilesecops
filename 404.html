@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="robots" content="noindex, follow">
+
+  <title>404 &mdash; Page Not Found | AgileSecOps</title>
+  <meta name="description" content="The page you were looking for could not be found. Explore AgileSecOps security services and the Constable security proxy.">
+
+  <!-- Favicon -->
+  <link href="/assets/img/favicon.png" rel="icon">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor + Main CSS -->
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/style.css" rel="stylesheet">
+
+  <style>
+    .error-section {
+      min-height: 78vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+    .error-code {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: clamp(5rem, 18vw, 11rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #20c073;
+      background: linear-gradient(135deg, #3ddc8a, #178a55);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-body">
+
+  <!-- ======= Header / Navbar ======= -->
+  <nav class="navbar navbar-expand-lg py-3" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="/assets/img/logo.jpg" alt="AgileSecOps" width="50" height="50" class="rounded-circle me-2">
+        <span class="fw-bold fs-4 text-white">AgileSecOps</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-main">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-main">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="/#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/#services">Services</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="softwareDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Software</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="softwareDropdown">
+              <li><a class="dropdown-item" href="/constable.html">Constable</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="/#pricing">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="/#faq">FAQ</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-success btn-sm px-3 nav-cta" href="/#contact">Free Consultation</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======= 404 ======= -->
+  <main class="error-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="error-code mb-2">404</div>
+          <h1 class="heading fw-bold mb-3">This page wandered off.</h1>
+          <p class="text-muted mb-4 mx-auto" style="max-width: 540px;">
+            The page you&rsquo;re looking for doesn&rsquo;t exist or may have moved. Let&rsquo;s get you back to safety.
+          </p>
+          <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <a href="/" class="btn btn-success btn-lg px-4"><i class="bi bi-house-door me-2"></i>Back to Home</a>
+            <a href="/constable.html" class="btn btn-outline-success btn-lg px-4"><i class="bi bi-shield-check me-2"></i>Explore Constable</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-3 mb-lg-0">
+          <a href="/" class="d-flex align-items-center text-decoration-none">
+            <img src="/assets/img/logo.jpg" alt="AgileSecOps" width="40" height="40" class="rounded-circle me-2">
+            <span class="text-light fw-bold fs-5">AgileSecOps</span>
+          </a>
+        </div>
+        <div class="col-lg-6">
+          <p class="text-muted mb-0 text-lg-end">&copy; <span id="currentYear"></span> AgileSecOps. All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+
+</body>
+
+</html>

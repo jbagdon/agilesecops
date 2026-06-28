@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://www.agilesecops.com/">
 
   <title>AgileSecOps - Penetration Testing & Information Security Consulting</title>
   <meta content="AgileSecOps provides penetration testing, WAF implementation, and virtual CISO services for startups and small businesses. Protect your company with expert remote security professionals." name="description">
@@ -11,21 +14,27 @@
 
   <!-- Open Graph / Social Meta Tags -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AgileSecOps">
   <meta property="og:title" content="AgileSecOps - Penetration Testing & Security Consulting">
   <meta property="og:description" content="Expert penetration testing, WAF implementation, and virtual CISO services for startups and small businesses.">
   <meta property="og:url" content="https://www.agilesecops.com/">
-  <meta property="og:image" content="https://www.agilesecops.com/assets/img/4.webp">
+  <meta property="og:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
+  <meta property="og:image:width" content="543">
+  <meta property="og:image:height" content="362">
+  <meta property="og:image:alt" content="AgileSecOps information security services">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="AgileSecOps - Penetration Testing & Security Consulting">
   <meta name="twitter:description" content="Expert penetration testing, WAF implementation, and virtual CISO services for startups and small businesses.">
+  <meta name="twitter:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
 
   <!-- Google Fonts (Disrupt theme: Inter + Outfit) -->
-  <link href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Outfit:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -43,10 +52,62 @@
     "name": "AgileSecOps",
     "description": "Information security consulting firm providing penetration testing, WAF implementation, and virtual CISO services.",
     "url": "https://www.agilesecops.com",
+    "logo": "https://www.agilesecops.com/assets/img/logo.jpg",
+    "image": "https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp",
     "email": "info@agilesecops.com",
     "serviceType": ["Penetration Testing", "Web Application Firewall", "Virtual CISO"],
     "areaServed": "US",
     "priceRange": "$$"
+  }
+  </script>
+
+  <!-- FAQ Structured Data (eligible for FAQ rich results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long does a typical penetration test take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A typical black box penetration test takes 1-2 weeks per application. White box tests with authenticated access generally take 2-3 weeks depending on the complexity of the application. We provide a detailed timeline during our initial scoping call."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What compliance frameworks do you support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We support HIPAA, PCI DSS, SOC2, and other major compliance frameworks. Our penetration testing reports are designed to satisfy auditor requirements for these standards, and our virtual CISO service can guide you through the full compliance process."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a Virtual CISO and do I need one?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A Virtual CISO provides executive-level security leadership on a fractional basis. If your company handles sensitive data, needs to meet compliance requirements, or is growing beyond the point where ad-hoc security is sufficient, a vCISO can build your security program without the overhead of a full-time hire."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does your engagement model work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We start with a free consultation to understand your needs. For penetration testing, we offer fixed-price per-application engagements. WAF and Virtual CISO services are billed hourly with flexible monthly commitments. All engagements are fully remote."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you work with startups and small teams?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. Startups and small businesses are our primary focus. We understand the unique challenges of working with lean teams and tight budgets. Our services are designed to scale with your company as it grows."
+        }
+      }
+    ]
   }
   </script>
 </head>
@@ -95,7 +156,7 @@
           </div>
         </div>
         <div class="col-lg-5" data-aos="fade-left" data-aos-delay="200">
-          <img src="assets/img/4.webp" class="img-fluid hero-img" alt="Information security services illustration">
+          <img src="assets/img/agilesecops-penetration-testing.webp" class="img-fluid hero-img" width="543" height="362" fetchpriority="high" alt="Information security services illustration">
         </div>
       </div>
     </div>
@@ -145,7 +206,7 @@
         <div class="row gx-5 align-items-center">
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
             <div class="about-content">
-              <h3 class="text-uppercase fw-bold text-success mb-2">Who We Are</h3>
+              <p class="text-uppercase fw-bold text-success mb-2">Who We Are</p>
               <h2 class="heading fw-bold mb-3">Hardworking and honest Information Security professionals who bring value to small companies.</h2>
               <p class="text-muted">
                 AgileSecOps believes in providing the best remote services possible. While our primary focus is Security, we enjoy performing work from assessments, automation, cloud development, and system administration. We understand and believe a cultural difference exists between the startup and Fortune 100. We will work within your business guidelines and direction to complete projects satisfactorily.
@@ -158,7 +219,7 @@
             </div>
           </div>
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
-            <img src="assets/img/1.jpg" class="img-fluid rounded-3" alt="AgileSecOps team">
+            <img src="assets/img/agilesecops-security-team.jpg" class="img-fluid rounded-3" width="800" height="533" loading="lazy" alt="AgileSecOps team">
           </div>
         </div>
       </div>

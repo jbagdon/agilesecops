@@ -4,6 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://www.agilesecops.com/constable.html">
 
   <title>Constable &mdash; Intelligent Security Proxy by AgileSecOps</title>
   <meta content="Constable is an intelligent security proxy by AgileSecOps. Every inbound request runs a 25-stage gauntlet — IP reputation, botnet detection, CVE-mapped rules, adaptive scoring — and responses are inspected and header-hardened before returning to the client." name="description">
@@ -11,22 +14,27 @@
 
   <!-- Open Graph / Social Meta Tags -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AgileSecOps">
   <meta property="og:title" content="Constable — Intelligent Security Proxy by AgileSecOps">
   <meta property="og:description" content="Every request must answer to it. A 25-stage request gauntlet with response inspection and hardening, written in Go.">
   <meta property="og:url" content="https://www.agilesecops.com/constable.html">
-  <meta property="og:image" content="https://www.agilesecops.com/assets/img/4.webp">
+  <meta property="og:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
+  <meta property="og:image:width" content="543">
+  <meta property="og:image:height" content="362">
+  <meta property="og:image:alt" content="Constable intelligent security proxy by AgileSecOps">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Constable — Intelligent Security Proxy by AgileSecOps">
   <meta name="twitter:description" content="A 25-stage request gauntlet with response inspection and hardening, written in Go.">
+  <meta name="twitter:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
 
   <!-- Google Fonts (Disrupt theme: Inter + Outfit, plus JetBrains Mono for the pipeline) -->
-  <link href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Outfit:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -46,10 +54,49 @@
     "operatingSystem": "Linux",
     "description": "An intelligent security proxy that runs every inbound request through a 25-stage inspection gauntlet and inspects, rewrites, and hardens responses before returning them to the client.",
     "url": "https://www.agilesecops.com/constable.html",
+    "image": "https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp",
+    "screenshot": "https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp",
+    "offers": {
+      "@type": "Offer",
+      "url": "https://www.agilesecops.com/constable.html#contact",
+      "availability": "https://schema.org/InStock",
+      "businessFunction": "http://purl.org/goodrelations/v1#Sell",
+      "description": "Price on request"
+    },
     "publisher": {
       "@type": "Organization",
-      "name": "AgileSecOps"
+      "name": "AgileSecOps",
+      "url": "https://www.agilesecops.com/",
+      "logo": "https://www.agilesecops.com/assets/img/logo.jpg"
     }
+  }
+  </script>
+
+  <!-- Breadcrumb Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.agilesecops.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Software",
+        "item": "https://www.agilesecops.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Constable",
+        "item": "https://www.agilesecops.com/constable.html"
+      }
+    ]
   }
   </script>
 
@@ -324,7 +371,7 @@
       <div class="row align-items-center">
         <div class="col-lg-6" data-aos="fade-right">
           <div>
-            <h3 class="text-uppercase fw-bold text-success mb-2" style="letter-spacing: 2px; font-size: 0.85rem;">Intelligent Security Proxy</h3>
+            <p class="text-uppercase fw-bold text-success mb-2" style="letter-spacing: 2px; font-size: 0.85rem;">Intelligent Security Proxy</p>
             <div class="constable-lockup">
               <span class="constable-mark"><i class="bi bi-shield-fill-check"></i></span>
               <span class="constable-name">Constable</span>
@@ -464,7 +511,7 @@
         <div class="row gx-5 align-items-center">
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
             <div class="about-content">
-              <h3 class="text-uppercase fw-bold text-success mb-2">What Is Constable</h3>
+              <p class="text-uppercase fw-bold text-success mb-2">What Is Constable</p>
               <h2 class="heading fw-bold mb-3">A single hardened chokepoint between the public internet and your application.</h2>
               <p class="text-muted">
                 Constable doesn't rely on a single defense. Every layer is independent, stackable, and tunable &mdash; so no attacker slips through a gap between them. Each inbound request runs the full ordered gauntlet and is dropped at the first layer that flags it. Only clean traffic ever reaches your origin, and every response makes the return trip back through Constable for inspection and hardening.
@@ -590,7 +637,7 @@
         <div class="row gx-5 align-items-center">
           <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
             <div class="about-content">
-              <h3 class="text-uppercase fw-bold text-success mb-2">Architecture</h3>
+              <p class="text-uppercase fw-bold text-success mb-2">Architecture</p>
               <h2 class="heading fw-bold mb-3">Sits at the gate. Inspects both directions.</h2>
               <p class="text-muted">
                 Constable is the single hardened chokepoint between the public internet and your application. Every request runs the full ordered gauntlet and is dropped at the first layer that flags it. Only clean traffic reaches the origin.
