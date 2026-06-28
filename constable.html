@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Constable &mdash; Intelligent Security Proxy by AgileSecOps</title>
+  <meta content="Constable is an intelligent security proxy by AgileSecOps. Every inbound request runs a 25-stage gauntlet — IP reputation, botnet detection, CVE-mapped rules, adaptive scoring — and responses are inspected and header-hardened before returning to the client." name="description">
+  <meta content="security proxy, reverse proxy, WAF, CVE detection, botnet detection, IP reputation, adaptive scoring, AgileSecOps, Go security" name="keywords">
+
+  <!-- Open Graph / Social Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Constable — Intelligent Security Proxy by AgileSecOps">
+  <meta property="og:description" content="Every request must answer to it. A 25-stage request gauntlet with response inspection and hardening, written in Go.">
+  <meta property="og:url" content="https://www.agilesecops.com/constable.html">
+  <meta property="og:image" content="https://www.agilesecops.com/assets/img/4.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Constable — Intelligent Security Proxy by AgileSecOps">
+  <meta name="twitter:description" content="A 25-stage request gauntlet with response inspection and hardening, written in Go.">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
+
+  <!-- Google Fonts (Disrupt theme: Inter + Outfit, plus JetBrains Mono for the pipeline) -->
+  <link href="https://fonts.googleapis.com/css?family=Inter:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Outfit:200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Constable",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Linux",
+    "description": "An intelligent security proxy that runs every inbound request through a 25-stage inspection gauntlet and inspects, rewrites, and hardens responses before returning them to the client.",
+    "url": "https://www.agilesecops.com/constable.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "AgileSecOps"
+    }
+  }
+  </script>
+
+  <!-- Constable pipeline + flow component (re-themed to the Disrupt green/blue palette) -->
+  <style>
+    :root {
+      --pl-bg:       #0b0f19;
+      --pl-surface:  #131a2b;
+      --pl-surface2: #0f1623;
+      --pl-border:   rgba(255, 255, 255, 0.08);
+      --pl-gold:     #20c073;
+      --pl-gold-dim: rgba(32, 192, 115, 0.12);
+      --pl-text:     #f7f8f9;
+      --pl-muted:    #9a9cab;
+      --pl-faint:    #3a4256;
+      --pl-green:    #3FB980;
+      --pl-red:      #DC5050;
+      --pl-red-dim:  rgba(220, 80, 80, 0.13);
+      --pl-crit:     #E8764A;
+      --pl-crit-dim: rgba(232, 118, 74, 0.13);
+      --pl-teal:     #4FB8C4;
+      --pl-teal-dim: rgba(79, 184, 196, 0.13);
+      --pl-mono:     'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    /* expose the variables the pipeline JS reads via var(--gold) etc. */
+    .pipe, .flow {
+      --gold:  var(--pl-gold);
+      --green: var(--pl-green);
+      --red:   var(--pl-red);
+      --crit:  var(--pl-crit);
+      --teal:  var(--pl-teal);
+    }
+
+    /* ── PIPELINE PANEL ──────────────────── */
+    .pipe {
+      width: 100%; max-width: 480px; margin: 0 auto;
+      height: min(660px, 78vh);
+      display: flex; flex-direction: column;
+      background: var(--pl-surface); border: 1px solid var(--pl-border);
+      border-radius: 12px; overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 0 1px rgba(32, 192, 115, 0.08), 0 32px 64px rgba(0, 0, 0, 0.45);
+    }
+    .pipe::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; z-index: 4;
+      background: linear-gradient(90deg, transparent, var(--pl-gold), transparent);
+    }
+    .pipe-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.65rem 1.125rem;
+      background: var(--pl-surface2); border-bottom: 1px solid var(--pl-border);
+      flex-shrink: 0;
+    }
+    .pipe-title { font-family: var(--pl-mono); font-size: 0.6rem; letter-spacing: 0.14em; color: var(--pl-gold); }
+    .pipe-live { display: flex; align-items: center; gap: 0.4rem; }
+    .pipe-livedot { width: 6px; height: 6px; border-radius: 50%; background: var(--pl-green); animation: pulse 2s infinite; }
+    .pipe-livelabel { font-family: var(--pl-mono); font-size: 0.58rem; color: var(--pl-green); letter-spacing: 0.08em; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+    .pipe-rail {
+      position: relative; flex: 1;
+      display: flex; flex-direction: column;
+      padding: 0.55rem 1.125rem; overflow: hidden;
+    }
+    .pipe-line {
+      position: absolute; top: 0.55rem; bottom: 0.55rem; left: calc(1.125rem + 10.5px);
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--pl-border) 6%, var(--pl-border) 94%, transparent);
+      z-index: 0;
+    }
+
+    .pipe-stage, .pipe-entry, .pipe-forward, .pipe-upstream, .pipe-rstage, .pipe-return {
+      display: grid; grid-template-columns: 21px 1fr auto;
+      align-items: center; gap: 0.5rem; position: relative; z-index: 1;
+    }
+    .pipe-list  { flex: 19 1 0; display: flex; flex-direction: column; justify-content: space-between; }
+    .pipe-rlist { flex: 4 1 0;  display: flex; flex-direction: column; justify-content: space-between; }
+
+    .pipe-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--pl-surface); border: 1.5px solid var(--pl-faint);
+      margin: 0 auto; position: relative; z-index: 2;
+      transition: background .15s, box-shadow .15s, border-color .15s;
+    }
+    .pipe-label {
+      font-family: var(--pl-mono); font-size: 0.62rem; color: var(--pl-muted);
+      letter-spacing: 0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: color .15s;
+    }
+    .pipe-code {
+      font-family: var(--pl-mono); font-size: 0.52rem; letter-spacing: 0.04em;
+      padding: 0.06rem 0.34rem; opacity: 0.45; white-space: nowrap;
+      transition: opacity .15s, transform .15s;
+    }
+    .c-red   { color: var(--pl-red);   background: var(--pl-red-dim); }
+    .c-crit  { color: var(--pl-crit);  background: var(--pl-crit-dim); }
+    .c-gold  { color: var(--pl-gold);  background: var(--pl-gold-dim); }
+    .c-green { color: var(--pl-green); background: rgba(63, 185, 128, 0.13); }
+    .c-teal  { color: var(--pl-teal);  background: var(--pl-teal-dim); }
+
+    /* phase dot tints */
+    .ph-admit    .pipe-dot { border-color: rgba(32, 192, 115, 0.55); }
+    .ph-rep      .pipe-dot { border-color: rgba(220, 80, 80, 0.5); }
+    .ph-rules    .pipe-dot { border-color: rgba(32, 192, 115, 0.45); }
+    .ph-cve      .pipe-dot { border-color: rgba(232, 118, 74, 0.65); }
+    .ph-body     .pipe-dot { border-color: rgba(90, 140, 200, 0.55); }
+    .ph-adaptive .pipe-dot { border-color: rgba(63, 185, 128, 0.4); }
+    .ph-route    .pipe-dot { border-color: rgba(63, 185, 128, 0.7); }
+    .ph-resp     .pipe-dot { border-color: rgba(79, 184, 196, 0.6); }
+
+    .pipe-entry .pipe-dot   { border-color: var(--pl-gold); background: rgba(32, 192, 115, 0.2); }
+    .pipe-entry .pipe-label { color: var(--pl-text); }
+
+    /* handoff */
+    .pipe-forward {
+      margin-top: 0.15rem; padding-top: 0.4rem;
+      border-top: 1px dashed var(--pl-border);
+    }
+    .pipe-forward .pipe-dot   { border-color: #9fa3b8; }
+    .pipe-forward .pipe-label { color: var(--pl-muted); letter-spacing: 0.06em; font-size: 0.6rem; }
+
+    /* origin upstream — the pivot from request to response */
+    .pipe-upstream {
+      margin: 0.28rem 0;
+      padding: 0.42rem 0;
+      border-top: 1px solid rgba(79, 184, 196, 0.28);
+      border-bottom: 1px solid rgba(79, 184, 196, 0.28);
+      background: linear-gradient(90deg, rgba(79, 184, 196, 0.07), transparent 70%);
+    }
+    .pipe-upstream .pipe-dot   { border-color: var(--pl-teal); background: rgba(79, 184, 196, 0.18); }
+    .pipe-upstream .pipe-label { color: #a6dbe1; letter-spacing: 0.05em; font-size: 0.6rem; }
+    .pipe-upstream.recv .pipe-dot { background: var(--pl-teal); box-shadow: 0 0 12px 2px rgba(79, 184, 196, 0.7); }
+
+    /* return to client */
+    .pipe-return {
+      margin-top: 0.28rem; padding-top: 0.42rem;
+      border-top: 1px dashed var(--pl-border);
+    }
+    .pipe-return .pipe-dot   { border-color: var(--pl-green); background: rgba(63, 185, 128, 0.18); }
+    .pipe-return .pipe-label { color: var(--pl-green); letter-spacing: 0.08em; font-size: 0.6rem; }
+    .pipe-return.ok .pipe-dot  { background: var(--pl-green); box-shadow: 0 0 13px 2px rgba(63, 185, 128, 0.75); }
+    .pipe-return.ok .pipe-code { opacity: 1; }
+
+    .pipe-stage.hit .pipe-label { color: var(--pl-text); }
+    .pipe-stage.hit .pipe-code  { opacity: 1; transform: scale(1.05); }
+
+    /* packets overlay */
+    .pipe-packets { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+    .packet {
+      position: absolute; width: 9px; height: 9px; border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: #EDE7DA;
+      box-shadow: 0 0 7px 1px rgba(237, 231, 218, 0.7), 0 0 2px #fff;
+      transition: top .07s linear, left .07s linear;
+    }
+    .packet.green { background: var(--pl-green); box-shadow: 0 0 11px 2px rgba(63, 185, 128, 0.75); }
+    .packet.red   { background: var(--pl-red);  box-shadow: 0 0 11px 2px rgba(220, 80, 80, 0.85); }
+    .packet.crit  { background: var(--pl-crit); box-shadow: 0 0 11px 2px rgba(232, 118, 74, 0.9); }
+    .packet.gold  { background: var(--pl-gold); box-shadow: 0 0 11px 2px rgba(32, 192, 115, 0.85); }
+    .packet.resp  { background: var(--pl-teal); box-shadow: 0 0 12px 2px rgba(79, 184, 196, 0.85); }
+    .packet.burst {
+      transition: transform .3s ease, opacity .3s ease;
+      transform: translate(-50%, -50%) scale(2.6); opacity: 0;
+    }
+
+    .pipe-floattag {
+      position: absolute; right: 8px; transform: translateY(-50%);
+      font-family: var(--pl-mono); font-size: 0.55rem; letter-spacing: 0.02em;
+      padding: 0.1rem 0.42rem; white-space: nowrap; z-index: 6; pointer-events: none;
+      animation: tagPop 1s ease forwards;
+    }
+    @keyframes tagPop {
+      0%   { opacity: 0; transform: translateY(-50%) translateX(-5px); }
+      18%  { opacity: 1; transform: translateY(-50%) translateX(0); }
+      100% { opacity: 0; transform: translateY(-50%) translateX(3px); }
+    }
+
+    .pipe-foot {
+      display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0;
+      padding: 0.6rem 1.125rem; border-top: 1px solid var(--pl-border);
+      font-family: var(--pl-mono); font-size: 0.59rem; color: var(--pl-faint);
+    }
+    .pf-item { display: flex; align-items: center; gap: 0.4rem; }
+    .pf-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .pf-served .pf-dot { background: var(--pl-green); }
+    .pf-block  .pf-dot { background: var(--pl-red); }
+    .pf-served b { color: var(--pl-green); font-weight: 500; }
+    .pf-block  b { color: var(--pl-red); font-weight: 500; }
+    .pf-spacer { flex: 1; }
+    .pf-total b { color: var(--pl-muted); font-weight: 500; }
+
+    /* ── ROUND-TRIP FLOW (Architecture section) ──────── */
+    .flow {
+      font-family: var(--pl-mono); font-size: 0.72rem;
+      display: flex; flex-direction: column;
+      border: 1px solid var(--pl-border); background: var(--pl-surface2);
+      border-radius: 12px; overflow: hidden; position: relative;
+    }
+    .flow::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--pl-gold), transparent); }
+    .flow-h { padding: 0.7rem 1.25rem; border-bottom: 1px solid var(--pl-border); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--pl-gold); background: rgba(32, 192, 115, 0.04); }
+    .flow-body { padding: 1.25rem 1.5rem; }
+    .flow-in { color: var(--pl-red); margin-bottom: 0.5rem; }
+    .flow-step { color: var(--pl-faint); padding: 0.2rem 0 0.2rem 1.25rem; border-left: 1px solid var(--pl-border); margin-left: 0.5rem; }
+    .flow-step span { color: var(--pl-muted); }
+    .flow-gate { margin: 0.75rem 0; border: 1px solid var(--pl-gold); padding: 0.7rem; text-align: center; font-family: var(--heading-font, 'Outfit', sans-serif); font-size: 0.95rem; color: var(--pl-gold); letter-spacing: 0.12em; background: var(--pl-gold-dim); border-radius: 6px; }
+    .flow-resp { color: var(--pl-teal); margin-top: 0.5rem; padding-left: 1.25rem; border-left: 1px solid rgba(79, 184, 196, 0.3); margin-left: 0.5rem; }
+    .flow-out { color: var(--pl-green); margin-top: 0.5rem; }
+    .flow-block { color: var(--pl-red); margin-top: 0.25rem; }
+
+    /* ── HERO PRODUCT LOCKUP ──────────────── */
+    .constable-lockup {
+      display: inline-flex; align-items: center; gap: 0.85rem;
+      margin: 0.35rem 0 1.1rem;
+    }
+    .constable-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 56px; height: 56px; border-radius: 15px;
+      background: linear-gradient(135deg, #2bd585, #178a55);
+      color: #fff; font-size: 1.65rem; line-height: 1; flex-shrink: 0;
+      box-shadow: 0 10px 26px rgba(32, 192, 115, 0.32),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+    .constable-name {
+      font-family: 'Outfit', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 4.4vw, 2.8rem); line-height: 1;
+      letter-spacing: -0.015em; color: #f7f8f9;
+    }
+
+    @media (max-width: 991px) {
+      .pipe { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pipe-livedot, .packet { animation: none !important; }
+    }
+  </style>
+</head>
+
+<body class="bg-gradient-body">
+
+  <!-- ======= Header / Navbar ======= -->
+  <nav class="navbar navbar-expand-lg py-3" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/img/logo.jpg" alt="AgileSecOps" width="50" height="50" class="rounded-circle me-2">
+        <span class="fw-bold fs-4 text-white">AgileSecOps</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-main">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navcol-main">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="softwareDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Software</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="softwareDropdown">
+              <li><a class="dropdown-item active" href="constable.html">Constable</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="index.html#pricing">Pricing</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#faq">FAQ</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-success btn-sm px-3 nav-cta" href="index.html#contact">Free Consultation</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======= Hero Section ======= -->
+  <header id="hero" class="hero-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6" data-aos="fade-right">
+          <div>
+            <h3 class="text-uppercase fw-bold text-success mb-2" style="letter-spacing: 2px; font-size: 0.85rem;">Intelligent Security Proxy</h3>
+            <div class="constable-lockup">
+              <span class="constable-mark"><i class="bi bi-shield-fill-check"></i></span>
+              <span class="constable-name">Constable</span>
+            </div>
+            <h1 class="h2 heading fw-bold mb-4">Every request must answer to it.</h1>
+            <p class="lead fw-lighter mb-4 hero-subtitle">
+              Constable runs every inbound request through a 25-stage gauntlet &mdash; admission, IP reputation, botnet detection, CVE-mapped rules, adaptive scoring &mdash; dropping threats at the exact layer that catches them. Clean traffic reaches your origin; the response is then inspected, rewritten, header-hardened, and returned to the client. Written in Go.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+              <a href="#contact" class="btn btn-success btn-lg px-4">Get a Demo</a>
+              <a href="#architecture" class="btn btn-outline-success btn-lg px-4">See How It Works</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+          <div class="pipe" id="pipe">
+            <div class="pipe-head">
+              <span class="pipe-title">CONSTABLE &#9656; REQUEST PIPELINE</span>
+              <div class="pipe-live">
+                <div class="pipe-livedot"></div>
+                <span class="pipe-livelabel">LIVE</span>
+              </div>
+            </div>
+
+            <div class="pipe-rail" id="rail">
+              <div class="pipe-line"></div>
+
+              <div class="pipe-entry">
+                <span class="pipe-dot"></span>
+                <span class="pipe-label">INBOUND &middot; req-id &middot; TLS &middot; HTTPS</span>
+                <span class="pipe-code c-gold">IN</span>
+              </div>
+
+              <div class="pipe-list" id="list">
+                <div class="pipe-stage ph-admit"><span class="pipe-dot"></span><span class="pipe-label">Worker slot &middot; pool</span><span class="pipe-code c-gold">503</span></div>
+                <div class="pipe-stage ph-admit"><span class="pipe-dot"></span><span class="pipe-label">Rate limit &middot; per-IP</span><span class="pipe-code c-gold">429</span></div>
+                <div class="pipe-stage ph-rep"><span class="pipe-dot"></span><span class="pipe-label">IP block list</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-rep"><span class="pipe-dot"></span><span class="pipe-label">GeoIP filter</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-rep"><span class="pipe-dot"></span><span class="pipe-label">Botnet &middot; IP reputation</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-rep"><span class="pipe-dot"></span><span class="pipe-label">Botnet &middot; behavioral</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-rep"><span class="pipe-dot"></span><span class="pipe-label">Botnet &middot; UA fingerprint</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-rules"><span class="pipe-dot"></span><span class="pipe-label">Conditional rules</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-rules"><span class="pipe-dot"></span><span class="pipe-label">Authentication</span><span class="pipe-code c-red">401</span></div>
+                <div class="pipe-stage ph-rules"><span class="pipe-dot"></span><span class="pipe-label">HTTP method</span><span class="pipe-code c-red">405</span></div>
+                <div class="pipe-stage ph-rules"><span class="pipe-dot"></span><span class="pipe-label">Header limits</span><span class="pipe-code c-gold">431</span></div>
+                <div class="pipe-stage ph-rules"><span class="pipe-dot"></span><span class="pipe-label">URL + header rules</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-cve"><span class="pipe-dot"></span><span class="pipe-label">CVE &middot; URL + headers</span><span class="pipe-code c-crit">CVE</span></div>
+                <div class="pipe-stage ph-rules"><span class="pipe-dot"></span><span class="pipe-label">Per-path rules</span><span class="pipe-code c-red">BLOCK</span></div>
+                <div class="pipe-stage ph-body"><span class="pipe-dot"></span><span class="pipe-label">Read body &middot; max_bytes</span><span class="pipe-code c-gold">413</span></div>
+                <div class="pipe-stage ph-body"><span class="pipe-dot"></span><span class="pipe-label">Body rules</span><span class="pipe-code c-gold">408</span></div>
+                <div class="pipe-stage ph-cve"><span class="pipe-dot"></span><span class="pipe-label">CVE &middot; request body</span><span class="pipe-code c-crit">CVE</span></div>
+                <div class="pipe-stage ph-adaptive"><span class="pipe-dot"></span><span class="pipe-label">Adaptive scoring &middot; shadow</span><span class="pipe-code c-gold">LOG</span></div>
+                <div class="pipe-stage ph-route"><span class="pipe-dot"></span><span class="pipe-label">Select upstream</span><span class="pipe-code c-green">ROUTE</span></div>
+              </div>
+
+              <div class="pipe-forward" id="forward">
+                <span class="pipe-dot"></span>
+                <span class="pipe-label">Forward to upstream</span>
+                <span class="pipe-code c-teal">&rarr;</span>
+              </div>
+
+              <div class="pipe-upstream" id="upstream">
+                <span class="pipe-dot"></span>
+                <span class="pipe-label">ORIGIN UPSTREAM &middot; response received</span>
+                <span class="pipe-code c-teal">&#8617; 200</span>
+              </div>
+
+              <div class="pipe-rlist" id="rlist">
+                <div class="pipe-rstage ph-resp"><span class="pipe-dot"></span><span class="pipe-label">Passive stack fingerprint + body</span><span class="pipe-code c-teal">SCAN</span></div>
+                <div class="pipe-rstage ph-resp"><span class="pipe-dot"></span><span class="pipe-label">Response rewrites</span><span class="pipe-code c-teal">REWRITE</span></div>
+                <div class="pipe-rstage ph-resp"><span class="pipe-dot"></span><span class="pipe-label">Security headers + strip</span><span class="pipe-code c-teal">+HDRS</span></div>
+                <div class="pipe-rstage ph-resp"><span class="pipe-dot"></span><span class="pipe-label">Record &middot; adaptive windows</span><span class="pipe-code c-teal">LEARN</span></div>
+              </div>
+
+              <div class="pipe-return" id="return">
+                <span class="pipe-dot"></span>
+                <span class="pipe-label">RETURN TO CLIENT</span>
+                <span class="pipe-code c-green">200</span>
+              </div>
+
+              <div class="pipe-packets" id="packets"></div>
+            </div>
+
+            <div class="pipe-foot">
+              <span class="pf-item pf-served"><span class="pf-dot"></span>SERVED&nbsp;<b id="servedN">0</b></span>
+              <span class="pf-item pf-block"><span class="pf-dot"></span>BLOCKED&nbsp;<b id="blockN">0</b></span>
+              <span class="pf-spacer"></span>
+              <span class="pf-total"><b id="totalN">0</b>&nbsp;evaluated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ======= Stats Bar ======= -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="row text-center gy-4">
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-item">
+              <i class="bi bi-layers"></i>
+              <h4 class="fw-bold mb-0">25</h4>
+              <p class="text-muted mb-0">Inspection Stages Per Request</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-item">
+              <i class="bi bi-lightning-charge"></i>
+              <h4 class="fw-bold mb-0">&lt;1s</h4>
+              <p class="text-muted mb-0">Live Config Reload &mdash; No Restart</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-item">
+              <i class="bi bi-broadcast"></i>
+              <h4 class="fw-bold mb-0">2+</h4>
+              <p class="text-muted mb-0">Live IP Threat Feed Integrations</p>
+            </div>
+          </div>
+          <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+            <div class="stat-item">
+              <i class="bi bi-shield-check"></i>
+              <h4 class="fw-bold mb-0">0</h4>
+              <p class="text-muted mb-0">Downtime Required to Block</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= About / Overview Section ======= -->
+    <section id="about" class="about-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-5 align-items-center">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+            <div class="about-content">
+              <h3 class="text-uppercase fw-bold text-success mb-2">What Is Constable</h3>
+              <h2 class="heading fw-bold mb-3">A single hardened chokepoint between the public internet and your application.</h2>
+              <p class="text-muted">
+                Constable doesn't rely on a single defense. Every layer is independent, stackable, and tunable &mdash; so no attacker slips through a gap between them. Each inbound request runs the full ordered gauntlet and is dropped at the first layer that flags it. Only clean traffic ever reaches your origin, and every response makes the return trip back through Constable for inspection and hardening.
+              </p>
+              <div class="trust-badges mt-4">
+                <span class="badge-item"><i class="bi bi-cpu"></i> Written in Go</span>
+                <span class="badge-item"><i class="bi bi-box-seam"></i> Zero Production Dependencies</span>
+                <span class="badge-item"><i class="bi bi-arrow-repeat"></i> Zero-Downtime Reloads</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-4 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+            <div class="flow">
+              <div class="flow-h">constable &#9656; round-trip evaluation trace</div>
+              <div class="flow-body">
+                <div class="flow-in">&#9656; inbound request arrives</div>
+                <div class="flow-step"><span>admission: worker slot, per-IP rate limit</span></div>
+                <div class="flow-step"><span>reputation: IP blocklists, GeoIP, 3-layer botnet detection</span></div>
+                <div class="flow-step"><span>rules: auth, method, URL / header, CVE signatures, per-path</span></div>
+                <div class="flow-step"><span>body: size limit, body rules, CVE body inspection</span></div>
+                <div class="flow-step"><span>adaptive scoring evaluated against learning windows</span></div>
+                <div class="flow-gate">CONSTABLE</div>
+                <div class="flow-block">&#10005; threat detected &rarr; dropped at the matching layer, event logged</div>
+                <div class="flow-out">&#10003; clean &rarr; forwarded to origin upstream</div>
+                <div class="flow-resp">&#8617; response: stack fingerprint + body scan, rewrites, header injection</div>
+                <div class="flow-resp">&#8617; recorded against adaptive windows &rarr; returned to client</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Features Cards Section ======= -->
+    <section id="features" class="features-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <h3 class="heading fw-bold text-uppercase">Layered Control, Enforced in Order</h3>
+          </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-3">
+
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-bug"></i>
+                </div>
+                <h5 class="card-title fw-bold">CVE-Pattern Detection</h5>
+                <p class="card-text text-muted mb-0">URL, header, and body rules mapped directly to named CVEs and stack-scoped. Log4Shell, PHP-CGI exploits, Exchange probes &mdash; every signature blocked on first contact.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-robot"></i>
+                </div>
+                <h5 class="card-title fw-bold">Three-Layer Botnet Detection</h5>
+                <p class="card-text text-muted mb-0">IP reputation blocklists, behavioral analysis on error rate and path scanning, and user-agent fingerprinting &mdash; three independent layers that catch automated traffic.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-graph-up-arrow"></i>
+                </div>
+                <h5 class="card-title fw-bold">Adaptive Scoring</h5>
+                <p class="card-text text-muted mb-0">Runs in shadow mode by default &mdash; logging verdicts without enforcing &mdash; then graduates to feeding conditional rules once tuned. Learning windows track every client over time.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-globe2"></i>
+                </div>
+                <h5 class="card-title fw-bold">IP Threat Intelligence</h5>
+                <p class="card-text text-muted mb-0">Integrates live blocklist feeds including FireHOL Level 1 and CINS Army, updated continuously. Known malicious infrastructure is blocked before it announces itself.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-arrow-repeat"></i>
+                </div>
+                <h5 class="card-title fw-bold">Zero-Downtime Config Reload</h5>
+                <p class="card-text text-muted mb-0">Push updated rules to GitHub. Constable polls for changes and reloads its full configuration in under a second &mdash; no restart, no dropped connections, no exposure window.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="300">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <div class="bs-icon mb-3">
+                  <i class="bi bi-file-earmark-lock"></i>
+                </div>
+                <h5 class="card-title fw-bold">Response Inspection + Hardening</h5>
+                <p class="card-text text-muted mb-0">Origin responses are fingerprint-masked, scanned, rewritten, and stamped with HSTS, CSP, and frame controls &mdash; then recorded against adaptive windows before reaching the client.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Architecture Section ======= -->
+    <section id="architecture" class="about-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row gx-5 align-items-center">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+            <div class="about-content">
+              <h3 class="text-uppercase fw-bold text-success mb-2">Architecture</h3>
+              <h2 class="heading fw-bold mb-3">Sits at the gate. Inspects both directions.</h2>
+              <p class="text-muted">
+                Constable is the single hardened chokepoint between the public internet and your application. Every request runs the full ordered gauntlet and is dropped at the first layer that flags it. Only clean traffic reaches the origin.
+              </p>
+              <p class="text-muted">
+                The response makes the return trip through Constable too &mdash; passive stack fingerprinting, body inspection, rewrites, security-header injection, and a final record against the adaptive-learning windows &mdash; before it's handed back to the client. Config lives in a JSON file pulled from GitHub; update a rule, push a commit.
+              </p>
+              <div class="trust-badges mt-4">
+                <span class="badge-item"><i class="bi bi-diagram-3"></i> 25-Stage Gauntlet</span>
+                <span class="badge-item"><i class="bi bi-shield-lock"></i> Response Hardening</span>
+                <span class="badge-item"><i class="bi bi-git"></i> Git-Backed Config</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-4 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+            <div class="row gy-4">
+              <div class="col-md-6">
+                <div class="card feature-card h-100">
+                  <div class="card-body">
+                    <div class="bs-icon mb-3"><i class="bi bi-box-arrow-in-right"></i></div>
+                    <h5 class="card-title fw-bold">Request Leg</h5>
+                    <p class="card-text text-muted mb-0">Admission, reputation, rules, body, and adaptive scoring &mdash; evaluated in order, short-circuited at the first match.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card feature-card h-100">
+                  <div class="card-body">
+                    <div class="bs-icon mb-3"><i class="bi bi-hdd-network"></i></div>
+                    <h5 class="card-title fw-bold">Origin Upstream</h5>
+                    <p class="card-text text-muted mb-0">Only clean, verified traffic is forwarded to your application. Everything else is dropped before it ever leaves the proxy.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card feature-card h-100">
+                  <div class="card-body">
+                    <div class="bs-icon mb-3"><i class="bi bi-box-arrow-left"></i></div>
+                    <h5 class="card-title fw-bold">Response Leg</h5>
+                    <p class="card-text text-muted mb-0">Stack fingerprint masking, body scan, rewrites, and security-header injection on the way back to the client.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card feature-card h-100">
+                  <div class="card-body">
+                    <div class="bs-icon mb-3"><i class="bi bi-journal-code"></i></div>
+                    <h5 class="card-title fw-bold">Git-Backed Config</h5>
+                    <p class="card-text text-muted mb-0">Rules live in JSON pulled from GitHub. Update a rule, push a commit &mdash; Constable reloads in under a second.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Contact CTA Section ======= -->
+    <section id="contact" class="contact-cta-section">
+      <div class="container" data-aos="fade-up">
+        <div class="cta-block text-center">
+          <h2 class="heading fw-bold mb-3">Put Constable at your gate.</h2>
+          <p class="text-muted mb-4 mx-auto" style="max-width: 600px;">Want to see Constable inspect live traffic against your stack? Get in touch with the AgileSecOps team for a walkthrough and deployment plan tailored to your environment.</p>
+          <a href="mailto:info@agilesecops.com?subject=Constable%20Demo" class="btn btn-success btn-lg px-5 mb-3">
+            <i class="bi bi-envelope me-2"></i>Get a Demo
+          </a>
+          <p class="text-muted mt-2 mb-0"><small><i class="bi bi-envelope me-1"></i> info@agilesecops.com</small></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <a href="index.html" class="d-flex align-items-center text-decoration-none mb-3">
+            <img src="assets/img/logo.jpg" alt="AgileSecOps" width="50" height="50" class="rounded-circle me-2">
+            <span class="text-light fw-bold fs-4">AgileSecOps</span>
+          </a>
+          <p class="text-muted mb-3">An intelligent security proxy by AgileSecOps, LLC &middot; Knoxville, TN. A 25-stage request gauntlet with response inspection and hardening, written in Go.</p>
+          <p class="mb-0"><a href="mailto:info@agilesecops.com" class="text-success"><i class="bi bi-envelope me-1"></i> info@agilesecops.com</a></p>
+        </div>
+        <div class="col-lg-7">
+          <nav class="nav footer-nav justify-content-lg-end mb-3">
+            <a class="nav-link" href="#hero">Home</a>
+            <a class="nav-link" href="#features">Features</a>
+            <a class="nav-link" href="#architecture">Architecture</a>
+            <a class="nav-link" href="#contact">Contact</a>
+            <a class="nav-link" href="index.html">AgileSecOps</a>
+          </nav>
+          <p class="text-muted mb-0 text-lg-end">&copy; <span id="currentYear"></span> AgileSecOps. All Rights Reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <a href="#hero" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Constable Pipeline Animation -->
+  <script>
+  (function(){
+    const rail     = document.getElementById('rail');
+    const list     = document.getElementById('list');
+    const rlist    = document.getElementById('rlist');
+    const forward  = document.getElementById('forward');
+    const upstream = document.getElementById('upstream');
+    const ret      = document.getElementById('return');
+    const layer    = document.getElementById('packets');
+    const servedEl = document.getElementById('servedN');
+    const blockEl  = document.getElementById('blockN');
+    const totalEl  = document.getElementById('totalN');
+    if (!rail) return;
+
+    const stages   = Array.from(list.querySelectorAll('.pipe-stage'));
+    const rstages  = Array.from(rlist.querySelectorAll('.pipe-rstage'));
+    const entryDot = document.querySelector('.pipe-entry .pipe-dot');
+    const fwdDot   = forward.querySelector('.pipe-dot');
+    const upDot    = upstream.querySelector('.pipe-dot');
+    const retDot   = ret.querySelector('.pipe-dot');
+
+    // Each threat is caught at the request stage (1-based) that detects it.
+    const ITEMS = [
+      { tag:"worker pool saturated",        catch:1,  tone:"gold" },
+      { tag:"request flood",                catch:2,  tone:"gold" },
+      { tag:"FireHOL L1 match",             catch:3,  tone:"red"  },
+      { tag:"geo-blocked origin",           catch:4,  tone:"red"  },
+      { tag:"CINS Army reputation",         catch:5,  tone:"red"  },
+      { tag:"scan velocity exceeded",       catch:6,  tone:"red"  },
+      { tag:"wpscan user-agent",            catch:7,  tone:"red"  },
+      { tag:"endpoint threshold",           catch:8,  tone:"gold" },
+      { tag:"missing credentials",          catch:9,  tone:"red"  },
+      { tag:"TRACE method blocked",         catch:10, tone:"red"  },
+      { tag:"oversized headers",            catch:11, tone:"gold" },
+      { tag:"path traversal  ../",          catch:12, tone:"red"  },
+      { tag:"${jndi:ldap}  CVE-2021-44228", catch:13, tone:"crit" },
+      { tag:"/actuator probe",              catch:14, tone:"red"  },
+      { tag:"body over max_bytes",          catch:15, tone:"gold" },
+      { tag:"regex backtrack timeout",      catch:16, tone:"gold" },
+      { tag:"PHP-CGI  CVE-2024-4577",       catch:17, tone:"crit" }
+    ];
+    const RESP_TAGS = { 0:"stack fingerprint masked", 2:"HSTS · CSP · XFO injected" };
+
+    let dotX=0, stageY=[], rStageY=[], entryY=0, fwdY=0, upY=0, retY=0;
+    let ready=false, started=false, active=0;
+    let served=0, block=0, total=47000 + Math.floor(Math.random()*900);
+
+    function center(el){
+      const r = el.getBoundingClientRect();
+      const b = rail.getBoundingClientRect();
+      return { x:r.left-b.left+r.width/2, y:r.top-b.top+r.height/2 };
+    }
+    function measure(){
+      if (rail.offsetWidth === 0) { ready=false; return; }
+      const e = center(entryDot);
+      dotX=e.x; entryY=e.y;
+      stageY  = stages.map(s => center(s.querySelector('.pipe-dot')).y);
+      rStageY = rstages.map(s => center(s.querySelector('.pipe-dot')).y);
+      fwdY = center(fwdDot).y;
+      upY  = center(upDot).y;
+      retY = center(retDot).y;
+      ready=true;
+    }
+    function updateFoot(){
+      servedEl.textContent = served.toLocaleString();
+      blockEl.textContent  = block.toLocaleString();
+      totalEl.textContent  = total.toLocaleString();
+    }
+
+    const TONE = {
+      red:  ['var(--pl-red)','rgba(220,80,80,0.16)'],
+      crit: ['var(--pl-crit)','rgba(232,118,74,0.16)'],
+      gold: ['var(--pl-gold)','rgba(32,192,115,0.16)'],
+      teal: ['var(--pl-teal)','rgba(79,184,196,0.16)']
+    };
+    function glow(dot, rgba){
+      dot.style.boxShadow = '0 0 8px 1px ' + rgba;
+      dot.style.borderColor = 'var(--pl-gold)';
+      setTimeout(()=>{ dot.style.boxShadow=''; dot.style.borderColor=''; }, 150);
+    }
+    function scan(i){ glow(stages[i].querySelector('.pipe-dot'), 'rgba(32,192,115,0.55)'); }
+    function rscan(j){
+      const dot = rstages[j].querySelector('.pipe-dot');
+      dot.style.boxShadow = '0 0 8px 1px rgba(79,184,196,0.6)';
+      dot.style.borderColor = 'var(--pl-teal)';
+      setTimeout(()=>{ dot.style.boxShadow=''; dot.style.borderColor=''; }, 160);
+    }
+    function floatTag(y, text, tone){
+      const t = document.createElement('div');
+      t.className = 'pipe-floattag';
+      t.textContent = text;
+      t.style.top = y + 'px';
+      t.style.color = TONE[tone][0];
+      t.style.background = TONE[tone][1];
+      layer.appendChild(t);
+      setTimeout(()=>t.remove(), 1000);
+    }
+    function hit(i, o){
+      const st = stages[i];
+      st.classList.add('hit');
+      const dot = st.querySelector('.pipe-dot');
+      const col = TONE[o.tone][0];
+      dot.style.background = col;
+      dot.style.borderColor = col;
+      dot.style.boxShadow = '0 0 12px 2px ' + TONE[o.tone][1].replace('0.16','0.7');
+      floatTag(stageY[i], o.tag, o.tone);
+      setTimeout(()=>{
+        st.classList.remove('hit');
+        dot.style.background=''; dot.style.borderColor=''; dot.style.boxShadow='';
+      }, 650);
+    }
+
+    function launch(){
+      if (!ready || active >= 6) return;
+      active++;
+
+      const clean = Math.random() < 0.32;
+      const o = clean ? null : ITEMS[Math.floor(Math.random()*ITEMS.length)];
+      const catchIdx = clean ? -1 : (o.catch - 1);
+      const last = stageY.length - 1;
+
+      const p = document.createElement('div');
+      p.className = 'packet';
+      p.style.left = dotX + 'px';
+      p.style.top  = entryY + 'px';
+      layer.appendChild(p);
+
+      total += Math.floor(Math.random()*5) + 1;
+      updateFoot();
+
+      function done(){ p.remove(); active--; }
+      let i = 0;
+
+      // response leg: origin → fingerprint → rewrite → headers → record → client
+      function respStep(j){
+        p.style.top = rStageY[j];
+        rscan(j);
+        if (RESP_TAGS[j] !== undefined) floatTag(rStageY[j], RESP_TAGS[j], 'teal');
+        if (j === rStageY.length - 1){
+          setTimeout(()=>{
+            p.style.top = retY;
+            ret.classList.add('ok');
+            setTimeout(()=>ret.classList.remove('ok'), 480);
+            served++; updateFoot();
+            setTimeout(()=>{ p.classList.add('burst'); setTimeout(done, 300); }, 150);
+          }, 80);
+          return;
+        }
+        setTimeout(()=>respStep(j+1), 95);
+      }
+
+      // hand off to upstream, receive response, flip the packet to a response
+      function handoff(){
+        p.style.top = fwdY;
+        setTimeout(()=>{
+          p.style.top = upY;
+          upstream.classList.add('recv');
+          setTimeout(()=>upstream.classList.remove('recv'), 520);
+          setTimeout(()=>{
+            p.classList.add('resp');     // request → response
+            respStep(0);
+          }, 200);                       // origin processing pause
+        }, 95);
+      }
+
+      function step(){
+        p.style.top = stageY[i];
+        scan(i);
+        if (i === catchIdx){
+          setTimeout(()=>{
+            hit(i, o);
+            p.classList.add(o.tone, 'burst');
+            block++; updateFoot();
+            setTimeout(done, 300);
+          }, 75);
+          return;
+        }
+        if (i === last){            // survived the gauntlet → round trip
+          setTimeout(handoff, 75);
+          return;
+        }
+        i++;
+        setTimeout(step, 60);
+      }
+      setTimeout(step, 90);
+    }
+
+    function staticView(){
+      [2,5,9,12,14].forEach((idx,k)=>{
+        const tones=['red','red','red','crit','gold'];
+        const tags=['FireHOL L1 match','scan velocity exceeded','missing credentials','${jndi:ldap}  CVE-2021-44228','body over max_bytes'];
+        hit(idx,{tone:tones[k],tag:tags[k]});
+      });
+      upstream.classList.add('recv');
+      ret.classList.add('ok');
+      const pr = document.createElement('div'); pr.className='packet resp';
+      pr.style.left=dotX+'px'; pr.style.top=rStageY[1]+'px'; layer.appendChild(pr);
+      const pc = document.createElement('div'); pc.className='packet green';
+      pc.style.left=dotX+'px'; pc.style.top=retY+'px'; layer.appendChild(pc);
+      served=29; block=63; updateFoot();
+    }
+
+    function start(){
+      if (started || !ready) return;
+      started = true;
+      updateFoot();
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        staticView();
+        return;
+      }
+      launch();
+      setTimeout(launch, 300);
+      setTimeout(launch, 620);
+      setInterval(launch, 700);
+    }
+
+    function init(){ measure(); start(); }
+
+    let t;
+    window.addEventListener('resize', ()=>{ clearTimeout(t); t=setTimeout(measure,150); });
+    window.addEventListener('load', init);
+    setTimeout(init, 400);
+  })();
+  </script>
+
+</body>
+
+</html>
