@@ -9,8 +9,8 @@
   <link rel="canonical" href="https://www.agilesecops.com/">
 
   <title>AgileSecOps - Penetration Testing & Information Security Consulting</title>
-  <meta content="AgileSecOps provides penetration testing, WAF implementation, and virtual CISO services for startups and small businesses. Protect your company with expert remote security professionals." name="description">
-  <meta content="penetration testing, information security, cybersecurity, WAF, virtual CISO, security consulting, HIPAA, SOC2, PCI compliance" name="keywords">
+  <meta content="AgileSecOps provides penetration testing, WAF implementation, and virtual CISO services for startups and small businesses — plus security software: Constable (intelligent security proxy) and Warden (secure browser terminals for SSH & AWS ECS). Protect your company with expert remote security professionals." name="description">
+  <meta content="penetration testing, information security, cybersecurity, WAF, virtual CISO, security consulting, HIPAA, SOC2, PCI compliance, Constable security proxy, Warden browser terminal, SSH access, AWS ECS, security software" name="keywords">
 
   <!-- Open Graph / Social Meta Tags -->
   <meta property="og:type" content="website">
@@ -105,6 +105,41 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Absolutely. Startups and small businesses are our primary focus. We understand the unique challenges of working with lean teams and tight budgets. Our services are designed to scale with your company as it grows."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Product Catalog Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "AgileSecOps Security Software",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "Constable",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Linux",
+          "description": "An intelligent security proxy that runs every inbound request through a 25-stage inspection gauntlet and inspects, rewrites, and hardens responses before returning them to the client.",
+          "url": "https://www.agilesecops.com/constable.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": "Warden",
+          "applicationCategory": "SecurityApplication",
+          "operatingSystem": "Linux, Docker",
+          "description": "A self-hosted, browser-based terminal for SSH servers and AWS ECS Fargate with passkey authentication, time-boxed access approvals, encrypted session recording, and live session sharing.",
+          "url": "https://www.agilesecops.com/warden.html"
         }
       }
     ]
@@ -268,6 +303,55 @@
                 </div>
                 <h5 class="card-title fw-bold">Virtual CISO</h5>
                 <p class="card-text text-muted mb-0">Fill that gap and provide guidance and direction for C-Level executives, security engineers, operations staff, and developers.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Software Section ======= -->
+    <section id="software" class="features-section">
+      <div class="container" data-aos="fade-up">
+        <div class="row mb-5">
+          <div class="col-md-8 col-xl-6">
+            <h3 class="heading fw-bold text-uppercase">Security Software</h3>
+            <p class="text-muted mb-0">Purpose-built security tools we design, build, and deploy &mdash; hardened in real engagements and ready to run on your own infrastructure.</p>
+          </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-lg-2">
+
+          <div class="col" data-aos="fade-up" data-aos-delay="100">
+            <div class="card feature-card h-100">
+              <div class="card-body d-flex flex-column">
+                <div class="bs-icon mb-3"><i class="bi bi-shield-fill-check"></i></div>
+                <h4 class="card-title fw-bold mb-1">Constable</h4>
+                <p class="text-success fw-semibold mb-2" style="font-size: 0.9rem;">Intelligent Security Proxy</p>
+                <p class="card-text text-muted">Every inbound request runs a 25-stage gauntlet &mdash; IP reputation, three-layer botnet detection, CVE-mapped rules, and adaptive scoring &mdash; then responses are inspected and header-hardened before returning to the client. Written in Go.</p>
+                <div class="trust-badges mt-2 mb-4">
+                  <span class="badge-item"><i class="bi bi-diagram-3"></i> 25-Stage Gauntlet</span>
+                  <span class="badge-item"><i class="bi bi-bug"></i> CVE Detection</span>
+                  <span class="badge-item"><i class="bi bi-robot"></i> Botnet Defense</span>
+                </div>
+                <a href="constable.html" class="btn btn-outline-success mt-auto align-self-start px-4">Explore Constable <i class="bi bi-arrow-right ms-1"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col" data-aos="fade-up" data-aos-delay="200">
+            <div class="card feature-card h-100">
+              <div class="card-body d-flex flex-column">
+                <div class="bs-icon mb-3"><i class="bi bi-terminal-fill"></i></div>
+                <h4 class="card-title fw-bold mb-1">Warden</h4>
+                <p class="text-success fw-semibold mb-2" style="font-size: 0.9rem;">Secure Browser Terminals for SSH &amp; AWS ECS</p>
+                <p class="card-text text-muted">Self-hosted, browser-based terminals for SSH servers and AWS ECS Fargate. Passkey authentication, time-boxed access approvals, encrypted session recording, and live session sharing &mdash; no browser extensions. Written in Go.</p>
+                <div class="trust-badges mt-2 mb-4">
+                  <span class="badge-item"><i class="bi bi-fingerprint"></i> Passkey Auth</span>
+                  <span class="badge-item"><i class="bi bi-stopwatch"></i> Access Approvals</span>
+                  <span class="badge-item"><i class="bi bi-record-circle"></i> Session Recording</span>
+                </div>
+                <a href="warden.html" class="btn btn-outline-success mt-auto align-self-start px-4">Explore Warden <i class="bi bi-arrow-right ms-1"></i></a>
               </div>
             </div>
           </div>
