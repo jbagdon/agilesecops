@@ -1,0 +1,2238 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://www.agilesecops.com/constable_docs.html">
+
+  <title>Constable Documentation &mdash; AgileSecOps</title>
+  <meta content="Complete documentation for Constable, the intelligent security proxy by AgileSecOps. Searchable reference for every config field — WAF rules, CVE detection, botnet detection, adaptive learning, TLS, Let's Encrypt, load balancing, and more." name="description">
+  <meta content="Constable documentation, security proxy docs, WAF config, CVE detection, botnet detection, adaptive learning, reverse proxy, AgileSecOps" name="keywords">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AgileSecOps">
+  <meta property="og:title" content="Constable Documentation — AgileSecOps">
+  <meta property="og:description" content="Searchable, complete reference for Constable, the intelligent security proxy. Every config field, with examples.">
+  <meta property="og:url" content="https://www.agilesecops.com/constable_docs.html">
+  <meta property="og:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --doc-bg:       #0b0f19;
+      --doc-surface:  #131a2b;
+      --doc-surface2: #0f1623;
+      --doc-border:   rgba(255, 255, 255, 0.08);
+      --doc-green:    #20c073;
+      --doc-green-dim:rgba(32, 192, 115, 0.12);
+      --doc-text:     #f7f8f9;
+      --doc-muted:    #9a9cab;
+      --doc-faint:    #5b6377;
+      --doc-crit:     #E8764A;
+      --doc-teal:     #4FB8C4;
+      --doc-mono:     'JetBrains Mono', 'Courier New', monospace;
+      --doc-sidebar-w: 290px;
+      --doc-toc-w: 220px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--doc-bg);
+      color: var(--doc-text);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── Top bar ─────────────────────────── */
+    .doc-topbar {
+      position: sticky; top: 0; z-index: 1030;
+      display: flex; align-items: center; gap: 1rem;
+      height: 60px; padding: 0 1.1rem;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--doc-border);
+    }
+    .doc-topbar .brand {
+      display: flex; align-items: center; gap: 0.55rem;
+      text-decoration: none; color: var(--doc-text); white-space: nowrap;
+    }
+    .doc-topbar .brand img { width: 34px; height: 34px; border-radius: 50%; }
+    .doc-topbar .brand b { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.05rem; }
+    .doc-topbar .brand .prod {
+      font-family: var(--doc-mono); font-size: 0.62rem; letter-spacing: 0.14em;
+      color: var(--doc-green); border: 1px solid var(--doc-green-dim);
+      background: var(--doc-green-dim); padding: 0.12rem 0.45rem; border-radius: 5px;
+      text-transform: uppercase;
+    }
+    .doc-topbar .top-links { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+    .doc-topbar .top-links a {
+      color: var(--doc-muted); text-decoration: none; font-size: 0.85rem;
+      padding: 0.35rem 0.7rem; border-radius: 6px; transition: color .15s, background .15s;
+    }
+    .doc-topbar .top-links a:hover { color: var(--doc-text); background: rgba(255,255,255,0.05); }
+    .doc-topbar .top-links a.cta {
+      background: var(--doc-green); color: #07130d; font-weight: 600;
+    }
+    .doc-topbar .top-links a.cta:hover { background: #2bd585; }
+
+    .menu-toggle {
+      display: none; background: none; border: 1px solid var(--doc-border);
+      color: var(--doc-text); border-radius: 7px; width: 38px; height: 38px;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+
+    /* ── Search box ──────────────────────── */
+    .doc-search {
+      position: relative; flex: 1; max-width: 460px;
+    }
+    .doc-search input {
+      width: 100%; background: var(--doc-surface); color: var(--doc-text);
+      border: 1px solid var(--doc-border); border-radius: 9px;
+      padding: 0.5rem 2.4rem 0.5rem 2.3rem; font-size: 0.9rem;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .doc-search input:focus {
+      outline: none; border-color: var(--doc-green);
+      box-shadow: 0 0 0 3px var(--doc-green-dim);
+    }
+    .doc-search input::placeholder { color: var(--doc-faint); }
+    .doc-search .si-icon {
+      position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%);
+      color: var(--doc-faint); pointer-events: none; font-size: 0.95rem;
+    }
+    .doc-search .si-kbd {
+      position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%);
+      font-family: var(--doc-mono); font-size: 0.62rem; color: var(--doc-faint);
+      border: 1px solid var(--doc-border); border-radius: 4px; padding: 0.05rem 0.32rem;
+      pointer-events: none;
+    }
+
+    /* search results dropdown */
+    .doc-results {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+      max-height: min(70vh, 560px); overflow-y: auto;
+      background: var(--doc-surface); border: 1px solid var(--doc-border);
+      border-radius: 11px; box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+      z-index: 1040; padding: 0.4rem;
+    }
+    .doc-results.open { display: block; }
+    .doc-results .res-meta {
+      font-family: var(--doc-mono); font-size: 0.66rem; letter-spacing: 0.08em;
+      color: var(--doc-faint); padding: 0.45rem 0.65rem 0.3rem; text-transform: uppercase;
+    }
+    .doc-result {
+      display: block; text-decoration: none; color: inherit;
+      padding: 0.55rem 0.65rem; border-radius: 8px; cursor: pointer;
+    }
+    .doc-result:hover, .doc-result.active { background: var(--doc-green-dim); }
+    .doc-result .r-crumb {
+      font-family: var(--doc-mono); font-size: 0.62rem; color: var(--doc-green);
+      letter-spacing: 0.04em; margin-bottom: 0.15rem;
+    }
+    .doc-result .r-title { font-weight: 600; font-size: 0.92rem; color: var(--doc-text); }
+    .doc-result .r-snip { font-size: 0.8rem; color: var(--doc-muted); margin-top: 0.12rem; line-height: 1.45; }
+    .doc-result mark { background: rgba(32, 192, 115, 0.32); color: #d7ffe9; padding: 0 1px; border-radius: 2px; }
+    .doc-noresults { padding: 1rem 0.8rem; color: var(--doc-muted); font-size: 0.88rem; }
+
+    /* ── Layout ──────────────────────────── */
+    .doc-layout {
+      display: grid;
+      grid-template-columns: var(--doc-sidebar-w) minmax(0, 1fr) var(--doc-toc-w);
+      max-width: 1500px; margin: 0 auto;
+    }
+
+    /* sidebar nav */
+    .doc-sidebar {
+      position: sticky; top: 60px; align-self: start;
+      height: calc(100vh - 60px); overflow-y: auto;
+      border-right: 1px solid var(--doc-border);
+      padding: 1.4rem 0.4rem 3rem 1.1rem;
+    }
+    .doc-nav-group { margin-bottom: 1.1rem; }
+    .doc-nav-group > .grp-title {
+      font-family: var(--doc-mono); font-size: 0.66rem; letter-spacing: 0.13em;
+      color: var(--doc-faint); text-transform: uppercase;
+      padding: 0.35rem 0.6rem; margin-top: 0.3rem;
+    }
+    .doc-nav-group a {
+      display: block; text-decoration: none; color: var(--doc-muted);
+      font-size: 0.86rem; padding: 0.32rem 0.7rem; border-radius: 7px;
+      border-left: 2px solid transparent; transition: color .12s, background .12s, border-color .12s;
+    }
+    .doc-nav-group a:hover { color: var(--doc-text); background: rgba(255,255,255,0.035); }
+    .doc-nav-group a.active {
+      color: var(--doc-green); background: var(--doc-green-dim);
+      border-left-color: var(--doc-green); font-weight: 500;
+    }
+    .doc-nav-group a.hidden-by-filter { display: none; }
+
+    /* main content */
+    .doc-content {
+      padding: 2.2rem clamp(1.1rem, 3.5vw, 3.2rem) 6rem;
+      min-width: 0;
+    }
+    .doc-content h1 {
+      font-family: 'Outfit', sans-serif; font-weight: 800;
+      font-size: clamp(1.8rem, 3.6vw, 2.5rem); letter-spacing: -0.015em;
+      margin-bottom: 0.6rem;
+    }
+    .doc-content h2 {
+      font-family: 'Outfit', sans-serif; font-weight: 700;
+      font-size: 1.65rem; margin: 0 0 1rem; padding-top: 0.4rem;
+      scroll-margin-top: 80px;
+    }
+    .doc-content h3 {
+      font-family: 'Outfit', sans-serif; font-weight: 600;
+      font-size: 1.18rem; margin: 2.2rem 0 0.7rem; color: var(--doc-text);
+      scroll-margin-top: 80px;
+    }
+    .doc-content h4 {
+      font-weight: 600; font-size: 1rem; margin: 1.5rem 0 0.5rem; color: #cfd2dc;
+      font-family: var(--doc-mono); letter-spacing: 0.01em;
+    }
+    .doc-content p { color: #c3c6d2; line-height: 1.72; margin-bottom: 1rem; }
+    .doc-content ul, .doc-content ol { color: #c3c6d2; line-height: 1.72; margin-bottom: 1rem; }
+    .doc-content li { margin-bottom: 0.3rem; }
+    .doc-content a { color: var(--doc-green); text-decoration: none; }
+    .doc-content a:hover { text-decoration: underline; }
+    .doc-content strong { color: var(--doc-text); }
+
+    .doc-section { margin-bottom: 3.4rem; border-bottom: 1px solid var(--doc-border); padding-bottom: 1.6rem; }
+    .doc-section:last-child { border-bottom: none; }
+    .doc-section .sec-lead { font-size: 1.02rem; color: var(--doc-muted); margin-bottom: 1.4rem; }
+
+    .anchor-h { position: relative; }
+    .anchor-h .alink {
+      opacity: 0; margin-left: 0.5rem; font-size: 0.75em; color: var(--doc-faint);
+      text-decoration: none; transition: opacity .12s;
+    }
+    .anchor-h:hover .alink { opacity: 1; }
+
+    /* code */
+    code {
+      font-family: var(--doc-mono); font-size: 0.84em;
+      background: rgba(32, 192, 115, 0.10); color: #7fe3b3;
+      padding: 0.1rem 0.38rem; border-radius: 5px;
+    }
+    pre {
+      background: var(--doc-surface2); border: 1px solid var(--doc-border);
+      border-radius: 11px; padding: 1.05rem 1.2rem; overflow-x: auto;
+      margin-bottom: 1.3rem; position: relative;
+    }
+    pre code {
+      background: none; color: #d6dae6; padding: 0; font-size: 0.82rem; line-height: 1.65;
+      display: block; white-space: pre;
+    }
+    pre .copy-btn {
+      position: absolute; top: 0.55rem; right: 0.55rem;
+      background: var(--doc-surface); border: 1px solid var(--doc-border);
+      color: var(--doc-muted); border-radius: 6px; font-size: 0.68rem;
+      padding: 0.2rem 0.5rem; cursor: pointer; opacity: 0; transition: opacity .12s, color .12s;
+      font-family: var(--doc-mono);
+    }
+    pre:hover .copy-btn { opacity: 1; }
+    pre .copy-btn:hover { color: var(--doc-green); border-color: var(--doc-green); }
+
+    /* tables */
+    .table-wrap { overflow-x: auto; margin-bottom: 1.4rem; border: 1px solid var(--doc-border); border-radius: 11px; }
+    table.doc-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 560px; }
+    table.doc-table th {
+      background: var(--doc-surface2); color: var(--doc-green);
+      font-family: var(--doc-mono); font-size: 0.68rem; letter-spacing: 0.06em;
+      text-transform: uppercase; text-align: left; padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--doc-border); white-space: nowrap;
+    }
+    table.doc-table td {
+      padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--doc-border);
+      color: #c3c6d2; vertical-align: top; line-height: 1.55;
+    }
+    table.doc-table tr:last-child td { border-bottom: none; }
+    table.doc-table td code { font-size: 0.8em; white-space: nowrap; }
+    table.doc-table td:first-child code { color: #7fe3b3; }
+
+    /* callouts */
+    .callout {
+      border: 1px solid var(--doc-border); border-left: 3px solid var(--doc-green);
+      background: rgba(32, 192, 115, 0.05); border-radius: 9px;
+      padding: 0.85rem 1.1rem; margin-bottom: 1.3rem; font-size: 0.9rem; color: #c3c6d2;
+    }
+    .callout.warn { border-left-color: var(--doc-crit); background: rgba(232, 118, 74, 0.06); }
+    .callout.info { border-left-color: var(--doc-teal); background: rgba(79, 184, 196, 0.06); }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout .co-tag {
+      font-family: var(--doc-mono); font-size: 0.66rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--doc-green); display: block; margin-bottom: 0.3rem;
+    }
+    .callout.warn .co-tag { color: var(--doc-crit); }
+    .callout.info .co-tag { color: var(--doc-teal); }
+
+    /* pills */
+    .pill {
+      display: inline-block; font-family: var(--doc-mono); font-size: 0.66rem;
+      letter-spacing: 0.04em; padding: 0.12rem 0.5rem; border-radius: 20px;
+      border: 1px solid var(--doc-border); color: var(--doc-muted); margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+    .pill.global { color: var(--doc-teal); border-color: rgba(79,184,196,0.4); }
+    .pill.vhost  { color: var(--doc-green); border-color: rgba(32,192,115,0.4); }
+    .pill.hard   { color: var(--doc-crit); border-color: rgba(232,118,74,0.4); }
+
+    /* right-side on-page TOC */
+    .doc-toc {
+      position: sticky; top: 60px; align-self: start;
+      height: calc(100vh - 60px); overflow-y: auto;
+      padding: 1.8rem 1rem 3rem; border-left: 1px solid var(--doc-border);
+    }
+    .doc-toc .toc-title {
+      font-family: var(--doc-mono); font-size: 0.64rem; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--doc-faint); margin-bottom: 0.7rem;
+    }
+    .doc-toc a {
+      display: block; text-decoration: none; color: var(--doc-muted);
+      font-size: 0.8rem; padding: 0.22rem 0.55rem; border-left: 2px solid transparent;
+      transition: color .12s, border-color .12s;
+    }
+    .doc-toc a:hover { color: var(--doc-text); }
+    .doc-toc a.active { color: var(--doc-green); border-left-color: var(--doc-green); }
+    .doc-toc a.lvl-h3 { padding-left: 1.25rem; font-size: 0.76rem; }
+
+    /* hero intro card */
+    .doc-hero {
+      background: linear-gradient(135deg, rgba(32,192,115,0.10), rgba(79,184,196,0.05));
+      border: 1px solid var(--doc-border); border-radius: 14px;
+      padding: 1.6rem 1.8rem; margin-bottom: 2.4rem;
+    }
+    .doc-hero .eyebrow {
+      font-family: var(--doc-mono); font-size: 0.68rem; letter-spacing: 0.16em;
+      color: var(--doc-green); text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .quick-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.9rem; margin: 1.6rem 0 0.4rem; }
+    .quick-card {
+      display: block; text-decoration: none; color: inherit;
+      background: var(--doc-surface); border: 1px solid var(--doc-border);
+      border-radius: 11px; padding: 1rem 1.1rem; transition: border-color .15s, transform .15s;
+    }
+    .quick-card:hover { border-color: var(--doc-green); transform: translateY(-2px); }
+    .quick-card i { font-size: 1.3rem; color: var(--doc-green); }
+    .quick-card .qc-t { font-weight: 600; margin: 0.45rem 0 0.2rem; font-size: 0.98rem; }
+    .quick-card .qc-d { font-size: 0.8rem; color: var(--doc-muted); line-height: 1.45; }
+
+    /* feature grid */
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 0.7rem; margin-bottom: 1.4rem; }
+    .feat-item { display: flex; gap: 0.6rem; align-items: flex-start; background: var(--doc-surface); border: 1px solid var(--doc-border); border-radius: 9px; padding: 0.7rem 0.85rem; }
+    .feat-item i { color: var(--doc-green); margin-top: 0.15rem; }
+    .feat-item span { font-size: 0.84rem; color: #c3c6d2; line-height: 1.4; }
+
+    /* scrollbars */
+    .doc-sidebar::-webkit-scrollbar, .doc-toc::-webkit-scrollbar, .doc-results::-webkit-scrollbar, pre::-webkit-scrollbar, .table-wrap::-webkit-scrollbar { width: 8px; height: 8px; }
+    .doc-sidebar::-webkit-scrollbar-thumb, .doc-toc::-webkit-scrollbar-thumb, .doc-results::-webkit-scrollbar-thumb, pre::-webkit-scrollbar-thumb, .table-wrap::-webkit-scrollbar-thumb { background: var(--doc-faint); border-radius: 4px; }
+
+    .doc-footer {
+      border-top: 1px solid var(--doc-border); margin-top: 3rem; padding-top: 1.6rem;
+      color: var(--doc-faint); font-size: 0.82rem;
+    }
+    .doc-footer a { color: var(--doc-muted); }
+
+    .sb-backdrop { display: none; }
+
+    /* ── Responsive ──────────────────────── */
+    @media (max-width: 1200px) {
+      .doc-layout { grid-template-columns: var(--doc-sidebar-w) minmax(0, 1fr); }
+      .doc-toc { display: none; }
+    }
+    @media (max-width: 860px) {
+      .doc-layout { grid-template-columns: minmax(0, 1fr); }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .doc-topbar .brand b { display: none; }
+      .doc-topbar .top-links .hide-sm { display: none; }
+      .doc-sidebar {
+        position: fixed; top: 60px; left: 0; bottom: 0; width: 86%; max-width: 330px;
+        height: calc(100vh - 60px); background: var(--doc-bg); z-index: 1035;
+        transform: translateX(-105%); transition: transform .22s ease; border-right: 1px solid var(--doc-border);
+      }
+      .doc-sidebar.open { transform: translateX(0); }
+      .sb-backdrop.show { display: block; position: fixed; inset: 60px 0 0 0; background: rgba(0,0,0,0.55); z-index: 1034; }
+    }
+    @media (max-width: 520px) {
+      .doc-search .si-kbd { display: none; }
+      .doc-topbar { gap: 0.6rem; padding: 0 0.7rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== Top bar ===== -->
+  <div class="doc-topbar">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation"><i class="bi bi-list"></i></button>
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.jpg" alt="AgileSecOps">
+      <b>AgileSecOps</b>
+      <span class="prod">Constable Docs</span>
+    </a>
+
+    <div class="doc-search" id="searchWrap">
+      <i class="bi bi-search si-icon"></i>
+      <input type="text" id="docSearch" placeholder="Search the docs…" autocomplete="off" spellcheck="false"
+             aria-label="Search documentation" role="combobox" aria-expanded="false" aria-controls="docResults">
+      <span class="si-kbd">/</span>
+      <div class="doc-results" id="docResults" role="listbox"></div>
+    </div>
+
+    <nav class="top-links">
+      <a class="hide-sm" href="constable.html">Product</a>
+      <a class="hide-sm" href="warden_docs.html">Warden Docs</a>
+      <a class="cta" href="index.html#contact">Get a Demo</a>
+    </nav>
+  </div>
+
+  <div class="sb-backdrop" id="sbBackdrop"></div>
+
+  <div class="doc-layout">
+
+    <!-- ===== Sidebar nav ===== -->
+    <aside class="doc-sidebar" id="sidebar">
+      <nav id="sideNav">
+        <div class="doc-nav-group">
+          <div class="grp-title">Getting Started</div>
+          <a href="#overview">Overview</a>
+          <a href="#quick-start">Quick Start</a>
+          <a href="#guided-setup">Guided Setup Path</a>
+          <a href="#remote-config">Remote Config (GitHub)</a>
+          <a href="#install-deb">Install from .deb</a>
+          <a href="#systemd">systemd Service</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Concepts</div>
+          <a href="#pipeline">Request Pipeline</a>
+          <a href="#multi-domain">Multi-Domain Hosting</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Core Config</div>
+          <a href="#core">Core Settings</a>
+          <a href="#blocking">Blocking Behavior</a>
+          <a href="#ip-lists">IP Allow / Block Lists</a>
+          <a href="#rate-limit">Rate Limiting</a>
+          <a href="#request-limits">Request Limits</a>
+          <a href="#methods">Allowed Methods</a>
+          <a href="#logging">Logging</a>
+          <a href="#request-id">Request ID</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">WAF Rules</div>
+          <a href="#rules">Rules Overview</a>
+          <a href="#url-rules">url_rules</a>
+          <a href="#header-rules">header_rules</a>
+          <a href="#body-rules">body_rules</a>
+          <a href="#response-body-rules">response_body_rules</a>
+          <a href="#path-rules">Per-Path Rules</a>
+          <a href="#conditional-rules">Conditional Rules</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Threat Intel</div>
+          <a href="#cve-detection">CVE Detection</a>
+          <a href="#stack-awareness">Stack Awareness</a>
+          <a href="#botnet">Botnet Detection</a>
+          <a href="#geoip">GeoIP Blocking</a>
+          <a href="#learn-mode">Learn Mode</a>
+          <a href="#adaptive">Adaptive Learning</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Traffic & Delivery</div>
+          <a href="#upstreams">Upstreams & Load Balancing</a>
+          <a href="#health-checks">Health Checks</a>
+          <a href="#caching">Response Caching</a>
+          <a href="#gzip">Gzip Compression</a>
+          <a href="#security-headers">Security Headers</a>
+          <a href="#remove-headers">Remove Response Headers</a>
+          <a href="#response-rewrites">Response Rewrites</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">TLS & Auth</div>
+          <a href="#tls">TLS Termination</a>
+          <a href="#lets-encrypt">Let's Encrypt</a>
+          <a href="#redirects">HTTP/WWW Redirects</a>
+          <a href="#auth">Authentication</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Operations</div>
+          <a href="#metrics">Prometheus Metrics</a>
+          <a href="#peers">Peer Block Sync</a>
+          <a href="#hardening">Production Hardening</a>
+          <a href="#ai-report">Daily AI Report</a>
+          <a href="#full-example">Full config.json</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ===== Main content ===== -->
+    <main class="doc-content" id="content">
+
+      <!-- OVERVIEW -->
+      <section class="doc-section" id="overview" data-crumb="Getting Started">
+        <h1>Constable Documentation</h1>
+        <div class="doc-hero">
+          <div class="eyebrow">Intelligent Security Proxy &middot; AgileSecOps</div>
+          <p style="font-size:1.05rem; margin-bottom:0.4rem;">
+            <strong>Constable</strong> is a single-binary Go reverse proxy with WAF-like request inspection. It sits in front of
+            one or more upstream targets and blocks or logs requests matching configurable regex rules applied to URLs, headers,
+            and request/response bodies — then inspects, rewrites, and header-hardens the response on the way back.
+          </p>
+          <p style="margin-bottom:0;">
+            The proxy binary is <strong>stdlib-only — zero external dependencies</strong>. Config is hot-reloaded from disk every
+            3&nbsp;seconds (no restart for rules, limits, TLS domains, peers, cache, and more), and can optionally be pulled from a
+            remote GitHub URL.
+          </p>
+          <div class="quick-cards">
+            <a class="quick-card" href="#quick-start"><i class="bi bi-rocket-takeoff"></i><div class="qc-t">Quick Start</div><div class="qc-d">Install and run in two commands.</div></a>
+            <a class="quick-card" href="#guided-setup"><i class="bi bi-signpost-split"></i><div class="qc-t">Guided Setup</div><div class="qc-d">Observe → review → enforce.</div></a>
+            <a class="quick-card" href="#pipeline"><i class="bi bi-diagram-3"></i><div class="qc-t">Request Pipeline</div><div class="qc-d">The 25-stage gauntlet.</div></a>
+            <a class="quick-card" href="#full-example"><i class="bi bi-filetype-json"></i><div class="qc-t">Full Example</div><div class="qc-d">A complete config.json.</div></a>
+          </div>
+        </div>
+
+        <h2 class="anchor-h">What's in the box <a class="alink" href="#overview">#</a></h2>
+        <p class="sec-lead">Every capability below is configured in a single <code>config.json</code>. Enable only what you need; everything is off by default unless noted.</p>
+        <div class="feat-grid">
+          <div class="feat-item"><i class="bi bi-speedometer2"></i><span>Per-IP rate limiting & connection limits</span></div>
+          <div class="feat-item"><i class="bi bi-shield-lock"></i><span>IP allow / block lists & GeoIP blocking</span></div>
+          <div class="feat-item"><i class="bi bi-key"></i><span>Auth: Basic / API key / JWT / mTLS</span></div>
+          <div class="feat-item"><i class="bi bi-lock"></i><span>TLS termination + Let's Encrypt (HTTP-01 / DNS-01)</span></div>
+          <div class="feat-item"><i class="bi bi-diagram-2"></i><span>Multiple upstreams, load balancing, health checks</span></div>
+          <div class="feat-item"><i class="bi bi-hdd-stack"></i><span>Response caching & gzip compression</span></div>
+          <div class="feat-item"><i class="bi bi-bug"></i><span>Inline CVE detection with stack-aware exposure scoring</span></div>
+          <div class="feat-item"><i class="bi bi-robot"></i><span>3-layer botnet detection</span></div>
+          <div class="feat-item"><i class="bi bi-graph-up"></i><span>Adaptive learning (shadow-first anomaly scoring)</span></div>
+          <div class="feat-item"><i class="bi bi-broadcast-pin"></i><span>Peer-to-peer block sync across nodes</span></div>
+          <div class="feat-item"><i class="bi bi-bar-chart"></i><span>Prometheus metrics & SIEM/syslog streaming</span></div>
+          <div class="feat-item"><i class="bi bi-envelope-paper"></i><span>Daily AI security report</span></div>
+        </div>
+        <div class="callout info">
+          <span class="co-tag">New here?</span>
+          <p>Start with the <a href="#quick-start">Quick Start</a>, then follow the <a href="#guided-setup">Guided Setup Path</a> —
+          the recommended progression of <em>start minimal → run in observe mode → review → promote rules to blocking</em>.
+          This reference page documents every field exhaustively.</p>
+        </div>
+      </section>
+
+      <!-- QUICK START -->
+      <section class="doc-section" id="quick-start" data-crumb="Getting Started">
+        <h2 class="anchor-h">Quick Start <a class="alink" href="#quick-start">#</a></h2>
+        <p class="sec-lead">Two things are required: where to <strong>listen</strong> and where to <strong>forward</strong>.</p>
+
+        <h4>1. Install</h4>
+        <pre><code>sudo apt install ./constable_&lt;version&gt;_amd64.deb
+sudo systemctl start constable</code></pre>
+        <p>The package installs the binary to <code>/usr/bin/constable</code> and its config to <code>/etc/constable/config.json</code>. The config file is hot-reloaded every 3 seconds whenever it changes — no restart needed. See <a href="#install-deb">Install from .deb</a> for the full package layout.</p>
+
+        <h4>2. The bare-minimum config.json</h4>
+        <pre><code>{
+  "listen_addr": "127.0.0.1:8080",
+  "target_url": "http://127.0.0.1:9000"
+}</code></pre>
+        <p>That's a working reverse proxy. Every request to <code>127.0.0.1:8080</code> is forwarded to your backend. A health endpoint is available at <code>/healthz</code> (bypasses auth/WAF, rate-limited).</p>
+
+        <h4>Environment variables for config loading</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>CONSTABLE_CONFIG_PATH</code></td><td>Path to a local config file (overrides the default <code>config.json</code> location).</td></tr>
+              <tr><td><code>CONSTABLE_REMOTE_CONFIG_URL</code></td><td>Remote URL to poll for config — see <a href="#remote-config">Remote Config</a>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <span class="co-tag">Tip</span>
+          <p>Keep <code>listen_addr</code> on <code>127.0.0.1</code> until you've finished tuning, then move to <code>0.0.0.0</code> (or put it behind your existing edge) when you go live.</p>
+        </div>
+      </section>
+
+      <!-- GUIDED SETUP -->
+      <section class="doc-section" id="guided-setup" data-crumb="Getting Started">
+        <h2 class="anchor-h">Guided Setup Path <a class="alink" href="#guided-setup">#</a></h2>
+        <p class="sec-lead">The recommended progression: <strong>start minimal → observe with learning → review what it found → promote rules to blocking → layer on the rest.</strong></p>
+        <div class="callout warn">
+          <span class="co-tag">Guiding principle</span>
+          <p><strong>Never start in blocking mode on day one.</strong> Run in detect/observe first, look at what the proxy <em>would</em> have done against your real traffic, and only then turn on enforcement. This avoids blocking legitimate users while you tune.</p>
+        </div>
+
+        <h3 class="anchor-h">1. Add observability early <a class="alink" href="#guided-setup">#</a></h3>
+        <p>Turn on the metrics endpoint now — you'll need it to see what the learning modes are doing. Keep it local-only so it isn't exposed to the world:</p>
+        <pre><code>{
+  "listen_addr": "127.0.0.1:8080",
+  "target_url": "http://127.0.0.1:9000",
+  "metrics_addr": "127.0.0.1:9090",
+  "metrics_local_only": true,
+  "log_file": "/var/log/constable/constable.log",
+  "log_format": "json"
+}</code></pre>
+        <p><code>curl -s http://127.0.0.1:9090/metrics</code> gives you Prometheus counters; <code>json</code> log format is recommended for anything you'll grep or ship to a log pipeline.</p>
+
+        <h3 class="anchor-h">2. Run both learning systems in observe mode <a class="alink" href="#guided-setup">#</a></h3>
+        <p>Constable has two complementary learning systems. Run <strong>both, in observe/log mode first</strong>, then review.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>System</th><th>What it learns</th><th>Best for</th></tr></thead>
+            <tbody>
+              <tr><td><a href="#learn-mode">Learn Mode</a></td><td>The query-parameter <em>names</em> your app uses → a file of <code>mode:"log"</code> rules to review</td><td>Bootstrapping a static rule set from scratch</td></tr>
+              <tr><td><a href="#adaptive">Adaptive Learning</a></td><td>A live behavioral profile + a risk score per request</td><td>Ongoing anomaly detection that adapts over time</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Enable Learn Mode and Adaptive Learning in <code>shadow</code>, then drive <strong>representative, legitimate traffic</strong> through the proxy (real users, a staging suite, or a crawler).</p>
+
+        <h3 class="anchor-h">3. Detect: review what learning found <a class="alink" href="#guided-setup">#</a></h3>
+        <pre><code># Learn Mode candidate rules firing
+grep '"event":"DETECT"' constable.log | grep 'learned-'
+
+# Adaptive: what shadow mode WOULD have blocked
+curl -s http://127.0.0.1:9090/metrics | grep proxy_adaptive_would_block_total
+grep '"event":"ADAPTIVE"' constable.log</code></pre>
+        <p>You are looking for two things: the would-block counter rises with known-bad traffic, and stays at (or near) <strong>zero</strong> for legitimate traffic.</p>
+
+        <h3 class="anchor-h">4. Apply: promote rules to blocking <a class="alink" href="#guided-setup">#</a></h3>
+        <p>Only after review, copy trusted rules from <code>learned-rules.json</code> into <code>url_rules</code>/<code>header_rules</code> and change <code>"mode": "log"</code> to <code>"mode": "block"</code>; then disable Learn Mode. Promote Adaptive Learning to <code>enforce</code> via a <a href="#conditional-rules">conditional rule</a> with <code>trigger_on: "adaptive_score"</code>.</p>
+
+        <h3 class="anchor-h">5. Going to production — checklist <a class="alink" href="#guided-setup">#</a></h3>
+        <ul>
+          <li><code>listen_addr</code> bound where you want it (behind your edge/firewall as appropriate).</li>
+          <li><code>log_file</code> set, <code>log_format: "json"</code>, rotation configured.</li>
+          <li><code>metrics_addr</code> set with <code>metrics_local_only: true</code>.</li>
+          <li>Learn Mode disabled after rules were promoted.</li>
+          <li>Adaptive Learning ran in <code>shadow</code> for a full traffic cycle before <code>enforce</code>.</li>
+          <li>Rules promoted to <code>block</code> were watched in <code>log</code> first.</li>
+          <li>Secrets supplied via <code>$ENV{VAR}</code> expansion, not hard-coded.</li>
+          <li>Running under systemd with restart-on-failure.</li>
+        </ul>
+      </section>
+
+      <!-- REMOTE CONFIG -->
+      <section class="doc-section" id="remote-config" data-crumb="Getting Started">
+        <h2 class="anchor-h">Remote Config from GitHub <a class="alink" href="#remote-config">#</a></h2>
+        <p class="sec-lead">The proxy can poll a remote URL (e.g. a raw GitHub file) and reload automatically when the content changes.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Required</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>CONSTABLE_REMOTE_CONFIG_URL</code></td><td>yes</td><td>—</td><td>Full URL to poll. <strong>Must be <code>https</code></strong> — plaintext is refused at startup unless the allow-http flag is set. Redirects to internal/loopback/metadata addresses are blocked.</td></tr>
+              <tr><td><code>CONSTABLE_REMOTE_CONFIG_TOKEN</code></td><td>no</td><td>—</td><td>GitHub token for private repos (sent as <code>Authorization: token &lt;value&gt;</code>). Also raises the rate limit from 60 to 5,000 req/hour.</td></tr>
+              <tr><td><code>CONSTABLE_REMOTE_CONFIG_INTERVAL</code></td><td>no</td><td><code>60</code></td><td>Poll interval in seconds.</td></tr>
+              <tr><td><code>CONSTABLE_REMOTE_CONFIG_ALLOW_HTTP</code></td><td>no</td><td>—</td><td>Set to <code>1</code> to allow a plaintext <code>http://</code> URL (insecure; logs a loud warning).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>export CONSTABLE_REMOTE_CONFIG_URL="https://raw.githubusercontent.com/you/repo/main/proxy.json"
+export CONSTABLE_REMOTE_CONFIG_TOKEN="ghp_xxxxxxxxxxxx"   # optional, for private repos
+export CONSTABLE_REMOTE_CONFIG_INTERVAL=60                # optional, default 60
+./constable</code></pre>
+
+        <h4>How it works</h4>
+        <ol>
+          <li>The local <code>config.json</code> is always loaded first as the initial/fallback config.</li>
+          <li>On startup the proxy fetches the remote URL; on success it applies the remote config and writes it back to the local file.</li>
+          <li>Every interval it polls using an <code>ETag</code> / <code>If-None-Match</code> header. GitHub returns <code>304 Not Modified</code> when unchanged — free requests that don't count against the rate limit.</li>
+          <li>When the file changes, the new config is validated and applied live, the local cache file is updated, and a reload line is logged.</li>
+          <li>If the remote fetch fails (network error, non-2xx, invalid JSON), the proxy logs a warning and continues with the current config unchanged.</li>
+        </ol>
+        <div class="callout">
+          <span class="co-tag">Suppressing poll log noise</span>
+          <p>Set <code>"remote_config_silent": true</code> to suppress routine poll / <code>304</code> lines; errors, <code>429</code> rate-limits, and <code>200 config applied</code> always log. This setting is hot-reloadable.</p>
+        </div>
+      </section>
+
+      <!-- INSTALL DEB -->
+      <section class="doc-section" id="install-deb" data-crumb="Getting Started">
+        <h2 class="anchor-h">Install from .deb (Debian/Ubuntu) <a class="alink" href="#install-deb">#</a></h2>
+        <p class="sec-lead">Constable is delivered as prebuilt <code>.deb</code> packages for <code>amd64</code> and <code>arm64</code>.</p>
+        <pre><code># install the package you were provided (match your host architecture)
+sudo apt install ./constable_&lt;version&gt;_amd64.deb
+sudo $EDITOR /etc/constable/config.json   # seeded from the shipped example on first install
+sudo systemctl start constable</code></pre>
+        <h4>What the package lays down</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Path</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>/usr/bin/constable</code></td><td>The proxy binary.</td></tr>
+              <tr><td><code>/etc/constable/config.json</code></td><td>Live config. Seeded from the example on first install; never overwritten on upgrade.</td></tr>
+              <tr><td><code>/etc/constable/config.json.example</code></td><td>Reference schema, refreshed every upgrade (dpkg conffile).</td></tr>
+              <tr><td><code>/lib/systemd/system/constable.service</code></td><td>systemd unit. Runs as the <code>constable</code> user with <code>CAP_NET_BIND_SERVICE</code>.</td></tr>
+              <tr><td><code>/var/lib/constable/</code></td><td>State dir (good place for the Let's Encrypt cache).</td></tr>
+              <tr><td><code>/var/log/constable/</code></td><td>Log dir.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The unit sets <code>CONSTABLE_CONFIG_PATH=/etc/constable/config.json</code> and is enabled on install. Upgrades preserve <code>config.json</code> and <code>try-restart</code> the service. <code>apt purge</code> removes the system user and config dir.</p>
+      </section>
+
+      <!-- SYSTEMD -->
+      <section class="doc-section" id="systemd" data-crumb="Getting Started">
+        <h2 class="anchor-h">Running as a systemd Service <a class="alink" href="#systemd">#</a></h2>
+        <p class="sec-lead">If you can't use the <code>.deb</code> directly (non-Debian distro, custom paths), this manual layout is what the package effectively does. The proxy is a single static binary, so it runs cleanly under systemd. Extract the binary and example config from the package you were provided with <code>dpkg-deb -x constable_&lt;version&gt;_amd64.deb ./extracted</code>.</p>
+
+        <h4>Lay out files</h4>
+        <pre><code>sudo useradd --system --home /opt/constable --shell /usr/sbin/nologin constable
+sudo mkdir -p /opt/constable /var/log/constable /var/lib/constable
+sudo install -m 0755 constable /opt/constable/proxy
+sudo install -m 0640 config.json.example /opt/constable/config.json   # then edit it
+sudo chown -R constable:constable /opt/constable /var/log/constable /var/lib/constable</code></pre>
+        <div class="callout warn">
+          <span class="co-tag">Permissions</span>
+          <p>Keep <code>config.json</code> group-readable by the <code>constable</code> user (mode <code>0640</code>, group <code>constable</code>). A root-owned <code>0600</code> file will make the service fail to read it.</p>
+        </div>
+
+        <h4>systemd unit — /etc/systemd/system/constable.service</h4>
+        <pre><code>[Unit]
+Description=Constable
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=constable
+Group=constable
+WorkingDirectory=/opt/constable
+ExecStart=/opt/constable/proxy
+EnvironmentFile=-/etc/constable.env
+Environment=CONSTABLE_CONFIG_PATH=/opt/constable/config.json
+Restart=on-failure
+RestartSec=2s
+LimitNOFILE=1048576
+
+# Allow binding 80/443 as non-root
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ReadWritePaths=/var/log/constable /var/lib/constable /opt/constable
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+        <p>The <code>[Install]</code> section is required — without it <code>systemctl enable</code> refuses the unit.</p>
+
+        <h4>Secrets in an env file (optional)</h4>
+        <p>Only needed if you've enabled the AI report, SMTP, or peer sync:</p>
+        <pre><code>sudo tee /etc/constable.env >/dev/null &lt;&lt;'EOF'
+ANTHROPIC_API_KEY=sk-ant-...
+SMTP_PASSWORD=...
+PEER_SYNC_KEY=...
+EOF
+sudo chmod 0600 /etc/constable.env
+sudo chown root:constable /etc/constable.env</code></pre>
+
+        <h4>Start and enable</h4>
+        <pre><code>sudo systemctl daemon-reload
+sudo systemctl enable --now constable
+sudo systemctl status constable
+sudo journalctl -u constable -f          # live logs</code></pre>
+        <div class="callout">
+          <span class="co-tag">Day-to-day</span>
+          <p>Edit the config and the proxy hot-reloads within ~3 seconds — no restart for rules, rate limits, peers, cache, gzip, or Let's Encrypt domains. <code>systemctl restart</code> only when you swap the binary or change values in the env file.</p>
+        </div>
+      </section>
+
+      <!-- PIPELINE -->
+      <section class="doc-section" id="pipeline" data-crumb="Concepts">
+        <h2 class="anchor-h">Request Processing Pipeline <a class="alink" href="#pipeline">#</a></h2>
+        <p class="sec-lead">Every incoming request passes through these checks <strong>in order</strong>. The first failure stops processing and returns the configured error response (default <code>403</code>).</p>
+        <pre><code>Incoming request
+      │
+ 1.  Generate / propagate Request ID
+ 2.  Health check endpoint  (/healthz)
+ 3.  ACME HTTP-01 challenge  (Let's Encrypt)
+ 4.  HTTP → HTTPS redirect
+ 5.  Acquire worker slot  → 503 on timeout
+ 6.  Rate limit check (per-IP)  → 429 if exceeded
+ 7.  IP allow / block list
+ 8.  GeoIP check
+ 9.  Botnet detection
+         Layer 1: IP reputation blocklists
+         Layer 2: Behavioral (error rate + path scan)
+         Layer 3: User-agent fingerprinting
+10.  Conditional rules  (per-endpoint threshold blocks)
+11.  Authentication  (Basic / API key / JWT)
+12.  HTTP method check
+13.  Header count and size limits
+14.  URL rules
+15.  Header rules
+16.  CVE detection — URL + headers  (named signatures, stack-scoped)
+17.  Per-path rules
+18.  Adaptive scoring  (shadow: log only; enforce: feed conditional rules)
+19.  Read request body  → 413 if over max_body_bytes
+20.  Body rules  → 408 on regex timeout
+21.  CVE detection — request body
+22.  Select upstream  (load balancer, health-aware)
+      │  ▼  Forward to upstream  ▼
+23.  Passive stack fingerprint + inspect response body
+24.  Apply response rewrites
+25.  Inject security headers / strip removed headers
+      │
+ Record against conditional + adaptive windows → Return to client</code></pre>
+        <div class="callout info">
+          <span class="co-tag">Rule modes</span>
+          <p><code>"mode": "log"</code> emits a <code>[DETECT]</code> line but does not block — the request continues. <code>"mode": "null"</code> silently drops the TCP connection without any response (mirrors iptables <code>DROP</code>), emitting <code>[DROP]</code>. CVE detections emit <code>[CVE_DETECT]</code> / <code>[CVE_BLOCK]</code>. Adaptive scoring never blocks inline — in <code>shadow</code> it only emits <code>[ADAPTIVE]</code>.</p>
+        </div>
+      </section>
+
+      <!-- MULTI-DOMAIN -->
+      <section class="doc-section" id="multi-domain" data-crumb="Concepts">
+        <h2 class="anchor-h">Multi-Domain Hosting <a class="alink" href="#multi-domain">#</a></h2>
+        <p class="sec-lead">One proxy can serve multiple distinct domains/subdomains, each with its own upstreams, rules, auth, methods, gzip, cache, and security headers. Add a <code>domains</code> map where each key is the <code>Host</code> header to match (lowercased, port stripped).</p>
+        <pre><code>{
+  "listen_addr": ":443",
+  "tls": { "listen_addr": ":443" },
+  "lets_encrypt": { "enabled": true, "email": "ops@example.com", "cache_dir": "/var/lib/constable/acme" },
+
+  "url_rules": [
+    { "label": "deny .env (global)", "pattern": "(?i)\\.env($|\\?)" }
+  ],
+
+  "domains": {
+    "api.example.com": {
+      "upstreams": [{ "url": "http://api-backend:8080" }],
+      "url_rules": [{ "label": "api: block /admin", "pattern": "(?i)^/admin" }],
+      "auth": { "api_key": { "enabled": true, "header": "X-API-Key", "keys": ["$ENV{API_KEY_PROD}"] } }
+    },
+    "www.example.com": {
+      "target_url": "http://www-backend:8080",
+      "gzip": { "enabled": true, "level": 6 }
+    }
+  }
+}</code></pre>
+
+        <h3 class="anchor-h">Per-Vhost vs Global <a class="alink" href="#multi-domain">#</a></h3>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Per-vhost (in <code>domains.*</code>)</th><th>Stays global (top-level only)</th></tr></thead>
+            <tbody>
+              <tr><td><code>target_url</code> / <code>upstreams</code> / <code>load_balance</code> / <code>preserve_host</code></td><td><code>rate_limit</code></td></tr>
+              <tr><td><code>url_rules</code> / <code>header_rules</code> / <code>body_rules</code> / <code>response_body_rules</code></td><td><code>botnet_detection</code></td></tr>
+              <tr><td><code>path_rules</code></td><td><code>conditional_rules</code></td></tr>
+              <tr><td><code>allowed_methods</code></td><td><code>geoip</code></td></tr>
+              <tr><td><code>auth</code></td><td><code>peers</code></td></tr>
+              <tr><td><code>security_headers</code> / <code>remove_response_headers</code></td><td><code>allowed_ips</code> / <code>blocked_ips</code></td></tr>
+              <tr><td><code>gzip</code> / <code>cache</code></td><td><code>tls</code> / <code>listen_addr</code> / <code>max_workers</code></td></tr>
+              <tr><td><code>inspect_get_body</code> / <code>max_body_bytes</code> / <code>allowed_redirect_hosts</code></td><td><code>lets_encrypt</code> (but SAN list auto-includes vhost keys)</td></tr>
+              <tr><td><code>response_rewrites</code> / <code>upstream_stack</code></td><td><code>health_check</code> / <code>trusted_proxies</code> / <code>ai_report</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Stateful subsystems (rate-limit, botnet, conditional rules, peer sync, GeoIP) intentionally stay global — they track cross-host attack signal. CVE detection is global too, but its <code>upstream_stack</code> declaration is per-vhost.</p>
+
+        <h3 class="anchor-h">Merge precedence <a class="alink" href="#multi-domain">#</a></h3>
+        <p>Per-request merge order is <strong>per-path rules &gt; per-domain block &gt; top-level config</strong>. Within the per-domain block, each overridable field uses <em>nil = inherit, non-nil = override</em>:</p>
+        <ul>
+          <li><strong>Slice fields</strong> (<code>url_rules</code>, etc.): absent / <code>null</code> ⇒ inherit top-level. A non-nil slice (even <code>[]</code>) <strong>replaces</strong> the top-level slice for that vhost.</li>
+          <li><strong>Pointer fields</strong> (<code>gzip</code>, <code>cache</code>, <code>auth</code>, …): absent ⇒ inherit; present ⇒ override.</li>
+          <li><strong><code>security_headers</code></strong>: absent map ⇒ inherit; present map ⇒ override (maps are not merged).</li>
+        </ul>
+        <div class="callout">
+          <span class="co-tag">Default vhost</span>
+          <p>Requests whose <code>Host</code> doesn't match any <code>domains</code> key fall through to the top-level config, which acts as the default vhost — so existing single-host configs work unchanged. To reject unknown hosts, leave <code>target_url</code> and <code>upstreams</code> empty at the top level and the proxy returns 502 for unmatched hosts.</p>
+        </div>
+      </section>
+
+      <!-- CORE -->
+      <section class="doc-section" id="core" data-crumb="Core Config">
+        <h2 class="anchor-h">Core Settings <a class="alink" href="#core">#</a></h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>listen_addr</code></td><td>string</td><td><span class="pill hard">required</span></td><td>Address to listen on, e.g. <code>":80"</code> or <code>"127.0.0.1:8000"</code>.</td></tr>
+              <tr><td><code>target_url</code></td><td>string</td><td>—</td><td>Single upstream origin, e.g. <code>"http://localhost:8080"</code>. Use <code>upstreams</code> for multiple.</td></tr>
+              <tr><td><code>max_workers</code></td><td>int</td><td><code>NumCPU×4</code></td><td>Max concurrent requests. Excess requests queue until <code>queue_timeout_ms</code>.</td></tr>
+              <tr><td><code>max_procs</code></td><td>int</td><td><code>0</code> (all CPUs)</td><td><code>GOMAXPROCS</code>. <code>0</code> uses all available CPUs.</td></tr>
+              <tr><td><code>queue_timeout_ms</code></td><td>int</td><td><code>5000</code></td><td>Milliseconds to wait for a worker slot before returning 503.</td></tr>
+              <tr><td><code>inspect_get_body</code></td><td>bool</td><td><code>false</code></td><td>Apply body rules to GET requests.</td></tr>
+              <tr><td><code>log_allowed</code></td><td>bool</td><td><code>false</code></td><td>Emit <code>[ALLOW]</code> log lines for requests that pass all checks.</td></tr>
+              <tr><td><code>preserve_host</code></td><td>bool</td><td><code>false</code></td><td>Forward the original <code>Host</code> header to the upstream instead of rewriting it.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- BLOCKING -->
+      <section class="doc-section" id="blocking" data-crumb="Core Config">
+        <h2 class="anchor-h">Blocking Behavior <a class="alink" href="#blocking">#</a></h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>block_status_code</code></td><td>int</td><td><code>403</code></td><td>HTTP status code returned when a request is blocked.</td></tr>
+              <tr><td><code>block_message</code></td><td>string</td><td><code>"Blocked by proxy policy"</code></td><td>Response body text when a request is blocked.</td></tr>
+              <tr><td><code>block_x_forwarded_for</code></td><td>bool</td><td><code>false</code></td><td>Also apply IP allow/block checks to <code>X-Forwarded-For</code> / <code>X-Real-IP</code>. Only honored when the value parses as a real IP and arrives via a configured <code>trusted_proxies</code> hop.</td></tr>
+              <tr><td><code>trusted_proxies</code></td><td>[]string</td><td><code>[]</code></td><td>IPs/CIDRs of trusted upstream proxies allowed to set <code>X-Forwarded-For</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout info">
+          <span class="co-tag">Forwarding headers sent upstream</span>
+          <p>The proxy is the sole authority for the <code>X-Forwarded-*</code> headers it sends to the backend: it overwrites <code>X-Forwarded-For</code> with its own trusted client-IP view, sets <code>X-Forwarded-Proto</code>/<code>X-Forwarded-Host</code> from its own state, and strips client-supplied <code>Forwarded</code>, <code>X-Forwarded-Scheme</code>, <code>X-Original-URL</code>/<code>-Host</code>, and <code>X-Rewrite-URL</code>. If you place this proxy behind another L7 hop, list that hop in <code>trusted_proxies</code>.</p>
+        </div>
+      </section>
+
+      <!-- IP LISTS -->
+      <section class="doc-section" id="ip-lists" data-crumb="Core Config">
+        <h2 class="anchor-h">IP Allow / Block Lists <a class="alink" href="#ip-lists">#</a></h2>
+        <p class="sec-lead">Exact IPs and CIDR ranges are both supported. If <code>allowed_ips</code> is non-empty, all IPs not in the list are blocked. The allow list takes precedence over the block list.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>allowed_ips</code></td><td>[]string</td><td><code>[]</code></td><td>If non-empty, only these IPs/CIDRs are allowed through.</td></tr>
+              <tr><td><code>blocked_ips</code></td><td>[]string</td><td><code>[]</code></td><td>These IPs/CIDRs are always blocked.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "allowed_ips": ["203.0.113.5", "198.51.100.0/24"],
+  "blocked_ips": ["192.0.2.100"]
+}</code></pre>
+        <p><code>allowed_ips</code> traffic takes precedence and bypasses adaptive scoring.</p>
+      </section>
+
+      <!-- RATE LIMIT -->
+      <section class="doc-section" id="rate-limit" data-crumb="Core Config">
+        <h2 class="anchor-h">Rate Limiting <a class="alink" href="#rate-limit">#</a></h2>
+        <p class="sec-lead">Per-IP token bucket rate limiter. Activates as soon as <code>requests_per_second</code> &gt; 0 — there is no separate <code>enabled</code> flag. Stale entries are cleaned up automatically.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>rate_limit.requests_per_second</code></td><td>float</td><td><code>0</code> (off)</td><td>Sustained request rate per IP.</td></tr>
+              <tr><td><code>rate_limit.burst</code></td><td>int</td><td><code>0</code></td><td>Maximum burst above the sustained rate.</td></tr>
+              <tr><td><code>rate_limit.cleanup_interval_sec</code></td><td>int</td><td><code>300</code></td><td>How often stale per-IP buckets are removed (seconds).</td></tr>
+              <tr><td><code>rate_limit.max_concurrent_per_ip</code></td><td>int</td><td><code>0</code></td><td>Caps simultaneously in-flight requests per IP (defeats slowloris-style connection holding). See <a href="#hardening">Production Hardening</a>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "rate_limit": {
+    "requests_per_second": 100,
+    "burst": 200,
+    "cleanup_interval_sec": 300
+  }
+}</code></pre>
+      </section>
+
+      <!-- REQUEST LIMITS -->
+      <section class="doc-section" id="request-limits" data-crumb="Core Config">
+        <h2 class="anchor-h">Request Limits <a class="alink" href="#request-limits">#</a></h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>max_body_bytes</code></td><td>int</td><td><code>10485760</code> (10 MB)</td><td>Maximum request body size. Returns 413 if exceeded.</td></tr>
+              <tr><td><code>max_header_bytes</code></td><td>int</td><td><code>0</code> (unlimited)</td><td>Maximum total size of all request headers in bytes.</td></tr>
+              <tr><td><code>max_headers</code></td><td>int</td><td><code>0</code> (unlimited)</td><td>Maximum number of request headers.</td></tr>
+              <tr><td><code>max_url_length</code></td><td>int</td><td><code>0</code> (unlimited)</td><td>Maximum URL length in bytes.</td></tr>
+              <tr><td><code>regex_timeout_ms</code></td><td>int</td><td><code>5000</code></td><td>Per-request deadline for body regex scanning. Returns 408 on timeout.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- METHODS -->
+      <section class="doc-section" id="methods" data-crumb="Core Config">
+        <h2 class="anchor-h">Allowed HTTP Methods <a class="alink" href="#methods">#</a></h2>
+        <p class="sec-lead">Global method whitelist. Requests using any method not in the list are blocked.</p>
+        <pre><code>{
+  "allowed_methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
+}</code></pre>
+      </section>
+
+      <!-- LOGGING -->
+      <section class="doc-section" id="logging" data-crumb="Core Config">
+        <h2 class="anchor-h">Logging <a class="alink" href="#logging">#</a></h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>log_format</code></td><td>string</td><td><code>"text"</code></td><td><code>"text"</code> for human-readable, <code>"json"</code> for structured JSON.</td></tr>
+              <tr><td><code>log_file</code></td><td>string</td><td><code>""</code></td><td>Path to a log file. Logs go to both stderr and this file. Empty = stderr only.</td></tr>
+              <tr><td><code>log_max_size_mb</code></td><td>int</td><td><code>0</code></td><td>Max log file size in MB before rotation. <code>0</code> disables rotation.</td></tr>
+              <tr><td><code>log_max_backups</code></td><td>int</td><td><code>0</code></td><td>Number of rotated files to keep. <code>0</code> keeps all.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>When <code>log_max_size_mb</code> is set, the proxy rotates the log file when it reaches the size. Rotated files are numbered sequentially (<code>constable.log.1</code>, <code>.2</code>, …) with <code>.1</code> the most recent. Rotation is handled internally — no reload or restart required.</p>
+      </section>
+
+      <!-- REQUEST ID -->
+      <section class="doc-section" id="request-id" data-crumb="Core Config">
+        <h2 class="anchor-h">Request ID <a class="alink" href="#request-id">#</a></h2>
+        <p class="sec-lead">A unique ID is generated for every request (or propagated from an incoming header) and attached to log lines, upstream requests, and responses for end-to-end tracing.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>request_id_header</code></td><td>string</td><td><code>"X-Request-ID"</code></td><td>Header name to read from incoming requests and write to upstream requests and responses.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RULES -->
+      <section class="doc-section" id="rules" data-crumb="WAF Rules">
+        <h2 class="anchor-h">Rules Overview <a class="alink" href="#rules">#</a></h2>
+        <p class="sec-lead">Rules are regex patterns applied to specific parts of the request or response. Each rule has:</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>label</code></td><td>string</td><td>yes</td><td>Human-readable name shown in logs.</td></tr>
+              <tr><td><code>pattern</code></td><td>string</td><td>yes</td><td>RE2 regular expression (max 4,096 chars).</td></tr>
+              <tr><td><code>mode</code></td><td>string</td><td>no</td><td><code>"block"</code> (default) rejects with the configured status. <code>"log"</code> emits a <code>[DETECT]</code> line but forwards. <code>"null"</code> silently drops the TCP connection (iptables DROP behavior).</td></tr>
+              <tr><td><code>exceptions</code></td><td>[]string</td><td>no</td><td>If any of these literal strings are present in the input, the rule is skipped entirely.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout info">
+          <span class="co-tag">Decode-aware matching</span>
+          <p><code>url_rules</code> are evaluated against <strong>both</strong> the raw (percent-encoded) URL and a fully-decoded view, so a payload can't slip past by alphanumeric percent-encoding. Before any rule runs, the proxy rejects (<code>400</code>) requests with encoded path separators at any decoding depth (<code>%2f</code>, <code>%252f</code>, <code>%5c</code>, backslash) or a <code>..</code> dot-segment — so the form the WAF inspects always matches the path the upstream resolves.</p>
+        </div>
+      </section>
+
+      <!-- URL RULES -->
+      <section class="doc-section" id="url-rules" data-crumb="WAF Rules">
+        <h2 class="anchor-h"><code>url_rules</code> <a class="alink" href="#url-rules">#</a></h2>
+        <p class="sec-lead">Applied to the full request URL including query string.</p>
+        <pre><code>{
+  "url_rules": [
+    { "label": "block .env files",
+      "pattern": "\\.env($|\\?)" },
+
+    { "label": "SQL injection in query string",
+      "pattern": "(?i)(select|insert|update|delete|drop|union).+(from|into|where|table)" },
+
+    { "label": "path traversal",
+      "pattern": "(?i)(\\.\\.[\\\\/]|%2e%2e[%2f%5c])" },
+
+    { "label": "sensitive file access",
+      "pattern": "(?i)\\.(htaccess|htpasswd|git|svn|bak|old|swp)($|[\\?/])" },
+
+    { "label": "debug and status endpoints",
+      "pattern": "(?i)/(phpinfo|server-status|server-info|elmah\\.axd|actuator|metrics)($|[\\?/])" },
+
+    { "label": "SSRF private IP in query param",
+      "pattern": "(?i)[?&][^=]+=https?://(127\\.|10\\.|192\\.168\\.|localhost)" },
+
+    { "label": "log access to /admin (detect only)",
+      "pattern": "(?i)^/admin", "mode": "log" },
+
+    { "label": "block /bad but allow known safe route",
+      "pattern": "(?i)/bad", "exceptions": ["badtest"] },
+
+    { "label": "silently drop /honeypot",
+      "pattern": "(?i)^/honeypot", "mode": "null" }
+  ]
+}</code></pre>
+      </section>
+
+      <!-- HEADER RULES -->
+      <section class="doc-section" id="header-rules" data-crumb="WAF Rules">
+        <h2 class="anchor-h"><code>header_rules</code> <a class="alink" href="#header-rules">#</a></h2>
+        <p class="sec-lead">Applied to the raw <code>Key: Value</code> string for each header.</p>
+        <pre><code>{
+  "header_rules": [
+    { "label": "block scanner user-agents",
+      "pattern": "(?i)User-Agent:.*(sqlmap|nikto|nmap|masscan|gobuster|ffuf|wfuzz|nuclei)" },
+
+    { "label": "XSS via Referer or Origin",
+      "pattern": "(?i)(Referer|Origin|X-Forwarded-Host):.*(<script|javascript:|data:text/html|vbscript:)" },
+
+    { "label": "CRLF header injection",
+      "pattern": "(%0d|%0a|\\\\r|\\\\n)" },
+
+    { "label": "Java deserialization content-type",
+      "pattern": "(?i)Content-Type:.*(application/x-java-serialized-object)" },
+
+    { "label": "empty Host header",
+      "pattern": "(?i)Host:\\s*$" }
+  ]
+}</code></pre>
+      </section>
+
+      <!-- BODY RULES -->
+      <section class="doc-section" id="body-rules" data-crumb="WAF Rules">
+        <h2 class="anchor-h"><code>body_rules</code> <a class="alink" href="#body-rules">#</a></h2>
+        <p class="sec-lead">Applied to the request body. Skipped for GET requests unless <code>inspect_get_body</code> is <code>true</code>.</p>
+        <pre><code>{
+  "body_rules": [
+    { "label": "SQL injection",
+      "pattern": "(?i)(select\\s.+from\\s|insert\\s+into\\s|drop\\s+table\\s|union\\s+select)" },
+
+    { "label": "XSS script tags",
+      "pattern": "(?i)<script[^>]*>" },
+
+    { "label": "command injection",
+      "pattern": "(?i)(;|\\||&&|`|\\$\\()\\s*(ls|cat|wget|curl|bash|sh|nc|whoami|id|uname)" },
+
+    { "label": "template injection (SSTI)",
+      "pattern": "(\\$\\{|\\{\\{|<%|%>|#\\{).*?(exec|import|system|eval|Runtime|getClass)" },
+
+    { "label": "log4shell JNDI",
+      "pattern": "(?i)\\$\\{jndi:(ldap|rmi|dns|iiop|corba|nds|http)://" },
+
+    { "label": "XXE external entity",
+      "pattern": "(?i)<!\\s*(DOCTYPE|ENTITY)[^>]*(SYSTEM|PUBLIC)" },
+
+    { "label": "PHP deserialization",
+      "pattern": "(?i)(O:\\d+:\"|a:\\d+:\\{|s:\\d+:\")" },
+
+    { "label": "credit card numbers",
+      "pattern": "\\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})\\b" },
+
+    { "label": "SSN pattern",
+      "pattern": "\\b[0-9]{3}-[0-9]{2}-[0-9]{4}\\b" }
+  ]
+}</code></pre>
+      </section>
+
+      <!-- RESPONSE BODY RULES -->
+      <section class="doc-section" id="response-body-rules" data-crumb="WAF Rules">
+        <h2 class="anchor-h"><code>response_body_rules</code> <a class="alink" href="#response-body-rules">#</a></h2>
+        <p class="sec-lead">Applied to the upstream response body. Gzip-compressed responses are transparently decompressed for inspection; the original compressed payload is forwarded unchanged.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>max_response_inspect_bytes</code></td><td>int</td><td><code>1048576</code> (1 MB)</td><td>Maximum response bytes to scan. Bytes beyond this limit are not inspected.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "response_body_rules": [
+    { "label": "block SSN in response",
+      "pattern": "\\b[0-9]{3}-[0-9]{2}-[0-9]{4}\\b" },
+
+    { "label": "block credit card in response",
+      "pattern": "\\b(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})\\b" },
+
+    { "label": "log WordPress failed login",
+      "pattern": "(?i)(The password you entered for the username|Unknown username|Invalid username)",
+      "mode": "log" }
+  ],
+  "max_response_inspect_bytes": 1048576
+}</code></pre>
+      </section>
+
+      <!-- PATH RULES -->
+      <section class="doc-section" id="path-rules" data-crumb="WAF Rules">
+        <h2 class="anchor-h">Per-Path Rules <a class="alink" href="#path-rules">#</a></h2>
+        <p class="sec-lead">Override or extend global rules for requests whose path matches a regex. Per-path rules are evaluated <strong>after</strong> global rules.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>label</code></td><td>string</td><td>Human-readable name.</td></tr>
+              <tr><td><code>path_pattern</code></td><td>string</td><td>RE2 regex matched against the request path (not query string).</td></tr>
+              <tr><td><code>allowed_methods</code></td><td>[]string</td><td>Method whitelist for this path only. Overrides global for matching requests.</td></tr>
+              <tr><td><code>inspect_get_body</code></td><td>bool</td><td>Override <code>inspect_get_body</code> for this path only.</td></tr>
+              <tr><td><code>cache</code></td><td>bool</td><td>Override global <code>cache.enabled</code> for this path. Omit to inherit.</td></tr>
+              <tr><td><code>gzip</code></td><td>bool</td><td>Override global <code>gzip.enabled</code> for this path. Omit to inherit.</td></tr>
+              <tr><td><code>url_rules</code> / <code>header_rules</code> / <code>body_rules</code></td><td>[]rule</td><td>Additional rules applied only to matching requests.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "path_rules": [
+    {
+      "label": "API endpoint",
+      "path_pattern": "^/api/",
+      "allowed_methods": ["GET", "POST", "PUT", "DELETE"],
+      "body_rules": [
+        { "label": "UNION SELECT", "pattern": "(?i)\\bunion\\b.+\\bselect\\b" }
+      ]
+    },
+    {
+      "label": "upload endpoint",
+      "path_pattern": "^/upload",
+      "allowed_methods": ["POST"],
+      "body_rules": [
+        { "label": "PHP opening tag", "pattern": "(?i)<\\?(php|=)" },
+        { "label": "webshell eval", "pattern": "(?i)eval\\s*\\(\\s*(base64_decode|gzinflate|str_rot13)" }
+      ]
+    },
+    { "label": "static assets", "path_pattern": "^/static/", "cache": true },
+    { "label": "auth endpoints (never cache)", "path_pattern": "^/(login|logout|auth)", "cache": false },
+    { "label": "downloads (skip gzip)", "path_pattern": "^/downloads/", "gzip": false }
+  ]
+}</code></pre>
+      </section>
+
+      <!-- CONDITIONAL RULES -->
+      <section class="doc-section" id="conditional-rules" data-crumb="WAF Rules">
+        <h2 class="anchor-h">Conditional Rules <a class="alink" href="#conditional-rules">#</a></h2>
+        <p class="sec-lead">Threshold-based control statements that track how many qualifying requests a single IP has made to a specific endpoint within a time window, then fire an action when that threshold is crossed. Use cases: brute-force login protection, credential-stuffing mitigation, failure-based rate limiting.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>label</code></td><td>string</td><td><span class="pill hard">required</span></td><td>Unique human-readable name shown in logs.</td></tr>
+              <tr><td><code>path_pattern</code></td><td>string</td><td>required*</td><td>RE2 regex matched against the path. Optional for <code>rule_detect</code> (defaults to <code>".*"</code>).</td></tr>
+              <tr><td><code>methods</code></td><td>[]string</td><td><code>[]</code> (any)</td><td>If non-empty, only these HTTP methods are counted.</td></tr>
+              <tr><td><code>trigger_on</code></td><td>string</td><td><code>"failure"</code></td><td><code>"failure"</code> = any 4xx/5xx; <code>"status_codes"</code> = codes in <code>status_codes</code>; <code>"rule_detect"</code> = a rule in <code>trigger_by_labels</code> fires <code>[DETECT]</code>; <code>"adaptive_score"</code> = corroborated adaptive verdict.</td></tr>
+              <tr><td><code>status_codes</code></td><td>[]int</td><td><code>[]</code></td><td>Specific codes to count (required when <code>trigger_on</code> is <code>"status_codes"</code>).</td></tr>
+              <tr><td><code>trigger_by_labels</code></td><td>[]string</td><td><code>[]</code></td><td>Rule labels to watch for <code>[DETECT]</code> events (required for <code>"rule_detect"</code>).</td></tr>
+              <tr><td><code>threshold</code></td><td>int</td><td><span class="pill hard">required</span></td><td>Number of qualifying events before the action fires.</td></tr>
+              <tr><td><code>window_sec</code></td><td>int</td><td><span class="pill hard">required</span></td><td>Sliding window length in seconds.</td></tr>
+              <tr><td><code>action</code></td><td>string</td><td><code>"block"</code></td><td><code>"block"</code> blocks the IP from <code>path_pattern</code> endpoints; <code>"block_global"</code> blocks proxy-wide.</td></tr>
+              <tr><td><code>block_duration_min</code></td><td>int</td><td><code>0</code></td><td>How long to block, in minutes. <code>0</code> = until the proxy restarts.</td></tr>
+              <tr><td><code>log_only</code></td><td>bool</td><td><code>false</code></td><td>Log without blocking. Use to tune thresholds before enforcing.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Brute-force protection on a login endpoint</h4>
+        <pre><code>{
+  "conditional_rules": [
+    {
+      "label": "login brute-force",
+      "path_pattern": "^/login$",
+      "methods": ["POST"],
+      "trigger_on": "failure",
+      "threshold": 3,
+      "window_sec": 1800,
+      "action": "block",
+      "block_duration_min": 60
+    }
+  ]
+}</code></pre>
+
+        <h4>Trigger on rule detection (content-inspection)</h4>
+        <pre><code>{
+  "response_body_rules": [
+    { "label": "log WordPress failed login",
+      "pattern": "(?i)(The password you entered for the username|Unknown username)",
+      "mode": "log" }
+  ],
+  "conditional_rules": [
+    {
+      "label": "wordpress login brute-force",
+      "trigger_on": "rule_detect",
+      "trigger_by_labels": ["log WordPress failed login"],
+      "threshold": 3,
+      "window_sec": 1800,
+      "action": "block",
+      "block_duration_min": 60
+    }
+  ]
+}</code></pre>
+        <div class="callout">
+          <span class="co-tag">On config reload</span>
+          <p>Active blocks are cleared and the new rules take effect immediately — letting you adjust thresholds and unblock IPs by editing the config without restarting.</p>
+        </div>
+      </section>
+
+      <!-- CVE DETECTION -->
+      <section class="doc-section" id="cve-detection" data-crumb="Threat Intel">
+        <h2 class="anchor-h">CVE Detection <a class="alink" href="#cve-detection">#</a></h2>
+        <p class="sec-lead">Inline, <strong>named, explainable</strong> detection of known-CVE exploitation. Where generic rules say <em>"this looks like an attack,"</em> CVE detection says <em>"this is the exploitation path for CVE-2021-44228 (Log4Shell), CVSS 10.0"</em> — and, with stack awareness, <em>"…you run Contact Form 7 5.8.1, which is &lt; 5.9, so you are EXPOSED."</em></p>
+        <p>Rules merge from three sources at load time:</p>
+        <ul>
+          <li>A <strong>built-in baseline catalog</strong> (Log4Shell, Spring4Shell, Struts2 OGNL, Shellshock, Confluence OGNL, plus <code>.env</code>/<code>.git</code> harvesting and WordPress user-enumeration recon) — works offline.</li>
+          <li>A <strong>feed</strong> of CVE rules. With <code>feed_url</code> empty (default), a bundled <code>cve-feed.json</code> (~400 signatures from CISA KEV ∩ nuclei-templates) loads with no outbound request. Set <code>feed_url</code> to poll a live feed.</li>
+          <li>Operator <strong><code>custom_rules</code></strong>.</li>
+        </ul>
+        <p>Matching is two-stage: a case-folding Aho-Corasick literal prefilter answers "could any rule plausibly match?" in one pass, and only survivors run their full RE2 regex.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>enabled</code></td><td>bool</td><td><code>false</code></td><td>Master switch.</td></tr>
+              <tr><td><code>mode</code></td><td>string</td><td><code>block</code></td><td>Default action when a rule omits its own mode (<code>block</code>/<code>log</code>/<code>null</code>).</td></tr>
+              <tr><td><code>require_stack_match</code></td><td>bool</td><td><code>false</code></td><td>Only evaluate a rule when its platform/component is present behind the upstream. Unknown stacks fail open. Ubiquitous payloads (Log4Shell etc.) are never scoped out.</td></tr>
+              <tr><td><code>block_when</code></td><td>string</td><td><code>always</code></td><td>Gate blocking on the exposure verdict: <code>always</code>, <code>exposed_or_unknown</code>, or <code>exposed</code>.</td></tr>
+              <tr><td><code>only_kev</code></td><td>bool</td><td><code>false</code></td><td>Load only rules flagged <code>kev: true</code> (CISA KEV catalog).</td></tr>
+              <tr><td><code>feed_url</code></td><td>string</td><td>—</td><td>Feed of <code>[]CVERule</code> JSON. Empty = bundled feed. <code>http(s)://</code> = remote poll. Bare path / <code>file://</code> = local file.</td></tr>
+              <tr><td><code>feed_token</code></td><td>string</td><td>—</td><td><code>$ENV{}</code>-expandable bearer token; redacted from the AI report.</td></tr>
+              <tr><td><code>feed_interval_sec</code></td><td>int</td><td><code>3600</code></td><td>Feed poll interval.</td></tr>
+              <tr><td><code>feed_allow_http</code></td><td>bool</td><td><code>false</code></td><td>Allow a plaintext <code>http://</code> feed URL (otherwise rejected).</td></tr>
+              <tr><td><code>disable_builtins</code></td><td>[]string</td><td>—</td><td>CVE ids to drop <strong>from the built-in catalog only</strong>.</td></tr>
+              <tr><td><code>disable</code></td><td>[]string</td><td>—</td><td>CVE ids to drop <strong>from any source</strong>.</td></tr>
+              <tr><td><code>custom_rules</code></td><td>[]CVERule</td><td>—</td><td>Operator-supplied rules.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{ "cve_detection": { "enabled": true, "mode": "block" } }</code></pre>
+        <p>A block emits <code>[CVE_BLOCK]</code>; a log-only hit emits <code>[CVE_DETECT]</code> (which also feeds conditional-rule <code>trigger_on: rule_detect</code>). A local-only <code>/cve-intel</code> endpoint returns the loaded rules, provenance, feed status, and per-host fingerprinted stacks.</p>
+      </section>
+
+      <!-- STACK AWARENESS -->
+      <section class="doc-section" id="stack-awareness" data-crumb="Threat Intel">
+        <h2 class="anchor-h">Stack Awareness <a class="alink" href="#stack-awareness">#</a></h2>
+        <p class="sec-lead">Because the proxy knows what runs behind each upstream, it (1) <strong>scopes</strong> the CVE ruleset to only what's deployed and (2) attaches an <strong>exposure verdict</strong> to every CVE hit. It's hybrid — declaration anchors, fingerprinting fills in.</p>
+        <ul>
+          <li><strong>Declared</strong> (<code>upstream_stack</code>, top-level or per <code>domains.&lt;host&gt;</code>): you state the <code>platform</code> and optionally <code>components</code> with versions. Declared versions override anything detected. Set <code>auto_detect: false</code> to rely on the declaration alone.</li>
+          <li><strong>Passively detected</strong>: as upstream responses pass through, the proxy reads <code>Server</code> / <code>X-Powered-By</code> / <code>X-Generator</code> headers, the <code>&lt;meta name="generator"&gt;</code> tag, and WordPress plugin asset versions — keyed per host.</li>
+        </ul>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>platform</code></td><td>string</td><td>e.g. <code>wordpress</code>, <code>apache</code>, <code>php</code>.</td></tr>
+              <tr><td><code>components</code></td><td>[]object</td><td><code>{ name, version }</code> declared versions (override detection).</td></tr>
+              <tr><td><code>auto_detect</code></td><td>bool</td><td><code>true</code> by default; <code>false</code> disables passive fingerprinting for this host.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Given a rule whose <code>stack.affected</code> is <code>&lt;5.9</code> and a host running <code>contact-form-7 5.8.1</code>, a probe is logged <code>exposed="yes"</code>; a patched <code>6.0.0</code> logs <code>exposed="no"</code>; an undetected version logs <code>exposed="unknown"</code> (never treated as not-exposed).</p>
+      </section>
+
+      <!-- BOTNET -->
+      <section class="doc-section" id="botnet" data-crumb="Threat Intel">
+        <h2 class="anchor-h">Botnet Detection <a class="alink" href="#botnet">#</a></h2>
+        <p class="sec-lead">Three-layer detection: IP reputation blocklists, behavioral auto-blocking, and user-agent fingerprinting.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable botnet detection.</td></tr>
+              <tr><td><code>log_only</code></td><td>bool</td><td><code>false</code></td><td>Detect but don't block — logs <code>[DETECT]</code>. Use to tune before enforcing.</td></tr>
+              <tr><td colspan="4"><strong>Layer 1 — IP reputation</strong></td></tr>
+              <tr><td><code>ip_blocklists</code></td><td>[]object</td><td><code>[]</code></td><td>Remote blocklists to fetch. Each has a <code>url</code> and <code>label</code>. Duplicates auto-deduplicated.</td></tr>
+              <tr><td><code>refresh_interval_min</code></td><td>int</td><td><code>60</code></td><td>Minutes between blocklist refreshes.</td></tr>
+              <tr><td colspan="4"><strong>Layer 2 — Behavioral</strong></td></tr>
+              <tr><td><code>behavioral_enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable behavioral auto-blocking.</td></tr>
+              <tr><td><code>error_threshold</code></td><td>int</td><td><code>20</code></td><td>4xx/5xx responses in the window before ban.</td></tr>
+              <tr><td><code>scan_threshold</code></td><td>int</td><td><code>100</code></td><td>Unique paths accessed in the window before ban.</td></tr>
+              <tr><td><code>window_sec</code></td><td>int</td><td><code>60</code></td><td>Tracking window length in seconds.</td></tr>
+              <tr><td><code>ban_duration_min</code></td><td>int</td><td><code>30</code></td><td>How long a behaviorally-banned IP stays blocked.</td></tr>
+              <tr><td><code>ignore_not_found_paths</code></td><td>[]string</td><td><code>[]</code></td><td>RE2 path patterns exempt from the error counter on 404 (still counts toward scan).</td></tr>
+              <tr><td colspan="4"><strong>Layer 3 — UA fingerprinting</strong></td></tr>
+              <tr><td><code>ua_fingerprint_enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable user-agent pattern matching.</td></tr>
+              <tr><td><code>ua_patterns</code></td><td>[]string</td><td>built-ins</td><td>RE2 patterns vs <code>User-Agent</code>. When non-empty, <strong>replaces</strong> the built-in list.</td></tr>
+              <tr><td><code>custom_ua_patterns</code></td><td>[]string</td><td><code>[]</code></td><td>Extra patterns always appended on top.</td></tr>
+              <tr><td><code>block_empty_ua</code></td><td>bool</td><td><code>false</code></td><td>Block requests with no <code>User-Agent</code> header.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <span class="co-tag">Tuning workflow</span>
+          <p>Start with <code>"log_only": true</code>, watch <code>[DETECT]</code> lines to confirm patterns aren't over-matching, then switch to <code>"log_only": false</code>. Use <code>\b</code> word boundaries in UA patterns to avoid false positives — <code>\bmozi\b</code> won't match <code>Mozilla</code>.</p>
+        </div>
+      </section>
+
+      <!-- GEOIP -->
+      <section class="doc-section" id="geoip" data-crumb="Threat Intel">
+        <h2 class="anchor-h">GeoIP Blocking <a class="alink" href="#geoip">#</a></h2>
+        <p class="sec-lead">Block or allow requests by country code using a CIDR-to-country CSV database.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>geoip.enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable GeoIP checking.</td></tr>
+              <tr><td><code>geoip.database_path</code></td><td>string</td><td><code>""</code></td><td>Path to a CSV file with columns <code>cidr,country_code</code>.</td></tr>
+              <tr><td><code>geoip.blocked_countries</code></td><td>[]string</td><td><code>[]</code></td><td>ISO 3166-1 alpha-2 codes to block.</td></tr>
+              <tr><td><code>geoip.allowed_countries</code></td><td>[]string</td><td><code>[]</code></td><td>If non-empty, only these codes are allowed through.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "geoip": {
+    "enabled": true,
+    "database_path": "/etc/constable/geoip.csv",
+    "blocked_countries": ["CN", "RU", "KP"]
+  }
+}</code></pre>
+        <p>CSV format — one CIDR per line with its country code: <code>1.0.0.0/24,AU</code></p>
+      </section>
+
+      <!-- LEARN MODE -->
+      <section class="doc-section" id="learn-mode" data-crumb="Threat Intel">
+        <h2 class="anchor-h">Learn Mode <a class="alink" href="#learn-mode">#</a></h2>
+        <p class="sec-lead">A WAF bootstrapper for new deployments. Enable it and let real traffic teach the proxy what query parameters your application uses. After the observation window it generates <code>mode:"log"</code> WAF rules targeting those parameters with SQLi, XSS, and path-traversal patterns, written to a file for review. It never blocks.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>enabled</code></td><td><code>false</code></td><td>Enable the traffic profiler.</td></tr>
+              <tr><td><code>window_sec</code></td><td><code>300</code></td><td>Observation window in seconds.</td></tr>
+              <tr><td><code>min_requests</code></td><td><code>100</code></td><td>Minimum requests before generating rules.</td></tr>
+              <tr><td><code>min_param_count</code></td><td><code>5</code></td><td>Minimum times a query param must appear.</td></tr>
+              <tr><td><code>max_rules_per_type</code></td><td><code>20</code></td><td>Cap on how many parameters get rules.</td></tr>
+              <tr><td><code>source_ips</code></td><td><code>[]</code></td><td>If non-empty, only learn from these source IPs / CIDRs. Empty = learn from all.</td></tr>
+              <tr><td><code>output_file</code></td><td><code>"learned-rules.json"</code></td><td>File to write generated rules.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "listen_addr": ":8000",
+  "target_url": "http://localhost:8080",
+  "learn_mode": { "enabled": true, "source_ips": ["10.0.0.0/8", "192.168.0.0/16"] }
+}</code></pre>
+        <div class="callout warn">
+          <span class="co-tag">Best practice — learn only from trusted traffic</span>
+          <p>Learn Mode shapes rules from whatever it observes, so malicious traffic during the window can skew the result. If you can't guarantee the learning traffic is clean, pin learning to your trusted source ranges with <code>source_ips</code>.</p>
+        </div>
+      </section>
+
+      <!-- ADAPTIVE -->
+      <section class="doc-section" id="adaptive" data-crumb="Threat Intel">
+        <h2 class="anchor-h">Adaptive Learning <a class="alink" href="#adaptive">#</a></h2>
+        <p class="sec-lead">Where Learn Mode is a one-shot rule <em>generator</em>, <code>adaptive_learning</code> is a <strong>continuous anomaly-scoring engine</strong> that keeps adapting to live traffic. It combines three signals into a per-request risk score: past attack styles, a learned profile of the application, and 4xx error indicators.</p>
+        <h4>Shadow-first, never blocks by default</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Mode</th><th>Behavior</th></tr></thead>
+            <tbody>
+              <tr><td><code>off</code></td><td>Engine not built (zero cost). Default.</td></tr>
+              <tr><td><code>observe</code></td><td>Learns and persists the model only. No scoring, no logs, never blocks.</td></tr>
+              <tr><td><code>shadow</code></td><td>Scores every request, emits <code>[ADAPTIVE]</code> + the <code>proxy_adaptive_would_block_total</code> metric, but <strong>never blocks</strong>. Run this while evaluating.</td></tr>
+              <tr><td><code>enforce</code></td><td>May block — but only by feeding a corroborated verdict to a <code>conditional_rules</code> entry.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Even in <code>enforce</code>, a block requires all of: <code>score &gt;= enforce_threshold</code>, at least <code>min_corroborating_signals</code> independent signal classes agreeing, and a mature path profile.</p>
+        <pre><code>"conditional_rules": [
+  { "label": "adaptive-enforce", "trigger_on": "adaptive_score",
+    "threshold": 3, "window_sec": 300, "action": "block", "block_duration_min": 30 }
+],
+"adaptive_learning": { "mode": "enforce", "warmup_sec": 86400 }</code></pre>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Default</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>mode</code></td><td><code>off</code></td><td><code>off</code> / <code>observe</code> / <code>shadow</code> / <code>enforce</code>.</td></tr>
+              <tr><td><code>model_file</code></td><td><code>learned-model.json</code></td><td>Persisted model path (stats only — no raw values).</td></tr>
+              <tr><td><code>warmup_sec</code></td><td><code>86400</code></td><td>Time before any path profile can be considered mature.</td></tr>
+              <tr><td><code>min_path_observations</code></td><td><code>200</code></td><td>Clean requests before a path profile matures.</td></tr>
+              <tr><td><code>min_param_observations</code></td><td><code>20</code></td><td>Observations before a param's value stats are trusted.</td></tr>
+              <tr><td><code>min_confidence</code></td><td><code>0.8</code></td><td>Minimum attribute confidence to score a deviation.</td></tr>
+              <tr><td><code>enforce_threshold</code></td><td><code>0.85</code></td><td>Combined score needed to (corroborated) block in enforce.</td></tr>
+              <tr><td><code>min_corroborating_signals</code></td><td><code>2</code></td><td>Independent signal classes that must agree to block.</td></tr>
+              <tr><td><code>decay_half_life_sec</code></td><td><code>604800</code></td><td>Decay half-life for profiles + attack labels (7 days).</td></tr>
+              <tr><td><code>snapshot_interval_sec</code></td><td><code>300</code></td><td>Model flush + decay sweep interval.</td></tr>
+              <tr><td><code>max_path_profiles</code></td><td><code>5000</code></td><td>Cap on distinct path templates (LRU).</td></tr>
+              <tr><td><code>exempt_paths</code></td><td><code>[]</code></td><td>Regexes; matching paths are never scored or learned.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Inspect the model via local-only endpoints on the metrics port: <code>GET /anomaly-model</code> (full dump) and <code>GET /anomaly-model/explain?path=/api/items</code> (one path). The model persists stats-only with decay applied for elapsed time, and <strong>survives config reloads</strong>.</p>
+      </section>
+
+      <!-- UPSTREAMS -->
+      <section class="doc-section" id="upstreams" data-crumb="Traffic & Delivery">
+        <h2 class="anchor-h">Upstreams & Load Balancing <a class="alink" href="#upstreams">#</a></h2>
+        <p class="sec-lead">When <code>upstreams</code> is set it takes precedence over <code>target_url</code>. Unhealthy nodes are skipped automatically when health checks are enabled.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>upstreams</code></td><td>[]object</td><td><code>[]</code></td><td>List of upstream targets. Each has a <code>url</code> and optional <code>weight</code>.</td></tr>
+              <tr><td><code>load_balance</code></td><td>string</td><td><code>"round-robin"</code></td><td><code>"round-robin"</code>, <code>"least-conn"</code>, or <code>"random"</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "upstreams": [
+    { "url": "http://10.0.0.1:8080", "weight": 2 },
+    { "url": "http://10.0.0.2:8080", "weight": 1 }
+  ],
+  "load_balance": "least-conn"
+}</code></pre>
+        <h4>Upstream transport tuning</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>upstream_dial_timeout_ms</code></td><td><code>5000</code></td><td>TCP dial timeout for new upstream connections.</td></tr>
+              <tr><td><code>upstream_keepalive_sec</code></td><td><code>30</code></td><td>TCP keep-alive interval on dialer.</td></tr>
+              <tr><td><code>upstream_response_header_timeout_ms</code></td><td><code>30000</code></td><td>Max wait for the upstream's response headers.</td></tr>
+              <tr><td><code>upstream_max_idle_conns</code></td><td><code>1024</code></td><td>Total idle connections kept across all upstreams.</td></tr>
+              <tr><td><code>upstream_max_idle_conns_per_host</code></td><td><code>256</code></td><td>Idle connections kept per host.</td></tr>
+              <tr><td><code>upstream_idle_conn_timeout_sec</code></td><td><code>90</code></td><td>How long an idle pooled connection stays before closing.</td></tr>
+              <tr><td><code>upstream_total_request_timeout_sec</code></td><td><code>0</code></td><td>When &gt; 0, caps the entire upstream forward (headers + body). <code>0</code> = no end-to-end limit.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>For HTTPS upstreams, TLS sessions are automatically resumed across connections (TLS 1.2 tickets, TLS 1.3 PSK) — no configuration needed.</p>
+      </section>
+
+      <!-- HEALTH CHECKS -->
+      <section class="doc-section" id="health-checks" data-crumb="Traffic & Delivery">
+        <h2 class="anchor-h">Health Checks <a class="alink" href="#health-checks">#</a></h2>
+        <p class="sec-lead">Periodically probe upstreams and remove unhealthy nodes from rotation.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>health_check.enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable background health probing.</td></tr>
+              <tr><td><code>health_check.interval_sec</code></td><td>int</td><td><code>10</code></td><td>Seconds between probes.</td></tr>
+              <tr><td><code>health_check.timeout_sec</code></td><td>int</td><td><code>5</code></td><td>HTTP timeout per probe in seconds.</td></tr>
+              <tr><td><code>health_check.path</code></td><td>string</td><td><code>"/"</code></td><td>Path probed on each upstream.</td></tr>
+              <tr><td><code>health_check.unhealthy_threshold</code></td><td>int</td><td><code>3</code></td><td>Consecutive failures before marking a node unhealthy.</td></tr>
+              <tr><td><code>health_check.endpoint_path</code></td><td>string</td><td><code>"/healthz"</code></td><td>Path the proxy itself answers for liveness (returns 200 OK).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CACHING -->
+      <section class="doc-section" id="caching" data-crumb="Traffic & Delivery">
+        <h2 class="anchor-h">Response Caching <a class="alink" href="#caching">#</a></h2>
+        <p class="sec-lead">In-memory response cache. Serves repeated GET/HEAD requests from cache without hitting the upstream. Responses are cached only when the request carries no credentials and the response is 2xx with no <code>Cache-Control: no-store</code>/<code>private</code> or <code>Set-Cookie</code>.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>cache.enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable response caching.</td></tr>
+              <tr><td><code>cache.ttl_sec</code></td><td>int</td><td><code>60</code></td><td>Time-to-live in seconds for each cached entry.</td></tr>
+              <tr><td><code>cache.max_entries</code></td><td>int</td><td><code>0</code> → capped at <code>100000</code></td><td>Maximum cached entries. <code>0</code> is treated as a bounded 100,000 cap (with a warning) so an attacker can't OOM the cache.</td></tr>
+              <tr><td><code>cache.max_body_bytes</code></td><td>int</td><td><code>1048576</code> (1 MB)</td><td>Max response body size to cache. Larger bodies are forwarded normally and never cached.</td></tr>
+              <tr><td><code>cache.x_cache_header</code></td><td>bool</td><td><code>false</code></td><td>Add <code>X-Cache: HIT</code>/<code>MISS</code> to responses.</td></tr>
+              <tr><td><code>cache.skip_cookies</code></td><td>[]string</td><td><code>[]</code></td><td>Cookie-name prefixes that disqualify a request from the cache (prefix match).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn">
+          <span class="co-tag">Per-user cookies</span>
+          <p>For sites that issue per-user cookies, configure <code>skip_cookies</code> — otherwise personalized responses can be served to other clients. e.g. <code>["wordpress_logged_in_", "wp-postpass_", "PHPSESSID"]</code>.</p>
+        </div>
+        <p>Cache log events: <code>CACHE_HIT</code> (served from cache) and <code>CACHE_STORE</code> (new response stored). Config reloads that change cache settings discard the old cache and start fresh.</p>
+      </section>
+
+      <!-- GZIP -->
+      <section class="doc-section" id="gzip" data-crumb="Traffic & Delivery">
+        <h2 class="anchor-h">Gzip Compression <a class="alink" href="#gzip">#</a></h2>
+        <p class="sec-lead">Compresses eligible upstream responses before sending them to clients that advertise <code>Accept-Encoding: gzip</code>. Works alongside the response cache (the cache stores uncompressed bytes and compresses on-the-fly).</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>gzip.enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable gzip compression.</td></tr>
+              <tr><td><code>gzip.level</code></td><td>int</td><td><code>0</code> (default)</td><td><code>1</code> = fastest, <code>9</code> = best, <code>0</code> = Go default (level 6).</td></tr>
+              <tr><td><code>gzip.exclude_types</code></td><td>[]string</td><td><code>[]</code></td><td>Content-Type substrings to skip.</td></tr>
+              <tr><td><code>gzip.exclude_extensions</code></td><td>[]string</td><td><code>[]</code></td><td>Request path extensions to skip (e.g. <code>".jpg"</code>, <code>".mp4"</code>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <span class="co-tag">Tip</span>
+          <p>Images, video, audio, and already-compressed formats gain little from gzip and may even grow slightly. Add them to <code>exclude_types</code> / <code>exclude_extensions</code> to save CPU. If the upstream already set <code>Content-Encoding</code>, the proxy passes it through unchanged.</p>
+        </div>
+      </section>
+
+      <!-- SECURITY HEADERS -->
+      <section class="doc-section" id="security-headers" data-crumb="Traffic & Delivery">
+        <h2 class="anchor-h">Security Response Headers <a class="alink" href="#security-headers">#</a></h2>
+        <p class="sec-lead">Key-value pairs injected into every proxied response.</p>
+        <pre><code>{
+  "security_headers": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "X-XSS-Protection": "1; mode=block",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains"
+  }
+}</code></pre>
+      </section>
+
+      <!-- REMOVE HEADERS -->
+      <section class="doc-section" id="remove-headers" data-crumb="Traffic & Delivery">
+        <h2 class="anchor-h">Remove Response Headers <a class="alink" href="#remove-headers">#</a></h2>
+        <p class="sec-lead">Strip specific headers from the upstream response before forwarding to the client.</p>
+        <pre><code>{
+  "remove_response_headers": ["Server", "X-Powered-By", "X-Generator"]
+}</code></pre>
+      </section>
+
+      <!-- RESPONSE REWRITES -->
+      <section class="doc-section" id="response-rewrites" data-crumb="Traffic & Delivery">
+        <h2 class="anchor-h">Response Rewrites <a class="alink" href="#response-rewrites">#</a></h2>
+        <p class="sec-lead">String replacements applied to the response body and <code>Location</code> headers. Useful when an upstream returns hardcoded internal URLs or IP addresses.</p>
+        <pre><code>{
+  "response_rewrites": [
+    { "find": "http://10.0.0.5",  "replace": "https://example.com" },
+    { "find": "https://10.0.0.5", "replace": "https://example.com" }
+  ]
+}</code></pre>
+      </section>
+
+      <!-- TLS -->
+      <section class="doc-section" id="tls" data-crumb="TLS & Auth">
+        <h2 class="anchor-h">TLS Termination <a class="alink" href="#tls">#</a></h2>
+        <p class="sec-lead">Manual TLS using your own certificate and key files.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>tls.listen_addr</code></td><td>string</td><td><code>":443"</code></td><td>Address for the TLS listener.</td></tr>
+              <tr><td><code>tls.cert_file</code></td><td>string</td><td><code>""</code></td><td>Path to PEM certificate file.</td></tr>
+              <tr><td><code>tls.key_file</code></td><td>string</td><td><code>""</code></td><td>Path to PEM private key file.</td></tr>
+              <tr><td><code>tls.min_version</code></td><td>string</td><td><code>"1.2"</code></td><td>Minimum TLS version: <code>"1.0"</code>–<code>"1.3"</code>.</td></tr>
+              <tr><td><code>tls.cipher_suites</code></td><td>[]string</td><td>Go defaults</td><td>Preferred cipher suites (TLS 1.0–1.2 only; TLS 1.3 fixed by Go).</td></tr>
+              <tr><td><code>tls.client_auth</code></td><td>string</td><td><code>"none"</code></td><td>mTLS: <code>none</code> / <code>request</code> / <code>require</code>. See <a href="#hardening">Hardening</a>.</td></tr>
+              <tr><td><code>tls.client_ca_file</code></td><td>string</td><td><code>""</code></td><td>CA to verify client certificates against (mTLS).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- LETS ENCRYPT -->
+      <section class="doc-section" id="lets-encrypt" data-crumb="TLS & Auth">
+        <h2 class="anchor-h">Let's Encrypt (Automatic TLS) <a class="alink" href="#lets-encrypt">#</a></h2>
+        <p class="sec-lead">Automatically obtain and renew certificates. Certs are cached to disk and renewed within 30 days of expiry.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>lets_encrypt.enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable automatic certificate management.</td></tr>
+              <tr><td><code>lets_encrypt.domains</code></td><td>[]string</td><td><code>[]</code></td><td>Domains to obtain a cert for. Every key in the <code>domains</code> map is also unioned into the SAN list automatically.</td></tr>
+              <tr><td><code>lets_encrypt.email</code></td><td>string</td><td><code>""</code></td><td>Contact email registered with Let's Encrypt.</td></tr>
+              <tr><td><code>lets_encrypt.cache_dir</code></td><td>string</td><td><code>"./certs"</code></td><td>Directory to store the account key and certificate.</td></tr>
+              <tr><td><code>lets_encrypt.staging</code></td><td>bool</td><td><code>false</code></td><td>Use the staging environment for testing.</td></tr>
+              <tr><td><code>lets_encrypt.challenge</code></td><td>string</td><td><code>"http"</code></td><td><code>"http"</code> (HTTP-01) or <code>"dns-cloudflare"</code> (DNS-01).</td></tr>
+              <tr><td><code>lets_encrypt.cloudflare.api_token</code></td><td>string</td><td><code>""</code></td><td>Cloudflare token with <code>Zone:DNS:Edit</code> (DNS-01 only).</td></tr>
+              <tr><td><code>lets_encrypt.cloudflare.zone_id</code></td><td>string</td><td><code>""</code></td><td>Cloudflare Zone ID (DNS-01 only).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{
+  "lets_encrypt": {
+    "enabled": true,
+    "domains": ["example.com", "*.example.com"],
+    "email": "admin@example.com",
+    "cache_dir": "/var/lib/constable/acme",
+    "challenge": "dns-cloudflare",
+    "cloudflare": { "api_token": "$ENV{CF_TOKEN}", "zone_id": "YOUR_ZONE_ID" }
+  }
+}</code></pre>
+        <div class="callout">
+          <span class="co-tag">Tip</span>
+          <p>Set <code>"staging": true</code> first to verify the setup without hitting rate limits, then switch to <code>false</code> — the proxy re-issues a trusted production certificate automatically within seconds. DNS-01 works behind firewalls and supports wildcard certificates.</p>
+        </div>
+      </section>
+
+      <!-- REDIRECTS -->
+      <section class="doc-section" id="redirects" data-crumb="TLS & Auth">
+        <h2 class="anchor-h">HTTP & WWW Redirects <a class="alink" href="#redirects">#</a></h2>
+        <p class="sec-lead">Issue 301 redirects from HTTP to HTTPS, and from the bare domain to <code>www.</code></p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>https_redirect</code></td><td>bool</td><td><code>false</code></td><td>Enable HTTP → HTTPS redirects.</td></tr>
+              <tr><td><code>https_redirect_addr</code></td><td>string</td><td><code>":80"</code></td><td>Address for the redirect listener. When equal to <code>listen_addr</code>, redirects are handled inline on the main listener.</td></tr>
+              <tr><td><code>www_redirect</code></td><td>bool</td><td><code>false</code></td><td>Redirect <code>example.com</code> → <code>www.example.com</code>.</td></tr>
+              <tr><td><code>allowed_redirect_hosts</code></td><td>[]string</td><td><code>[]</code></td><td>Explicit <code>Host</code> values that may appear in a redirect Location (open-redirect protection). Matched case-insensitively, port-stripped.</td></tr>
+              <tr><td><code>allow_any_redirect_host</code></td><td>bool</td><td><code>false</code></td><td>Legacy behavior of accepting any Host. Only set if an upstream layer already validates Host.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn">
+          <span class="co-tag">Open-redirect protection</span>
+          <p>Both redirects build the Location header from the request's <code>Host</code>. The allow-list resolves in order: <code>allowed_redirect_hosts</code> → <code>lets_encrypt.domains</code> → top-level <code>domains</code> map keys → otherwise deny with <code>400</code>. Without an allow-list an attacker could send <code>Host: evil.com</code> and turn the proxy into an open redirect.</p>
+        </div>
+      </section>
+
+      <!-- AUTH -->
+      <section class="doc-section" id="auth" data-crumb="TLS & Auth">
+        <h2 class="anchor-h">Authentication <a class="alink" href="#auth">#</a></h2>
+        <p class="sec-lead">Three auth methods are available; only one needs to be enabled at a time. <code>exempt_paths</code> lists path prefixes that bypass authentication entirely.</p>
+
+        <h3 class="anchor-h">Basic Auth <a class="alink" href="#auth">#</a></h3>
+        <p>Passwords are stored as <code>sha256:&lt;hex&gt;</code> hashes (unsalted) and compared in constant time.</p>
+        <pre><code># Generate a password hash
+echo -n "mypassword" | sha256sum</code></pre>
+        <pre><code>{
+  "auth": {
+    "basic": {
+      "enabled": true,
+      "realm": "My Proxy",
+      "users": { "alice": "sha256:89e0...f45e" },
+      "exempt_paths": ["/healthz", "/public"]
+    }
+  }
+}</code></pre>
+        <div class="callout warn">
+          <span class="co-tag">Threat model — unsalted SHA-256</span>
+          <p>The proxy is stdlib-only by design; bcrypt/argon2/scrypt live outside stdlib. Constant-time compare blocks online timing attacks, but a leaked config can be cracked offline at GPU speed against common passwords. Use unique, 16+-character random passwords. For high-value credentials, terminate auth at an upstream IdP (OIDC/SSO) and use API keys or JWT through this proxy.</p>
+        </div>
+
+        <h3 class="anchor-h">API Key Auth <a class="alink" href="#auth">#</a></h3>
+        <pre><code>{
+  "auth": {
+    "api_key": {
+      "enabled": true,
+      "header": "X-API-Key",
+      "keys": ["key-one-abc123", "key-two-def456"],
+      "exempt_paths": ["/healthz"]
+    }
+  }
+}</code></pre>
+
+        <h3 class="anchor-h">JWT Auth <a class="alink" href="#auth">#</a></h3>
+        <p>Supports HMAC algorithms <code>HS256</code>, <code>HS384</code>, <code>HS512</code>. The secret supports <code>$ENV{VAR}</code> expansion.</p>
+        <pre><code>{
+  "auth": {
+    "jwt": {
+      "enabled": true,
+      "secret": "$ENV{JWT_SECRET}",
+      "algorithm": "HS256",
+      "header": "Authorization",
+      "exempt_paths": ["/healthz", "/login"]
+    }
+  }
+}</code></pre>
+      </section>
+
+      <!-- METRICS -->
+      <section class="doc-section" id="metrics" data-crumb="Operations">
+        <h2 class="anchor-h">Prometheus Metrics <a class="alink" href="#metrics">#</a></h2>
+        <p class="sec-lead">Exposes a Prometheus-compatible <code>/metrics</code> endpoint with request counts, latency histograms, and block/allow totals — including CVE and adaptive-learning series. The same listener serves the local-only <code>/cve-intel</code> and <code>/anomaly-model</code> endpoints.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>metrics_addr</code></td><td>string</td><td><code>""</code> (disabled)</td><td>Address for the metrics listener, e.g. <code>"127.0.0.1:9090"</code>.</td></tr>
+              <tr><td><code>metrics_local_only</code></td><td>bool</td><td><code>false</code></td><td>Restrict metrics (and <code>/cve-intel</code> / <code>/anomaly-model</code>) to loopback connections only.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre><code>{ "metrics_addr": "127.0.0.1:9090", "metrics_local_only": true }</code></pre>
+      </section>
+
+      <!-- PEERS -->
+      <section class="doc-section" id="peers" data-crumb="Operations">
+        <h2 class="anchor-h">Peer-to-Peer Block Sync <a class="alink" href="#peers">#</a></h2>
+        <p class="sec-lead">When running multiple proxy instances, each node automatically propagates dynamic blocks (botnet behavioral bans and conditional-rule blocks) to its peers within seconds. Nodes also run a periodic full-reconciliation loop to catch missed events.</p>
+        <h4>Security model</h4>
+        <ul>
+          <li>All messages are <strong>HMAC-SHA256 signed</strong> with a shared secret.</li>
+          <li><strong>Timestamp replay protection</strong> rejects messages more than 30 seconds old.</li>
+          <li><strong>Nonce deduplication</strong> prevents the same message from being applied twice.</li>
+          <li><strong>TLS transport</strong> — the listener requires a certificate (falls back to the main proxy cert).</li>
+          <li><strong>Optional mutual TLS</strong> for peer identity verification.</li>
+        </ul>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>peers.enabled</code></td><td>bool</td><td><code>false</code></td><td>Enable peer sync.</td></tr>
+              <tr><td><code>peers.listen_addr</code></td><td>string</td><td><code>""</code></td><td>Address for this node's peer-sync listener. <strong>Required</strong> when enabled.</td></tr>
+              <tr><td><code>peers.shared_key</code></td><td>string</td><td><code>""</code></td><td>HMAC-SHA256 signing key shared by all peers. Supports <code>$ENV{VAR}</code>. <strong>Required</strong> — an empty key is rejected.</td></tr>
+              <tr><td><code>peers.peers</code></td><td>[]object</td><td><code>[]</code></td><td>List of peer nodes — each has an <code>address</code> and optional per-peer <code>shared_key</code> override.</td></tr>
+              <tr><td><code>peers.sync_interval_sec</code></td><td>int</td><td><code>60</code></td><td>How often each node pulls full state from peers to reconcile.</td></tr>
+              <tr><td><code>peers.cert_file</code> / <code>key_file</code></td><td>string</td><td><code>""</code></td><td>TLS cert/key for the listener (falls back to <code>tls.*</code>).</td></tr>
+              <tr><td><code>peers.peer_ca_cert</code></td><td>string</td><td><code>""</code></td><td>PEM CA to verify peer TLS certs (for self-signed certs).</td></tr>
+              <tr><td><code>peers.mutual_tls</code></td><td>bool</td><td><code>false</code></td><td>Present this node's cert as a client cert when connecting to peers.</td></tr>
+              <tr><td><code>peers.allow_plaintext</code></td><td>bool</td><td><code>false</code></td><td>Opt into plaintext HTTP when no TLS cert is set (trusted private networks only).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          <span class="co-tag">Peer-sourced bans are bounded</span>
+          <p>Entries received from peers are validated, capped per shard (a flooding peer can't exhaust memory), and given a bounded expiry (max 24h — never permanent), so a single compromised peer cannot pin a permanent cluster-wide ban.</p>
+        </div>
+      </section>
+
+      <!-- HARDENING -->
+      <section class="doc-section" id="hardening" data-crumb="Operations">
+        <h2 class="anchor-h">Production Hardening <a class="alink" href="#hardening">#</a></h2>
+        <p class="sec-lead">Advanced, production-oriented controls. All are off by default, hot-reloadable, and pure stdlib.</p>
+
+        <h4>Client-certificate (mTLS) auth</h4>
+        <p><code>tls.client_auth: "require"</code> rejects the handshake unless the client presents a cert chaining to <code>client_ca_file</code>; the verified subject is forwarded upstream as <code>X-Client-Cert-Subject</code>.</p>
+
+        <h4>Connection-level DDoS controls</h4>
+        <p><code>rate_limit.max_concurrent_per_ip</code> caps simultaneous in-flight requests per IP. Listener timeouts are tunable for slow-POST/slowloris defense: <code>read_header_timeout_ms</code> (10000), <code>read_timeout_ms</code> (30000), <code>write_timeout_ms</code> (60000), <code>idle_timeout_ms</code> (120000).</p>
+
+        <h4>Structured body inspection</h4>
+        <p><code>inspect_structured_body: true</code> decodes JSON / urlencoded-form / multipart bodies into individual field values and runs <code>body_rules</code> against each. <code>max_json_depth</code> (default 64) rejects pathologically nested JSON.</p>
+
+        <h4>Forward-auth / external authorization</h4>
+        <pre><code>"forward_auth": { "enabled": true, "url": "http://authz:9000/auth",
+  "copy_request_headers": ["Cookie","Authorization"], "copy_response_headers": ["X-Auth-User"] }</code></pre>
+        <p>A subrequest carries the original method/URI/host; 2xx allows, 401/403 denies, any other status or transport error <strong>fails closed</strong>.</p>
+
+        <h4>Runtime management API</h4>
+        <pre><code>"management": { "enabled": true, "token": "$ENV{ASP_ADMIN_TOKEN}" }</code></pre>
+        <p>Bearer-token + local-only admin endpoints on the metrics listener: <code>POST /admin/ban?ip=&lt;ip&gt;&amp;minutes=&lt;n&gt;</code>, <code>POST /admin/unban?ip=&lt;ip&gt;</code>, <code>GET /admin/bans</code>, <code>POST /admin/purge-cache</code>. Bans persist across config reloads.</p>
+
+        <h4>Outlier ejection / circuit breaking</h4>
+        <p><code>outlier_detection</code> ejects an upstream after <code>consecutive_5xx</code> (default 5) 5xx responses for <code>ejection_sec</code> (default 30) — catching backends that pass active probes but fail real requests. <code>max_ejection_percent</code> (default 50) caps simultaneous ejections; the last upstream is never ejected.</p>
+
+        <h4>Upstream retries</h4>
+        <p><code>upstream_retry</code> retries idempotent requests on transient transport errors (never on a returned status) up to <code>max_retries</code> with a <code>backoff_ms</code> delay.</p>
+
+        <h4>Adaptive concurrency / load shedding</h4>
+        <p><code>adaptive_concurrency</code> sheds requests (503) when in-flight exceeds a latency-steered limit — AIMD, bounded by <code>[min_limit, max_limit]</code>.</p>
+
+        <h4>Distributed tracing</h4>
+        <p><code>tracing.enabled</code> propagates a W3C <code>traceparent</code> to the upstream and logs a <code>TRACE</code> event linking <code>trace_id</code> to <code>request_id</code>. No OpenTelemetry SDK — pure stdlib.</p>
+
+        <h4>Real-time alerting webhooks</h4>
+        <p><code>alerting</code> POSTs to a webhook (generic JSON or Slack) when thresholds are crossed — <code>blocks_per_interval</code>, <code>rate_limited_per_interval</code>, <code>adaptive_would_block_per_tick</code>, or <code>alert_on_upstream_down</code>.</p>
+
+        <h4>SIEM / syslog streaming</h4>
+        <pre><code>"syslog": { "enabled": true, "network": "tcp+tls", "address": "siem.example.com:6514" }</code></pre>
+        <p>Mirrors every structured log event to a remote collector as RFC5424 frames over <code>udp</code> / <code>tcp</code> / <code>tcp+tls</code>.</p>
+
+        <h4>Bot challenge (proof-of-work)</h4>
+        <pre><code>"bot_challenge": { "enabled": true, "secret": "$ENV{ASP_BOT_SECRET}", "difficulty": 4, "cookie_ttl_sec": 3600 }</code></pre>
+        <p>Gates matching paths behind a JavaScript proof-of-work interstitial. Stateless (HMAC over client IP + time) — no server-side storage, no CAPTCHA service.</p>
+
+        <h4>Response DLP / PII redaction</h4>
+        <pre><code>"dlp": { "enabled": true, "mode": "redact", "builtins": true,
+  "patterns": [ { "label": "internal-token", "pattern": "INT-[A-Z0-9]{20}" } ] }</code></pre>
+        <p>Scans response bodies for secrets/PII and either redacts matches in-flight (<code>mode: "redact"</code>) or logs them. <code>builtins: true</code> enables a curated set (US SSN, credit cards, AWS keys, JWTs, PEM private keys).</p>
+      </section>
+
+      <!-- AI REPORT -->
+      <section class="doc-section" id="ai-report" data-crumb="Operations">
+        <h2 class="anchor-h">Daily AI Report <a class="alink" href="#ai-report">#</a></h2>
+        <p class="sec-lead">Once per day, the proxy ships the previous 24 hours of <code>constable.log</code> and the running config to the Claude API and emails the analysis — top threats, block/detect/error counts, per-rule performance, and concrete config-change recommendations. Disabled by default; the pipeline can never block proxy traffic.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Setting</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>ai_report.enabled</code></td><td><code>false</code></td><td>Master on/off switch.</td></tr>
+              <tr><td><code>ai_report.schedule_time</code></td><td><code>"08:00"</code></td><td>Daily fire time, <code>HH:MM</code> 24-hour, server local time.</td></tr>
+              <tr><td><code>ai_report.model</code></td><td><code>"claude-opus-4-7"</code></td><td>Anthropic model ID.</td></tr>
+              <tr><td><code>ai_report.api_key_env</code></td><td><code>"ANTHROPIC_API_KEY"</code></td><td>Env var holding the Anthropic API key (never read from config).</td></tr>
+              <tr><td><code>ai_report.max_tokens</code></td><td><code>4096</code></td><td>Output token cap on the Claude response.</td></tr>
+              <tr><td><code>ai_report.smtp_host</code></td><td>—</td><td>SMTP server hostname.</td></tr>
+              <tr><td><code>ai_report.smtp_port</code></td><td><code>587</code></td><td>SMTP port. STARTTLS auto-negotiated when advertised.</td></tr>
+              <tr><td><code>ai_report.smtp_user</code></td><td>—</td><td>SMTP username. Empty disables auth.</td></tr>
+              <tr><td><code>ai_report.smtp_password_env</code></td><td><code>"SMTP_PASSWORD"</code></td><td>Env var holding the SMTP password.</td></tr>
+              <tr><td><code>ai_report.from</code> / <code>to</code></td><td>—</td><td><code>From:</code> address and recipient list.</td></tr>
+              <tr><td><code>ai_report.trigger_path</code> / <code>trigger_token</code></td><td>empty</td><td>Optional metrics-listener path + bearer token to run the report on demand (<code>POST</code>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout info">
+          <span class="co-tag">Pre-send redaction</span>
+          <p>Before the config is shipped to Claude, the report blanks <code>auth.basic.users</code>, <code>auth.api_key.keys</code>, <code>auth.jwt.secret</code>, every per-domain <code>domains.*.auth</code> block, all <code>peers.shared_key</code> fields, the Cloudflare API token, the SMTP user, and the trigger token.</p>
+        </div>
+      </section>
+
+      <!-- FULL EXAMPLE -->
+      <section class="doc-section" id="full-example" data-crumb="Operations">
+        <h2 class="anchor-h">Complete config.json Example <a class="alink" href="#full-example">#</a></h2>
+        <p class="sec-lead">A representative configuration touching the most common subsystems. Trim it to what you need — everything not listed inherits its default.</p>
+        <pre><code>{
+  "listen_addr": ":80",
+  "target_url": "http://localhost:8080",
+  "max_workers": 64,
+  "preserve_host": true,
+
+  "block_status_code": 403,
+  "block_message": "Blocked by proxy policy",
+
+  "rate_limit": { "requests_per_second": 100, "burst": 200, "cleanup_interval_sec": 300 },
+
+  "max_body_bytes": 10485760,
+  "regex_timeout_ms": 2000,
+  "allowed_methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"],
+
+  "log_format": "json",
+  "log_file": "constable.log",
+  "log_max_size_mb": 100,
+  "log_max_backups": 5,
+
+  "metrics_addr": "127.0.0.1:9090",
+  "metrics_local_only": true,
+
+  "cache": {
+    "enabled": true, "ttl_sec": 300, "max_entries": 10000,
+    "skip_cookies": ["wordpress_logged_in_", "PHPSESSID"]
+  },
+  "gzip": { "enabled": true, "level": 6, "exclude_types": ["image/", "video/", "application/pdf"] },
+
+  "tls": { "listen_addr": ":443", "min_version": "1.2" },
+  "lets_encrypt": { "enabled": true, "domains": ["example.com"], "email": "admin@example.com",
+                    "cache_dir": "/var/lib/constable/acme", "challenge": "http" },
+  "https_redirect": true,
+  "allowed_redirect_hosts": ["example.com", "www.example.com"],
+
+  "security_headers": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin"
+  },
+  "remove_response_headers": ["Server", "X-Powered-By"],
+
+  "cve_detection": { "enabled": true, "mode": "block" },
+
+  "botnet_detection": {
+    "enabled": true, "log_only": false,
+    "ip_blocklists": [
+      { "url": "https://www.spamhaus.org/drop/drop.txt", "label": "Spamhaus DROP" }
+    ],
+    "behavioral_enabled": true, "error_threshold": 20, "scan_threshold": 100,
+    "ua_fingerprint_enabled": true
+  },
+
+  "url_rules": [
+    { "label": "block .env files",      "pattern": "\\.env($|\\?)" },
+    { "label": "path traversal",        "pattern": "(?i)(\\.\\.[\\\\/]|%2e%2e[%2f%5c])" },
+    { "label": "sensitive file access", "pattern": "(?i)\\.(htaccess|htpasswd|git|svn|bak)($|[\\?/])" }
+  ],
+  "header_rules": [
+    { "label": "block scanner user-agents", "pattern": "(?i)User-Agent:.*(sqlmap|nikto|nmap|nuclei)" }
+  ],
+  "body_rules": [
+    { "label": "log4shell JNDI", "pattern": "(?i)\\$\\{jndi:(ldap|rmi|dns)://" }
+  ],
+
+  "conditional_rules": [
+    {
+      "label": "login brute-force",
+      "path_pattern": "^/login$", "methods": ["POST"],
+      "trigger_on": "failure", "threshold": 3, "window_sec": 1800,
+      "action": "block", "block_duration_min": 60
+    }
+  ]
+}</code></pre>
+
+        <div class="callout">
+          <span class="co-tag">Where things are written</span>
+          <p><code>config.json</code> (you — hot-reloaded every 3s) · <code>learned-rules.json</code> (Learn Mode — candidate rules to review) · <code>learned-model.json</code> (Adaptive Learning — stats-only model) · <code>constable.log</code> (the proxy — structured event log, ingested by the daily AI report).</p>
+        </div>
+
+        <div class="doc-footer">
+          <p>This documentation covers installing, configuring, and operating Constable.
+          &middot; <a href="constable.html">Product overview</a> &middot; <a href="index.html#contact">Talk to AgileSecOps</a></p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===== On-page TOC ===== -->
+    <aside class="doc-toc" id="pageToc">
+      <div class="toc-title">On this page</div>
+      <nav id="tocNav"></nav>
+    </aside>
+
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* ---------- Build the search index from the DOM ---------- */
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.doc-section'));
+    var index = [];
+    sections.forEach(function (sec) {
+      var crumb = sec.getAttribute('data-crumb') || '';
+      // index each heading (h2, h3) within the section as a searchable unit
+      var headings = sec.querySelectorAll('h1, h2, h3');
+      headings.forEach(function (h, i) {
+        var id = h.closest('[id]') ? h.closest('[id]').id : sec.id;
+        // collect text up to the next heading of same/higher level for the snippet
+        var title = h.textContent.replace(/#$/, '').trim();
+        // gather body text of the section for the snippet/keywords
+        var bodyText = sec.textContent.replace(/\s+/g, ' ').trim();
+        index.push({
+          id: sec.id,
+          crumb: crumb,
+          title: title,
+          text: (title + ' ' + bodyText).toLowerCase(),
+          raw: bodyText
+        });
+      });
+    });
+    // de-dup by (id+title)
+    var seen = {};
+    index = index.filter(function (e) {
+      var k = e.id + '|' + e.title;
+      if (seen[k]) return false;
+      seen[k] = 1; return true;
+    });
+
+    var input = document.getElementById('docSearch');
+    var results = document.getElementById('docResults');
+    var sideLinks = Array.prototype.slice.call(document.querySelectorAll('#sideNav a'));
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+    function escapeReg(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+    function highlight(text, terms) {
+      var out = escapeHtml(text);
+      terms.forEach(function (t) {
+        if (!t) return;
+        var re = new RegExp('(' + escapeReg(t) + ')', 'ig');
+        out = out.replace(re, '<mark>$1</mark>');
+      });
+      return out;
+    }
+
+    function snippetFor(raw, terms) {
+      var lower = raw.toLowerCase();
+      var pos = -1;
+      for (var i = 0; i < terms.length; i++) {
+        var p = lower.indexOf(terms[i]);
+        if (p !== -1 && (pos === -1 || p < pos)) pos = p;
+      }
+      if (pos === -1) pos = 0;
+      var start = Math.max(0, pos - 60);
+      var end = Math.min(raw.length, pos + 140);
+      var snip = (start > 0 ? '…' : '') + raw.slice(start, end).trim() + (end < raw.length ? '…' : '');
+      return highlight(snip, terms);
+    }
+
+    var activeIdx = -1;
+    var currentMatches = [];
+
+    function runSearch(q) {
+      q = q.trim().toLowerCase();
+      activeIdx = -1;
+      if (!q) { closeResults(); filterSidebar(''); return; }
+      filterSidebar(q);
+
+      var terms = q.split(/\s+/).filter(Boolean);
+      var scored = [];
+      index.forEach(function (e) {
+        var score = 0, ok = true;
+        terms.forEach(function (t) {
+          var inTitle = e.title.toLowerCase().indexOf(t) !== -1;
+          var inText = e.text.indexOf(t) !== -1;
+          if (!inText && !inTitle) ok = false;
+          if (inTitle) score += 10;
+          if (inText) score += 1;
+        });
+        if (ok) {
+          // exact title phrase bonus
+          if (e.title.toLowerCase().indexOf(q) !== -1) score += 25;
+          scored.push({ e: e, score: score });
+        }
+      });
+      scored.sort(function (a, b) { return b.score - a.score; });
+      scored = scored.slice(0, 12);
+      currentMatches = scored.map(function (s) { return s.e; });
+      renderResults(scored, terms, q);
+    }
+
+    function renderResults(scored, terms, q) {
+      if (!scored.length) {
+        results.innerHTML = '<div class="doc-noresults">No matches for “' + escapeHtml(q) + '”.</div>';
+        openResults();
+        return;
+      }
+      var html = '<div class="res-meta">' + scored.length + ' result' + (scored.length > 1 ? 's' : '') + '</div>';
+      scored.forEach(function (s, i) {
+        var e = s.e;
+        html += '<a class="doc-result" href="#' + e.id + '" data-idx="' + i + '">' +
+          '<div class="r-crumb">' + escapeHtml(e.crumb) + '</div>' +
+          '<div class="r-title">' + highlight(e.title, terms) + '</div>' +
+          '<div class="r-snip">' + snippetFor(e.raw, terms) + '</div>' +
+          '</a>';
+      });
+      results.innerHTML = html;
+      openResults();
+      Array.prototype.forEach.call(results.querySelectorAll('.doc-result'), function (a) {
+        a.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          go(a.getAttribute('href'));
+        });
+      });
+    }
+
+    function go(hash) {
+      closeResults();
+      var el = document.querySelector(hash);
+      if (el) {
+        history.replaceState(null, '', hash);
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        flash(el);
+      }
+      closeSidebar();
+    }
+
+    function flash(el) {
+      el.style.transition = 'background .2s';
+      el.style.background = 'rgba(32,192,115,0.07)';
+      setTimeout(function () { el.style.background = ''; }, 700);
+    }
+
+    function openResults() { results.classList.add('open'); input.setAttribute('aria-expanded', 'true'); }
+    function closeResults() { results.classList.remove('open'); input.setAttribute('aria-expanded', 'false'); activeIdx = -1; }
+
+    function filterSidebar(q) {
+      sideLinks.forEach(function (a) {
+        if (!q) { a.classList.remove('hidden-by-filter'); return; }
+        var t = a.textContent.toLowerCase();
+        if (t.indexOf(q) !== -1) a.classList.remove('hidden-by-filter');
+        else a.classList.add('hidden-by-filter');
+      });
+      // hide empty groups
+      document.querySelectorAll('.doc-nav-group').forEach(function (g) {
+        var anyVisible = Array.prototype.some.call(g.querySelectorAll('a'), function (a) {
+          return !a.classList.contains('hidden-by-filter');
+        });
+        g.style.display = (q && !anyVisible) ? 'none' : '';
+      });
+    }
+
+    var debounce;
+    input.addEventListener('input', function () {
+      clearTimeout(debounce);
+      var v = input.value;
+      debounce = setTimeout(function () { runSearch(v); }, 90);
+    });
+
+    input.addEventListener('keydown', function (ev) {
+      var items = results.querySelectorAll('.doc-result');
+      if (ev.key === 'ArrowDown') {
+        ev.preventDefault();
+        if (!items.length) return;
+        activeIdx = Math.min(activeIdx + 1, items.length - 1);
+        setActive(items);
+      } else if (ev.key === 'ArrowUp') {
+        ev.preventDefault();
+        if (!items.length) return;
+        activeIdx = Math.max(activeIdx - 1, 0);
+        setActive(items);
+      } else if (ev.key === 'Enter') {
+        if (activeIdx >= 0 && items[activeIdx]) {
+          ev.preventDefault();
+          go(items[activeIdx].getAttribute('href'));
+        } else if (currentMatches.length) {
+          ev.preventDefault();
+          go('#' + currentMatches[0].id);
+        }
+      } else if (ev.key === 'Escape') {
+        input.value = '';
+        runSearch('');
+        input.blur();
+      }
+    });
+
+    function setActive(items) {
+      Array.prototype.forEach.call(items, function (it, i) {
+        it.classList.toggle('active', i === activeIdx);
+      });
+      if (items[activeIdx]) items[activeIdx].scrollIntoView({ block: 'nearest' });
+    }
+
+    // close results when clicking outside
+    document.addEventListener('click', function (ev) {
+      if (!document.getElementById('searchWrap').contains(ev.target)) closeResults();
+    });
+
+    // "/" focuses search
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === '/' && document.activeElement !== input && !/input|textarea/i.test(document.activeElement.tagName)) {
+        ev.preventDefault();
+        input.focus();
+      }
+    });
+
+    /* ---------- Build the on-page TOC ---------- */
+    var tocNav = document.getElementById('tocNav');
+    var headingEls = Array.prototype.slice.call(document.querySelectorAll('.doc-content h2, .doc-content h3'));
+    var tocLinks = [];
+    headingEls.forEach(function (h) {
+      var sec = h.closest('.doc-section');
+      if (!sec) return;
+      var isH3 = h.tagName === 'H3';
+      // give h3 anchors a usable target via their section id (already scroll-margin)
+      var targetId = sec.id;
+      var a = document.createElement('a');
+      a.href = '#' + targetId;
+      a.textContent = h.textContent.replace(/#$/, '').trim();
+      if (isH3) a.className = 'lvl-h3';
+      a.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var el = document.getElementById(targetId);
+        if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.replaceState(null, '', '#' + targetId); }
+      });
+      // only top-level h2 sections get a TOC entry to keep it tidy
+      if (!isH3) { tocNav.appendChild(a); tocLinks.push({ a: a, id: targetId }); }
+    });
+
+    /* ---------- Scroll-spy: highlight active section in sidebar + TOC ---------- */
+    var navById = {};
+    sideLinks.forEach(function (a) {
+      var id = a.getAttribute('href').replace('#', '');
+      navById[id] = a;
+    });
+    var spyTargets = sections.map(function (s) { return s; });
+
+    function onScroll() {
+      var pos = window.scrollY + 110;
+      var current = null;
+      for (var i = 0; i < spyTargets.length; i++) {
+        if (spyTargets[i].offsetTop <= pos) current = spyTargets[i].id;
+      }
+      if (!current) return;
+      sideLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+      tocLinks.forEach(function (t) { t.a.classList.toggle('active', t.id === current); });
+    }
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) { window.requestAnimationFrame(function () { onScroll(); ticking = false; }); ticking = true; }
+    });
+    onScroll();
+
+    /* ---------- Copy buttons on code blocks ---------- */
+    document.querySelectorAll('pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn';
+      btn.type = 'button';
+      btn.textContent = 'copy';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code');
+        var text = code ? code.innerText : pre.innerText;
+        navigator.clipboard.writeText(text).then(function () {
+          btn.textContent = 'copied!';
+          setTimeout(function () { btn.textContent = 'copy'; }, 1400);
+        });
+      });
+      pre.appendChild(btn);
+    });
+
+    /* ---------- Mobile sidebar toggle ---------- */
+    var sidebar = document.getElementById('sidebar');
+    var backdrop = document.getElementById('sbBackdrop');
+    var toggle = document.getElementById('menuToggle');
+    function openSidebar() { sidebar.classList.add('open'); backdrop.classList.add('show'); }
+    function closeSidebar() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+    toggle.addEventListener('click', function () {
+      if (sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+    });
+    backdrop.addEventListener('click', closeSidebar);
+    sideLinks.forEach(function (a) {
+      a.addEventListener('click', function () { closeSidebar(); });
+    });
+
+    /* if loaded with a hash, scroll there nicely */
+    if (location.hash) {
+      var t = document.querySelector(location.hash);
+      if (t) setTimeout(function () { t.scrollIntoView({ block: 'start' }); }, 60);
+    }
+  })();
+  </script>
+
+</body>
+
+</html>

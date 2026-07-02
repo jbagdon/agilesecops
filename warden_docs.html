@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="theme-color" content="#0b0f19">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://www.agilesecops.com/warden_docs.html">
+
+  <title>Warden Documentation &mdash; AgileSecOps</title>
+  <meta content="Complete documentation for Warden, the self-hosted browser terminal for SSH & AWS ECS by AgileSecOps. Searchable reference for passkey auth, access approvals, session recording, live sharing, configuration, deployment, and the HTTP API." name="description">
+  <meta content="Warden documentation, browser terminal docs, SSH, AWS ECS, Fargate, passkey, WebAuthn, session recording, access approvals, self-hosted, AgileSecOps" name="keywords">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AgileSecOps">
+  <meta property="og:title" content="Warden Documentation — AgileSecOps">
+  <meta property="og:description" content="Searchable, complete reference for Warden — secure browser terminals for SSH & AWS ECS with passkey auth, access approvals, and encrypted session recording.">
+  <meta property="og:url" content="https://www.agilesecops.com/warden_docs.html">
+  <meta property="og:image" content="https://www.agilesecops.com/assets/img/agilesecops-penetration-testing.webp">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon" sizes="180x180">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --doc-bg:       #0b0f19;
+      --doc-surface:  #131a2b;
+      --doc-surface2: #0f1623;
+      --doc-border:   rgba(255, 255, 255, 0.08);
+      --doc-green:    #20c073;
+      --doc-green-dim:rgba(32, 192, 115, 0.12);
+      --doc-text:     #f7f8f9;
+      --doc-muted:    #9a9cab;
+      --doc-faint:    #5b6377;
+      --doc-crit:     #E0A830;
+      --doc-teal:     #4FB8C4;
+      --doc-mono:     'JetBrains Mono', 'Courier New', monospace;
+      --doc-sidebar-w: 290px;
+      --doc-toc-w: 220px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--doc-bg); color: var(--doc-text); font-family: 'Inter', sans-serif; }
+
+    /* ── Top bar ─────────────────────────── */
+    .doc-topbar {
+      position: sticky; top: 0; z-index: 1030;
+      display: flex; align-items: center; gap: 1rem;
+      height: 60px; padding: 0 1.1rem;
+      background: rgba(11, 15, 25, 0.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--doc-border);
+    }
+    .doc-topbar .brand { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; color: var(--doc-text); white-space: nowrap; }
+    .doc-topbar .brand img { width: 34px; height: 34px; border-radius: 50%; }
+    .doc-topbar .brand b { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.05rem; }
+    .doc-topbar .brand .prod {
+      font-family: var(--doc-mono); font-size: 0.62rem; letter-spacing: 0.14em;
+      color: var(--doc-green); border: 1px solid var(--doc-green-dim);
+      background: var(--doc-green-dim); padding: 0.12rem 0.45rem; border-radius: 5px; text-transform: uppercase;
+    }
+    .doc-topbar .top-links { margin-left: auto; display: flex; align-items: center; gap: 0.4rem; }
+    .doc-topbar .top-links a { color: var(--doc-muted); text-decoration: none; font-size: 0.85rem; padding: 0.35rem 0.7rem; border-radius: 6px; transition: color .15s, background .15s; }
+    .doc-topbar .top-links a:hover { color: var(--doc-text); background: rgba(255,255,255,0.05); }
+    .doc-topbar .top-links a.cta { background: var(--doc-green); color: #07130d; font-weight: 600; }
+    .doc-topbar .top-links a.cta:hover { background: #2bd585; }
+
+    .menu-toggle { display: none; background: none; border: 1px solid var(--doc-border); color: var(--doc-text); border-radius: 7px; width: 38px; height: 38px; font-size: 1.1rem; flex-shrink: 0; }
+
+    /* ── Search box ──────────────────────── */
+    .doc-search { position: relative; flex: 1; max-width: 460px; }
+    .doc-search input {
+      width: 100%; background: var(--doc-surface); color: var(--doc-text);
+      border: 1px solid var(--doc-border); border-radius: 9px;
+      padding: 0.5rem 2.4rem 0.5rem 2.3rem; font-size: 0.9rem; transition: border-color .15s, box-shadow .15s;
+    }
+    .doc-search input:focus { outline: none; border-color: var(--doc-green); box-shadow: 0 0 0 3px var(--doc-green-dim); }
+    .doc-search input::placeholder { color: var(--doc-faint); }
+    .doc-search .si-icon { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: var(--doc-faint); pointer-events: none; font-size: 0.95rem; }
+    .doc-search .si-kbd { position: absolute; right: 0.6rem; top: 50%; transform: translateY(-50%); font-family: var(--doc-mono); font-size: 0.62rem; color: var(--doc-faint); border: 1px solid var(--doc-border); border-radius: 4px; padding: 0.05rem 0.32rem; pointer-events: none; }
+
+    .doc-results {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+      max-height: min(70vh, 560px); overflow-y: auto;
+      background: var(--doc-surface); border: 1px solid var(--doc-border);
+      border-radius: 11px; box-shadow: 0 24px 60px rgba(0,0,0,0.55); z-index: 1040; padding: 0.4rem;
+    }
+    .doc-results.open { display: block; }
+    .doc-results .res-meta { font-family: var(--doc-mono); font-size: 0.66rem; letter-spacing: 0.08em; color: var(--doc-faint); padding: 0.45rem 0.65rem 0.3rem; text-transform: uppercase; }
+    .doc-result { display: block; text-decoration: none; color: inherit; padding: 0.55rem 0.65rem; border-radius: 8px; cursor: pointer; }
+    .doc-result:hover, .doc-result.active { background: var(--doc-green-dim); }
+    .doc-result .r-crumb { font-family: var(--doc-mono); font-size: 0.62rem; color: var(--doc-green); letter-spacing: 0.04em; margin-bottom: 0.15rem; }
+    .doc-result .r-title { font-weight: 600; font-size: 0.92rem; color: var(--doc-text); }
+    .doc-result .r-snip { font-size: 0.8rem; color: var(--doc-muted); margin-top: 0.12rem; line-height: 1.45; }
+    .doc-result mark { background: rgba(32, 192, 115, 0.32); color: #d7ffe9; padding: 0 1px; border-radius: 2px; }
+    .doc-noresults { padding: 1rem 0.8rem; color: var(--doc-muted); font-size: 0.88rem; }
+
+    /* ── Layout ──────────────────────────── */
+    .doc-layout { display: grid; grid-template-columns: var(--doc-sidebar-w) minmax(0, 1fr) var(--doc-toc-w); max-width: 1500px; margin: 0 auto; }
+
+    .doc-sidebar { position: sticky; top: 60px; align-self: start; height: calc(100vh - 60px); overflow-y: auto; border-right: 1px solid var(--doc-border); padding: 1.4rem 0.4rem 3rem 1.1rem; }
+    .doc-nav-group { margin-bottom: 1.1rem; }
+    .doc-nav-group > .grp-title { font-family: var(--doc-mono); font-size: 0.66rem; letter-spacing: 0.13em; color: var(--doc-faint); text-transform: uppercase; padding: 0.35rem 0.6rem; margin-top: 0.3rem; }
+    .doc-nav-group a { display: block; text-decoration: none; color: var(--doc-muted); font-size: 0.86rem; padding: 0.32rem 0.7rem; border-radius: 7px; border-left: 2px solid transparent; transition: color .12s, background .12s, border-color .12s; }
+    .doc-nav-group a:hover { color: var(--doc-text); background: rgba(255,255,255,0.035); }
+    .doc-nav-group a.active { color: var(--doc-green); background: var(--doc-green-dim); border-left-color: var(--doc-green); font-weight: 500; }
+    .doc-nav-group a.hidden-by-filter { display: none; }
+
+    .doc-content { padding: 2.2rem clamp(1.1rem, 3.5vw, 3.2rem) 6rem; min-width: 0; }
+    .doc-content h1 { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 3.6vw, 2.5rem); letter-spacing: -0.015em; margin-bottom: 0.6rem; }
+    .doc-content h2 { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.65rem; margin: 0 0 1rem; padding-top: 0.4rem; scroll-margin-top: 80px; }
+    .doc-content h3 { font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 1.18rem; margin: 2.2rem 0 0.7rem; color: var(--doc-text); scroll-margin-top: 80px; }
+    .doc-content h4 { font-weight: 600; font-size: 1rem; margin: 1.5rem 0 0.5rem; color: #cfd2dc; font-family: var(--doc-mono); letter-spacing: 0.01em; }
+    .doc-content p { color: #c3c6d2; line-height: 1.72; margin-bottom: 1rem; }
+    .doc-content ul, .doc-content ol { color: #c3c6d2; line-height: 1.72; margin-bottom: 1rem; }
+    .doc-content li { margin-bottom: 0.3rem; }
+    .doc-content a { color: var(--doc-green); text-decoration: none; }
+    .doc-content a:hover { text-decoration: underline; }
+    .doc-content strong { color: var(--doc-text); }
+
+    .doc-section { margin-bottom: 3.4rem; border-bottom: 1px solid var(--doc-border); padding-bottom: 1.6rem; }
+    .doc-section:last-child { border-bottom: none; }
+    .doc-section .sec-lead { font-size: 1.02rem; color: var(--doc-muted); margin-bottom: 1.4rem; }
+
+    .anchor-h { position: relative; }
+    .anchor-h .alink { opacity: 0; margin-left: 0.5rem; font-size: 0.75em; color: var(--doc-faint); text-decoration: none; transition: opacity .12s; }
+    .anchor-h:hover .alink { opacity: 1; }
+
+    code { font-family: var(--doc-mono); font-size: 0.84em; background: rgba(32, 192, 115, 0.10); color: #7fe3b3; padding: 0.1rem 0.38rem; border-radius: 5px; }
+    pre { background: var(--doc-surface2); border: 1px solid var(--doc-border); border-radius: 11px; padding: 1.05rem 1.2rem; overflow-x: auto; margin-bottom: 1.3rem; position: relative; }
+    pre code { background: none; color: #d6dae6; padding: 0; font-size: 0.82rem; line-height: 1.65; display: block; white-space: pre; }
+    pre .copy-btn { position: absolute; top: 0.55rem; right: 0.55rem; background: var(--doc-surface); border: 1px solid var(--doc-border); color: var(--doc-muted); border-radius: 6px; font-size: 0.68rem; padding: 0.2rem 0.5rem; cursor: pointer; opacity: 0; transition: opacity .12s, color .12s; font-family: var(--doc-mono); }
+    pre:hover .copy-btn { opacity: 1; }
+    pre .copy-btn:hover { color: var(--doc-green); border-color: var(--doc-green); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 1.4rem; border: 1px solid var(--doc-border); border-radius: 11px; }
+    table.doc-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 560px; }
+    table.doc-table th { background: var(--doc-surface2); color: var(--doc-green); font-family: var(--doc-mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; text-align: left; padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--doc-border); white-space: nowrap; }
+    table.doc-table td { padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--doc-border); color: #c3c6d2; vertical-align: top; line-height: 1.55; }
+    table.doc-table tr:last-child td { border-bottom: none; }
+    table.doc-table td code { font-size: 0.8em; white-space: nowrap; }
+    table.doc-table td:first-child code { color: #7fe3b3; }
+
+    .callout { border: 1px solid var(--doc-border); border-left: 3px solid var(--doc-green); background: rgba(32, 192, 115, 0.05); border-radius: 9px; padding: 0.85rem 1.1rem; margin-bottom: 1.3rem; font-size: 0.9rem; color: #c3c6d2; }
+    .callout.warn { border-left-color: var(--doc-crit); background: rgba(224, 168, 48, 0.06); }
+    .callout.info { border-left-color: var(--doc-teal); background: rgba(79, 184, 196, 0.06); }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout .co-tag { font-family: var(--doc-mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--doc-green); display: block; margin-bottom: 0.3rem; }
+    .callout.warn .co-tag { color: var(--doc-crit); }
+    .callout.info .co-tag { color: var(--doc-teal); }
+
+    .pill { display: inline-block; font-family: var(--doc-mono); font-size: 0.66rem; letter-spacing: 0.04em; padding: 0.12rem 0.5rem; border-radius: 20px; border: 1px solid var(--doc-border); color: var(--doc-muted); margin-left: 0.4rem; vertical-align: middle; }
+    .pill.req  { color: var(--doc-crit); border-color: rgba(224,168,48,0.4); }
+    .pill.role { color: var(--doc-teal); border-color: rgba(79,184,196,0.4); }
+    .pill.get   { color: var(--doc-teal); border-color: rgba(79,184,196,0.4); }
+    .pill.post  { color: var(--doc-green); border-color: rgba(32,192,115,0.4); }
+    .pill.del   { color: #DC5050; border-color: rgba(220,80,80,0.4); }
+    .pill.put   { color: var(--doc-crit); border-color: rgba(224,168,48,0.4); }
+
+    .doc-toc { position: sticky; top: 60px; align-self: start; height: calc(100vh - 60px); overflow-y: auto; padding: 1.8rem 1rem 3rem; border-left: 1px solid var(--doc-border); }
+    .doc-toc .toc-title { font-family: var(--doc-mono); font-size: 0.64rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--doc-faint); margin-bottom: 0.7rem; }
+    .doc-toc a { display: block; text-decoration: none; color: var(--doc-muted); font-size: 0.8rem; padding: 0.22rem 0.55rem; border-left: 2px solid transparent; transition: color .12s, border-color .12s; }
+    .doc-toc a:hover { color: var(--doc-text); }
+    .doc-toc a.active { color: var(--doc-green); border-left-color: var(--doc-green); }
+    .doc-toc a.lvl-h3 { padding-left: 1.25rem; font-size: 0.76rem; }
+
+    .doc-hero { background: linear-gradient(135deg, rgba(32,192,115,0.10), rgba(79,184,196,0.05)); border: 1px solid var(--doc-border); border-radius: 14px; padding: 1.6rem 1.8rem; margin-bottom: 2.4rem; }
+    .doc-hero .eyebrow { font-family: var(--doc-mono); font-size: 0.68rem; letter-spacing: 0.16em; color: var(--doc-green); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .quick-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.9rem; margin: 1.6rem 0 0.4rem; }
+    .quick-card { display: block; text-decoration: none; color: inherit; background: var(--doc-surface); border: 1px solid var(--doc-border); border-radius: 11px; padding: 1rem 1.1rem; transition: border-color .15s, transform .15s; }
+    .quick-card:hover { border-color: var(--doc-green); transform: translateY(-2px); }
+    .quick-card i { font-size: 1.3rem; color: var(--doc-green); }
+    .quick-card .qc-t { font-weight: 600; margin: 0.45rem 0 0.2rem; font-size: 0.98rem; }
+    .quick-card .qc-d { font-size: 0.8rem; color: var(--doc-muted); line-height: 1.45; }
+
+    .feat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 0.7rem; margin-bottom: 1.4rem; }
+    .feat-item { display: flex; gap: 0.6rem; align-items: flex-start; background: var(--doc-surface); border: 1px solid var(--doc-border); border-radius: 9px; padding: 0.7rem 0.85rem; }
+    .feat-item i { color: var(--doc-green); margin-top: 0.15rem; }
+    .feat-item span { font-size: 0.84rem; color: #c3c6d2; line-height: 1.4; }
+
+    .doc-sidebar::-webkit-scrollbar, .doc-toc::-webkit-scrollbar, .doc-results::-webkit-scrollbar, pre::-webkit-scrollbar, .table-wrap::-webkit-scrollbar { width: 8px; height: 8px; }
+    .doc-sidebar::-webkit-scrollbar-thumb, .doc-toc::-webkit-scrollbar-thumb, .doc-results::-webkit-scrollbar-thumb, pre::-webkit-scrollbar-thumb, .table-wrap::-webkit-scrollbar-thumb { background: var(--doc-faint); border-radius: 4px; }
+
+    .doc-footer { border-top: 1px solid var(--doc-border); margin-top: 3rem; padding-top: 1.6rem; color: var(--doc-faint); font-size: 0.82rem; }
+    .doc-footer a { color: var(--doc-muted); }
+
+    .sb-backdrop { display: none; }
+
+    @media (max-width: 1200px) { .doc-layout { grid-template-columns: var(--doc-sidebar-w) minmax(0, 1fr); } .doc-toc { display: none; } }
+    @media (max-width: 860px) {
+      .doc-layout { grid-template-columns: minmax(0, 1fr); }
+      .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .doc-topbar .brand b { display: none; }
+      .doc-topbar .top-links .hide-sm { display: none; }
+      .doc-sidebar { position: fixed; top: 60px; left: 0; bottom: 0; width: 86%; max-width: 330px; height: calc(100vh - 60px); background: var(--doc-bg); z-index: 1035; transform: translateX(-105%); transition: transform .22s ease; border-right: 1px solid var(--doc-border); }
+      .doc-sidebar.open { transform: translateX(0); }
+      .sb-backdrop.show { display: block; position: fixed; inset: 60px 0 0 0; background: rgba(0,0,0,0.55); z-index: 1034; }
+    }
+    @media (max-width: 520px) { .doc-search .si-kbd { display: none; } .doc-topbar { gap: 0.6rem; padding: 0 0.7rem; } }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== Top bar ===== -->
+  <div class="doc-topbar">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation"><i class="bi bi-list"></i></button>
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.jpg" alt="AgileSecOps">
+      <b>AgileSecOps</b>
+      <span class="prod">Warden Docs</span>
+    </a>
+
+    <div class="doc-search" id="searchWrap">
+      <i class="bi bi-search si-icon"></i>
+      <input type="text" id="docSearch" placeholder="Search the docs…" autocomplete="off" spellcheck="false"
+             aria-label="Search documentation" role="combobox" aria-expanded="false" aria-controls="docResults">
+      <span class="si-kbd">/</span>
+      <div class="doc-results" id="docResults" role="listbox"></div>
+    </div>
+
+    <nav class="top-links">
+      <a class="hide-sm" href="warden.html">Product</a>
+      <a class="hide-sm" href="constable_docs.html">Constable Docs</a>
+      <a class="cta" href="index.html#contact">Get a Demo</a>
+    </nav>
+  </div>
+
+  <div class="sb-backdrop" id="sbBackdrop"></div>
+
+  <div class="doc-layout">
+
+    <!-- ===== Sidebar nav ===== -->
+    <aside class="doc-sidebar" id="sidebar">
+      <nav id="sideNav">
+        <div class="doc-nav-group">
+          <div class="grp-title">Getting Started</div>
+          <a href="#overview">Overview</a>
+          <a href="#prerequisites">Prerequisites</a>
+          <a href="#quick-start-docker">Quick Start (Docker)</a>
+          <a href="#first-run">First-Run Setup</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Concepts</div>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#livesession">liveSession Model</a>
+          <a href="#roles">Roles</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Connections</div>
+          <a href="#ssh">SSH Terminals</a>
+          <a href="#ecs">AWS ECS Terminals</a>
+          <a href="#aws-accounts">AWS Accounts</a>
+          <a href="#saved-connections">Saved Connections</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Access & Sessions</div>
+          <a href="#access-approvals">Access Approvals</a>
+          <a href="#resumable">Resumable Sessions</a>
+          <a href="#sharing">Live Session Sharing</a>
+          <a href="#recording">Session Recording</a>
+          <a href="#layout-broadcast">Tabs, Tile & Broadcast</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Auth & Security</div>
+          <a href="#auth">Authentication</a>
+          <a href="#security">Security Model</a>
+          <a href="#hardening">Hardening Checklist</a>
+        </div>
+        <div class="doc-nav-group">
+          <div class="grp-title">Operations</div>
+          <a href="#configuration">Configuration</a>
+          <a href="#deployment">Deployment & HTTPS</a>
+          <a href="#database">Database Schema</a>
+          <a href="#api">HTTP API Reference</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ===== Main content ===== -->
+    <main class="doc-content" id="content">
+
+      <!-- OVERVIEW -->
+      <section class="doc-section" id="overview" data-crumb="Getting Started">
+        <h1>Warden Documentation</h1>
+        <div class="doc-hero">
+          <div class="eyebrow">Secure Browser Terminals &middot; AgileSecOps</div>
+          <p style="font-size:1.05rem; margin-bottom:0.4rem;">
+            <strong>Warden</strong> is a self-hosted, browser-based terminal for SSH servers and AWS ECS Fargate containers.
+            It pairs passwordless <strong>passkey authentication</strong> with time-boxed <strong>access approvals</strong>,
+            encrypted <strong>session recording</strong>, <strong>live session sharing</strong>, and resumable sessions — all
+            behind a full admin UI, with no browser extensions required.
+          </p>
+          <p style="margin-bottom:0;">
+            A single Go HTTP server proxies WebSocket connections to real <code>ssh</code> and
+            <code>aws ecs execute-command</code> subprocesses over a PTY. The UI is static HTML with xterm.js from a CDN —
+            <strong>no build step</strong>. State lives in PostgreSQL; secrets and recordings are AES-256-GCM encrypted at rest.
+          </p>
+          <div class="quick-cards">
+            <a class="quick-card" href="#quick-start-docker"><i class="bi bi-box-seam"></i><div class="qc-t">Quick Start</div><div class="qc-d">Up and running with Docker Compose.</div></a>
+            <a class="quick-card" href="#how-it-works"><i class="bi bi-diagram-3"></i><div class="qc-t">How It Works</div><div class="qc-d">Browser → WS → PTY → SSH/ECS.</div></a>
+            <a class="quick-card" href="#access-approvals"><i class="bi bi-shield-check"></i><div class="qc-t">Access Approvals</div><div class="qc-d">Gate sensitive environments.</div></a>
+            <a class="quick-card" href="#configuration"><i class="bi bi-sliders"></i><div class="qc-t">Configuration</div><div class="qc-d">Every environment variable.</div></a>
+          </div>
+        </div>
+
+        <h2 class="anchor-h">Features <a class="alink" href="#overview">#</a></h2>
+        <div class="feat-grid">
+          <div class="feat-item"><i class="bi bi-fingerprint"></i><span>Passkey / WebAuthn authentication — passwordless, admin-invited via magic link</span></div>
+          <div class="feat-item"><i class="bi bi-terminal"></i><span>SSH &amp; AWS ECS terminals in the browser</span></div>
+          <div class="feat-item"><i class="bi bi-cloud-lock"></i><span>Stored AWS accounts — encrypted creds, picked by name</span></div>
+          <div class="feat-item"><i class="bi bi-shield-check"></i><span>Time-boxed access approvals with full audit trail</span></div>
+          <div class="feat-item"><i class="bi bi-arrow-repeat"></i><span>Resumable sessions — survive logout / tab close</span></div>
+          <div class="feat-item"><i class="bi bi-people"></i><span>Live session sharing — view-only or give-control</span></div>
+          <div class="feat-item"><i class="bi bi-record-circle"></i><span>Encrypted session recording (asciicast v2) with playback</span></div>
+          <div class="feat-item"><i class="bi bi-grid-1x2"></i><span>Multi-tab, tile layout, broadcast-to-all input</span></div>
+          <div class="feat-item"><i class="bi bi-bookmark-star"></i><span>Saved SSH / ECS connection profiles (encrypted)</span></div>
+          <div class="feat-item"><i class="bi bi-person-gear"></i><span>Admin UI: users, environments, grants, AWS accounts, recordings</span></div>
+          <div class="feat-item"><i class="bi bi-shield-lock"></i><span>Roles: user, admin, admin_only (approver/auditor)</span></div>
+          <div class="feat-item"><i class="bi bi-box"></i><span>No build step — static UI, single Go binary, Docker image</span></div>
+        </div>
+        <div class="callout info">
+          <span class="co-tag">New here?</span>
+          <p>Start with <a href="#quick-start-docker">Quick Start (Docker)</a> — Compose brings up Warden (with the AWS CLI + SSM plugin bundled) and PostgreSQL together. Then read <a href="#how-it-works">How It Works</a> to understand the session model.</p>
+        </div>
+      </section>
+
+      <!-- PREREQUISITES -->
+      <section class="doc-section" id="prerequisites" data-crumb="Getting Started">
+        <h2 class="anchor-h">Prerequisites <a class="alink" href="#prerequisites">#</a></h2>
+        <p class="sec-lead">Warden ships as Docker containers — everything it needs to run is inside the image and the Compose stack. On the host you only need Docker.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>Docker Engine 24+</code></td><td>Runs the Warden container.</td></tr>
+              <tr><td><code>Docker Compose v2</code></td><td>Brings up Warden and its PostgreSQL together.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Everything else is provided for you: the <strong>PostgreSQL</strong> database runs as a Compose service, and <code>ssh</code>/<code>sshpass</code> plus the <strong>AWS CLI v2 + <code>session-manager-plugin</code></strong> (for ECS connections) are bundled inside the Warden image — nothing to install on the host.</p>
+      </section>
+
+      <!-- QUICK START DOCKER -->
+      <section class="doc-section" id="quick-start-docker" data-crumb="Getting Started">
+        <h2 class="anchor-h">Quick Start (Docker) <a class="alink" href="#quick-start-docker">#</a></h2>
+        <p class="sec-lead">Docker Compose starts the app (with the AWS CLI + session-manager-plugin bundled) and a PostgreSQL instance together.</p>
+        <pre><code>cp .env.example .env        # set ENCRYPTION_KEY, POSTGRES_PASSWORD, and review the rest
+docker compose up -d        # starts the provided Warden image + PostgreSQL
+open http://localhost:8080</code></pre>
+        <div class="callout warn">
+          <span class="co-tag">Required before first boot</span>
+          <p>Compose refuses to start until <code>POSTGRES_PASSWORD</code> and <code>ENCRYPTION_KEY</code> are set in <code>.env</code>. Generate a key with <code>openssl rand -base64 32</code> — <strong>changing it later makes existing encrypted secrets and recordings unreadable.</strong></p>
+        </div>
+        <p>The image runs as non-root user <code>warden</code> (UID 1000) with a read-only root filesystem; <code>/tmp</code> and <code>/home/warden</code> are tmpfs, and <code>/data</code> (recordings + known_hosts) is a persistent volume.</p>
+      </section>
+
+      <!-- FIRST RUN -->
+      <section class="doc-section" id="first-run" data-crumb="Getting Started">
+        <h2 class="anchor-h">First-Run Setup <a class="alink" href="#first-run">#</a></h2>
+        <p class="sec-lead">On first launch — when no users exist — Warden's <code>bootstrapCheck()</code> prints a one-time setup link to stdout (valid 24 hours):</p>
+        <pre><code>WARDEN setup link (expires in 24 h): http://localhost:8080/...</code></pre>
+        <p>Open that link to create the initial <strong>admin</strong> account with a passkey. Every subsequent user is invited from <strong>Admin → Users</strong> (an invite or reset link is emailed via SMTP, or printed to stdout if SMTP is not configured).</p>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section class="doc-section" id="how-it-works" data-crumb="Concepts">
+        <h2 class="anchor-h">How It Works <a class="alink" href="#how-it-works">#</a></h2>
+        <pre><code>Browser (xterm.js)
+  │  WS binary frames  — raw terminal I/O
+  │  WS text frames    — JSON connect / resize / session_id / exit
+  ▼
+Go HTTP server  (net/http + gorilla/websocket)
+  │  ── SSH path ──  pty.Start(ssh / sshpass)
+  │  ── ECS path ──  pty.Start(aws ecs execute-command --interactive)
+  │  one long-lived liveSession owns the PTY:
+  │     output → recorder (if enabled) + hub fan-out (owner + share subscribers) + scrollback
+  ▼
+Remote SSH server  or  AWS ECS task (via SSM session-manager-plugin)</code></pre>
+        <ol>
+          <li>Browser authenticates via passkey; the server issues an <code>http_sessions</code> cookie.</li>
+          <li>User opens a WebSocket to <code>/ws</code> and sends <code>{"type":"connect", "connType":"ssh"|"ecs", ...}</code> (or <code>resumeSessionId</code> to reattach).</li>
+          <li>Saved configs are resolved and the target is checked against the <strong>access-approval gate</strong>; inputs that become process args are validated.</li>
+          <li>The PTY is owned by a <strong>liveSession</strong> that outlives the WebSocket. Detaching (logout / tab close) leaves it running; the owner reattaches later and the buffered scrollback is replayed.</li>
+          <li>PTY output is fanned out to the owner and any share subscribers, and (when the environment opts in) appended to the recorder.</li>
+          <li>On a clean remote exit the server sends <code>{"type":"exit"}</code> and the tab auto-closes; the recording is finalized to an encrypted file on disk.</li>
+          <li>Sessions with no browser attached are reclaimed after <code>SESSION_IDLE_TIMEOUT</code>; a session is also killed if its access grant expires.</li>
+        </ol>
+      </section>
+
+      <!-- LIVESESSION -->
+      <section class="doc-section" id="livesession" data-crumb="Concepts">
+        <h2 class="anchor-h">The liveSession Model <a class="alink" href="#livesession">#</a></h2>
+        <p class="sec-lead">The load-bearing invariant: <strong>a <code>liveSession</code> owns the PTY — not the WebSocket.</strong> Registered in a <code>sync.Map</code> by <code>sessionID</code>, it owns the <code>ptmx</code>, the recorder, and a <code>sessionHub</code>, and it outlives any WebSocket.</p>
+        <ul>
+          <li><strong>Start:</strong> <code>newLiveSession</code> launches <code>run()</code> (PTY → recorder + hub fan-out) and a <code>cmd.Wait()</code> reaper.</li>
+          <li><strong>Attach / detach:</strong> WebSockets attach via <code>serveOwner</code> or <code>handleShareWS</code>. On WS close they <strong>detach</strong> — they never finalize or kill the session.</li>
+          <li><strong>End:</strong> the session ends only when the PTY closes — process exit or <code>kill()</code> (<code>ptmx.Close()</code>, called by the End endpoint, the idle sweeper, or when a grant expires). Then <code>finish()</code> runs once: reads the exit code, notifies a clean exit (<code>{"type":"exit"}</code> → tab auto-closes), closes the hub, deletes from the registry, finalizes the recording, removes the temp SSH key.</li>
+          <li><strong>Reclaim:</strong> detached sessions with no clients are reclaimed after <code>SESSION_IDLE_TIMEOUT</code>; the sweeper also kills a session whose access grant has expired.</li>
+        </ul>
+        <p>The session hub appends to a bounded scrollback (256&nbsp;KiB) and fans output out to all clients; on attach it replays the scrollback to restore the screen. An owner-approved <strong>view→control upgrade</strong> takes effect live, with no reconnect.</p>
+      </section>
+
+      <!-- ROLES -->
+      <section class="doc-section" id="roles" data-crumb="Concepts">
+        <h2 class="anchor-h">Roles <a class="alink" href="#roles">#</a></h2>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Role</th><th>Terminal access</th><th>Admin panel</th><th>Use for</th></tr></thead>
+            <tbody>
+              <tr><td><code>user</code> <span class="pill role">default</span></td><td>Yes</td><td>No</td><td>Engineers who open SSH/ECS terminals.</td></tr>
+              <tr><td><code>admin</code></td><td>Yes</td><td>Yes</td><td>Operators who manage users, environments, AWS accounts, recordings.</td></tr>
+              <tr><td><code>admin_only</code></td><td><strong>No</strong></td><td>Yes</td><td>Approvers / auditors — admin panel access without any terminal access.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><code>admin_only</code> passes the admin guard but is blocked from <code>/ws</code>; the terminal page redirects it to <code>/admin</code>. Disabling a user immediately drops their browser sessions and kills their live terminals.</p>
+      </section>
+
+      <!-- SSH -->
+      <section class="doc-section" id="ssh" data-crumb="Connections">
+        <h2 class="anchor-h">SSH Terminals <a class="alink" href="#ssh">#</a></h2>
+        <p class="sec-lead">Connect to any reachable SSH server. Warden launches a real <code>ssh</code> subprocess (wrapped by <code>sshpass</code> for password auth) attached to a PTY.</p>
+        <ul>
+          <li>In the UI, choose the <strong>SSH</strong> tab and enter host, username, port, and credentials — or pick a <a href="#saved-connections">saved connection</a>.</li>
+          <li>Host, username, port, and any value that becomes a process argument are <a href="#security">validated</a> and rejected if they could be parsed as options (e.g. <code>-oProxyCommand=…</code>).</li>
+          <li>SSH host keys are verified via <code>accept-new</code> (trust-on-first-use) against a persistent <code>known_hosts</code> by default; set <code>SSH_HOST_KEY_CHECKING=yes</code> for strict verification against a pre-seeded file.</li>
+        </ul>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Setting</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>SSH_HOST_KEY_CHECKING</code></td><td><code>accept-new</code></td><td><code>accept-new</code> (TOFU), <code>yes</code> (require known_hosts), or <code>no</code> (legacy insecure).</td></tr>
+              <tr><td><code>SSH_KNOWN_HOSTS_FILE</code></td><td><code>known_hosts</code></td><td>Path to the SSH known_hosts file (Docker: <code>/data/known_hosts</code>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ECS -->
+      <section class="doc-section" id="ecs" data-crumb="Connections">
+        <h2 class="anchor-h">AWS ECS Terminals <a class="alink" href="#ecs">#</a></h2>
+        <p class="sec-lead">Exec into a Fargate container with <code>aws ecs execute-command --interactive</code> over the SSM session-manager-plugin.</p>
+        <ol>
+          <li><strong>Enable ECS Exec</strong> on your task definition / service (<code>enableExecuteCommand: true</code>).</li>
+          <li><strong>Add an AWS account</strong> in Admin → AWS Accounts (access key ID + secret key, stored AES-256-GCM encrypted; optional default region/cluster/role ARN). Users then pick the account by name in the ECS connect form — no AWS credentials on the Warden host required. Selecting "host credentials" falls back to the host's ambient AWS config/instance role.</li>
+          <li>The Docker image bundles the AWS CLI + session-manager-plugin — nothing to install on the host.</li>
+        </ol>
+        <p>In the UI: switch to the <strong>AWS ECS</strong> tab, pick an AWS account, enter cluster + task ID (or <strong>▾ List</strong> to browse running tasks), then connect.</p>
+
+        <h4>Required IAM permissions</h4>
+        <p>Credentials are shared by all Warden users, so apply least privilege — scope <code>Resource</code> to the specific cluster/task ARNs you expose rather than <code>"*"</code>, and prefer a separate, narrowly scoped role per environment.</p>
+        <pre><code>{
+  "Effect": "Allow",
+  "Action": [
+    "ecs:ExecuteCommand", "ecs:ListTasks", "ecs:DescribeTasks",
+    "ssm:StartSession", "ssm:TerminateSession", "ssm:DescribeSessions"
+  ],
+  "Resource": [
+    "arn:aws:ecs:REGION:ACCOUNT:cluster/YOUR_CLUSTER",
+    "arn:aws:ecs:REGION:ACCOUNT:task/YOUR_CLUSTER/*"
+  ]
+}</code></pre>
+        <div class="callout warn">
+          <span class="co-tag">Fail-closed by default</span>
+          <p><code>ECS_ALLOW_UNGATED=false</code> (default) means an AWS account or cluster must be placed in an <a href="#access-approvals">environment</a> the user can access before it may be used — the shared admin AWS credentials never reach a target no admin has assigned. Set it to <code>true</code> only to restore the legacy behavior where any authenticated user may use any ungated account/cluster.</p>
+        </div>
+      </section>
+
+      <!-- AWS ACCOUNTS -->
+      <section class="doc-section" id="aws-accounts" data-crumb="Connections">
+        <h2 class="anchor-h">AWS Accounts <a class="alink" href="#aws-accounts">#</a></h2>
+        <p class="sec-lead">Admin-managed AWS credentials, encrypted at rest and shared across users — so engineers never handle raw AWS keys.</p>
+        <ul>
+          <li>Created in <strong>Admin → AWS Accounts</strong>: a name, access key ID, secret key (AES-256-GCM encrypted), and optional default region / cluster / role ARN.</li>
+          <li>Users select an account <em>by name</em> in the ECS connect form; the secret never leaves the server and is passed only to the <code>aws</code> subprocess via a minimal environment.</li>
+          <li>The non-admin list endpoint returns only names/metadata — never secret material.</li>
+        </ul>
+        <div class="callout info">
+          <span class="co-tag">ECS gating keys on both account and cluster</span>
+          <p>So "host credentials" can't be used to dodge an account-scoped gate. See <a href="#access-approvals">Access Approvals</a>.</p>
+        </div>
+      </section>
+
+      <!-- SAVED CONNECTIONS -->
+      <section class="doc-section" id="saved-connections" data-crumb="Connections">
+        <h2 class="anchor-h">Saved Connections <a class="alink" href="#saved-connections">#</a></h2>
+        <p class="sec-lead">SSH and ECS connection profiles are stored server-side per user so common targets are one click away.</p>
+        <ul>
+          <li><strong>SSH configs</strong> (<code>/api/configs</code>): host, user, port, and credentials — secrets AES-256-GCM encrypted at rest.</li>
+          <li><strong>ECS configs</strong> (<code>/api/ecs-configs</code>): cluster + task references, pointing at a stored AWS account (<code>account_id</code>) rather than embedding credentials.</li>
+        </ul>
+        <p>When you connect with a saved config, Warden resolves it server-side, then runs the same <a href="#access-approvals">approval gate</a> and <a href="#security">argument validation</a> as a manual connection.</p>
+      </section>
+
+      <!-- ACCESS APPROVALS -->
+      <section class="doc-section" id="access-approvals" data-crumb="Access & Sessions">
+        <h2 class="anchor-h">Access Approvals <a class="alink" href="#access-approvals">#</a></h2>
+        <p class="sec-lead">Gate sensitive <strong>environments</strong> behind time-boxed, approver-granted access with a full audit trail.</p>
+        <p>Admins define <strong>environments</strong> and attach connection <strong>resources</strong> to them — an AWS account or ECS cluster (for ECS) and/or an SSH host glob. An environment marked <strong>restricted</strong> (<code>requires_approval</code>) needs an active, time-boxed <strong>grant</strong> to connect; each environment has a list of <strong>approvers</strong>.</p>
+        <ul>
+          <li>Users request access from the terminal page (<strong>My Access</strong>): environment + duration-or-until + justification. Approvers see the request (a ~5 s polling banner, or the admin <strong>Access Grants</strong> table) and approve / deny; admins can also grant directly.</li>
+          <li>The gate runs at connect time and is <strong>re-checked on reattach</strong>; a running session is killed when its grant expires.</li>
+          <li><strong>ECS gating keys on both the AWS account and the cluster</strong>, so "host credentials" can't be used to dodge an account-scoped gate. SSH matches the host glob via <code>path.Match</code>.</li>
+          <li>Every request and decision is auditable in <strong>Admin → Access Grants</strong>.</li>
+        </ul>
+        <h4>Environment fields</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Field</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>Resources (<code>kind</code>)</td><td><code>aws_account</code>, <code>ecs_cluster</code>, or <code>ssh_host</code> (glob) attached to the environment.</td></tr>
+              <tr><td>Approvers</td><td>Users who may approve/deny requests for this environment.</td></tr>
+              <tr><td><code>requires_approval</code></td><td>When true, an active grant is required to connect.</td></tr>
+              <tr><td><code>record_sessions</code></td><td>Independently opt this environment into <a href="#recording">session recording</a> (off by default).</td></tr>
+              <tr><td><code>max_duration_secs</code></td><td>Optional cap on how long a grant can last.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Grants are a state machine: <code>pending → approved/denied/cancelled</code>, <code>approved → revoked</code>; <code>expired</code> is derived. An active grant is <em>approved and not expired</em>. Approve / deny / revoke self-authorize (approver-for-env or admin).</p>
+      </section>
+
+      <!-- RESUMABLE -->
+      <section class="doc-section" id="resumable" data-crumb="Access & Sessions">
+        <h2 class="anchor-h">Resumable Sessions <a class="alink" href="#resumable">#</a></h2>
+        <p class="sec-lead">A session keeps running server-side when you log out or close the tab. Reattach later with the screen restored.</p>
+        <ul>
+          <li>Because the <a href="#livesession">liveSession owns the PTY</a>, closing the browser only <em>detaches</em> — the remote process keeps running.</li>
+          <li>Reconnect by sending <code>resumeSessionId</code> on the <code>/ws</code> connect frame (the UI's <strong>Running Sessions</strong> list does this for you). Ownership and access are re-verified, then the buffered scrollback is replayed to restore the screen.</li>
+          <li>Detached sessions are reclaimed after <code>SESSION_IDLE_TIMEOUT</code> (default <code>2h</code>); each user is capped at <code>SESSION_MAX_PER_USER</code> concurrent live sessions (default 20), with a global cap of <code>MAX_LIVE_SESSIONS</code> (default 500).</li>
+        </ul>
+      </section>
+
+      <!-- SHARING -->
+      <section class="doc-section" id="sharing" data-crumb="Access & Sessions">
+        <h2 class="anchor-h">Live Session Sharing <a class="alink" href="#sharing">#</a></h2>
+        <p class="sec-lead">Share a running terminal with another user — view-only or with control — for pairing, debugging, or supervision.</p>
+        <ul>
+          <li>The owner invites a user to a running session; the invitee accepts and attaches as a subscriber to the session hub via <code>/ws/share/{id}</code>, receiving the replayed scrollback.</li>
+          <li>A viewer can <strong>request control</strong>; the owner approves and the viewer is upgraded to control <strong>live</strong> — the share mode is re-checked per message, so no reconnect is needed.</li>
+          <li>Revoking a share, or disabling the user, immediately disconnects active subscribers.</li>
+        </ul>
+        <p>Sharing is managed through the <code>/api/share/*</code> endpoints (create, accept/decline, request/grant/deny control, revoke) — see the <a href="#api">API Reference</a>.</p>
+      </section>
+
+      <!-- RECORDING -->
+      <section class="doc-section" id="recording" data-crumb="Access & Sessions">
+        <h2 class="anchor-h">Session Recording <a class="alink" href="#recording">#</a></h2>
+        <p class="sec-lead">Opt-in per environment. Captured as asciicast v2, gzipped and AES-256-GCM encrypted on disk, played back and downloaded by admins with speed control and scrubbing.</p>
+        <ul>
+          <li>Recording is <strong>off by default</strong>. A session is recorded only when its target's environment has <code>record_sessions=true</code> — independent of whether the environment requires approval.</li>
+          <li>On finalize, output is gzipped → AES-GCM encrypted → written to <code>{RECORDINGS_DIR}/{id}.cast.gz</code> (magic header <code>WER1</code>), with <code>recording_path</code> + <code>recording_size</code> stored in the DB. On a file-write failure it falls back to an encrypted DB column.</li>
+          <li>Admins browse and play recordings in <strong>Admin → Session recordings</strong> (and via <code>/api/admin/sessions/{id}/recording</code>). Playback handles legacy plaintext columns and legacy unencrypted gzip transparently.</li>
+        </ul>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Setting</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>RECORDINGS_DIR</code></td><td><code>recordings</code></td><td>Directory for encrypted recording files (Docker: <code>/data/recordings</code>).</td></tr>
+              <tr><td><code>RECORDING_MAX_BYTES</code></td><td><code>16777216</code> (16 MiB)</td><td>Per-recording in-memory buffer cap.</td></tr>
+              <tr><td><code>RECORDING_RETENTION_DAYS</code></td><td><code>0</code> (keep forever)</td><td>Delete recordings older than N days. Orphaned files with no DB row are always cleaned at startup.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn">
+          <span class="co-tag">Encryption key</span>
+          <p>Recordings are encrypted with <code>ENCRYPTION_KEY</code>. Changing the key makes existing recordings (and stored secrets) unreadable.</p>
+        </div>
+      </section>
+
+      <!-- LAYOUT BROADCAST -->
+      <section class="doc-section" id="layout-broadcast" data-crumb="Access & Sessions">
+        <h2 class="anchor-h">Tabs, Tile &amp; Broadcast <a class="alink" href="#layout-broadcast">#</a></h2>
+        <p class="sec-lead">Work many connections at once.</p>
+        <ul>
+          <li><strong>Tabs</strong> — keep multiple SSH/ECS connections open and switch between them.</li>
+          <li><strong>Tile layout</strong> — view several terminals side-by-side.</li>
+          <li><strong>Broadcast</strong> — optionally mirror your keystrokes to every open terminal at once, for fan-out operations across a fleet.</li>
+        </ul>
+        <p>Running and saved sessions are listed in the left rail; a running session shows a reattach (↻) indicator.</p>
+      </section>
+
+      <!-- AUTH -->
+      <section class="doc-section" id="auth" data-crumb="Auth & Security">
+        <h2 class="anchor-h">Authentication <a class="alink" href="#auth">#</a></h2>
+        <p class="sec-lead">Warden is <strong>passkey-only</strong> (WebAuthn) — there are no passwords to phish, reuse, or leak.</p>
+        <ul>
+          <li><strong>Registration</strong> is invite-driven: an admin sends a magic link (one-time token, 24 h) which the user opens to register a passkey. The very first admin is created from the first-run setup link.</li>
+          <li><strong>Login</strong> uses the registered passkey; the WebAuthn sign counter is persisted on each login.</li>
+          <li>Browser sessions are <code>http_sessions</code> cookies — 7-day rolling with an absolute 30-day cap. <code>https://</code> auto-enables Secure cookies + HSTS.</li>
+          <li>Auth endpoints are protected by a per-IP rate limiter; magic tokens are one-time; disabling a user drops their sessions and kills live terminals.</li>
+        </ul>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Setting</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>APP_URL</code></td><td><code>http://localhost:8080</code></td><td>Public URL — the WebAuthn origin; also scopes WS/CSRF origin checks and CSP. <code>https://</code> auto-enables Secure cookies + HSTS.</td></tr>
+              <tr><td><code>RP_ID</code></td><td><em>(APP_URL host)</em></td><td>WebAuthn relying-party ID — must match the domain users browse to.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECURITY -->
+      <section class="doc-section" id="security" data-crumb="Auth & Security">
+        <h2 class="anchor-h">Security Model <a class="alink" href="#security">#</a></h2>
+        <p class="sec-lead">Built-in protections across the request, subprocess, and storage boundaries.</p>
+        <ul>
+          <li><strong>Input validation (the RCE boundary)</strong> — host/username/port and ECS fields that become process arguments are rejected if they could be parsed as options (e.g. <code>ssh -oProxyCommand=…</code>). Any user value reaching <code>exec</code> goes through <code>validate.go</code>.</li>
+          <li><strong>SSH host keys</strong> — verified via <code>accept-new</code> (TOFU) against a persistent <code>known_hosts</code> by default; <code>SSH_HOST_KEY_CHECKING=yes</code> for strict.</li>
+          <li><strong>WebSocket</strong> — origin checked against <code>APP_URL</code>; per-connection read limit; keepalive with read deadlines.</li>
+          <li><strong>Secrets at rest</strong> — SSH/AWS credentials and recordings are AES-256-GCM encrypted. Subprocesses receive a <em>minimal</em> environment — the AES key / DB URL / SMTP password are never passed to <code>ssh</code> / <code>aws</code>.</li>
+          <li><strong>Headers</strong> — CSP, <code>X-Frame-Options: DENY</code>, <code>nosniff</code>, <code>Referrer-Policy: no-referrer</code>; HSTS when <code>SECURE_COOKIES</code>.</li>
+          <li><strong>Auth</strong> — passkey-only; per-IP rate limiting; one-time magic tokens; absolute session lifetime; disabling a user drops sessions and kills live terminals.</li>
+        </ul>
+        <div class="callout info">
+          <span class="co-tag">Container posture</span>
+          <p>The Docker image runs as non-root <code>warden</code> (UID 1000) with a read-only root filesystem, all Linux capabilities dropped, and <code>no-new-privileges</code>. <code>/tmp</code> and <code>/home/warden</code> are tmpfs; <code>/data</code> is the only persistent, writable mount.</p>
+        </div>
+        <div class="callout warn">
+          <span class="co-tag">STRICT_AAD</span>
+          <p><code>STRICT_AAD=true</code> rejects legacy unauthenticated/unbound data — it disables the no-AAD decryption fallback and requires the <code>WER1</code> header on recordings. Enable only <em>after</em> re-encrypting any pre-existing secrets/recordings.</p>
+        </div>
+      </section>
+
+      <!-- HARDENING -->
+      <section class="doc-section" id="hardening" data-crumb="Auth & Security">
+        <h2 class="anchor-h">Hardening Checklist <a class="alink" href="#hardening">#</a></h2>
+        <p class="sec-lead">Before exposing Warden to the internet:</p>
+        <ul>
+          <li>Put <strong>TLS in front</strong> (the bundled Caddy service, or Nginx) — see <a href="#deployment">Deployment &amp; HTTPS</a>.</li>
+          <li>Set <code>APP_URL</code> to your <code>https://</code> domain and <code>RP_ID</code> to its host.</li>
+          <li>Set <code>SECURE_COOKIES=true</code> and <code>TRUST_PROXY=true</code> (only when actually behind a trusted proxy that sets <code>X-Forwarded-For</code> / <code>X-Real-IP</code>).</li>
+          <li>Keep <code>BIND_ADDR=127.0.0.1</code> unless you front it with TLS; never publish the app port directly without TLS.</li>
+          <li>Generate a strong <code>ENCRYPTION_KEY</code> and back it up — losing it makes all encrypted secrets and recordings unreadable.</li>
+          <li>Use <code>sslmode=require</code> (or <code>verify-full</code>) for any non-loopback <code>DATABASE_URL</code>.</li>
+          <li>Prefer strict SSH host keys (<code>SSH_HOST_KEY_CHECKING=yes</code> with a seeded known_hosts) for sensitive fleets.</li>
+          <li>Scope AWS IAM to specific cluster/task ARNs; use a narrowly scoped role per environment.</li>
+        </ul>
+      </section>
+
+      <!-- CONFIGURATION -->
+      <section class="doc-section" id="configuration" data-crumb="Operations">
+        <h2 class="anchor-h">Configuration <a class="alink" href="#configuration">#</a></h2>
+        <p class="sec-lead">All settings are environment variables. Copy <code>.env.example</code> to <code>.env</code> to get started; Docker Compose reads <code>.env</code> automatically.</p>
+
+        <h4>Server &amp; networking</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>ADDR</code> or <code>PORT</code></td><td><code>:8080</code></td><td>Listen address / port.</td></tr>
+              <tr><td><code>BIND_ADDR</code></td><td><code>127.0.0.1</code></td><td>(Docker) host interface the port binds to; <code>0.0.0.0</code> to expose directly (only behind TLS).</td></tr>
+              <tr><td><code>APP_URL</code></td><td><code>http://localhost:8080</code></td><td>Public URL — WebAuthn origin; scopes WS/CSRF origin checks and CSP. <code>https://</code> auto-enables Secure cookies + HSTS.</td></tr>
+              <tr><td><code>RP_ID</code></td><td><em>(APP_URL host)</em></td><td>WebAuthn relying-party ID.</td></tr>
+              <tr><td><code>TZ</code></td><td><code>UTC</code></td><td>Container timezone (affects log timestamps).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Database</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>DATABASE_URL</code></td><td><span class="pill req">required</span></td><td>PostgreSQL connection string. Use <code>sslmode=require</code> for a non-loopback DB. The server refuses to start if unset.</td></tr>
+              <tr><td><code>POSTGRES_USER</code> / <code>POSTGRES_PASSWORD</code> / <code>POSTGRES_DB</code></td><td><code>warden</code> / — / <code>warden</code></td><td>Used by Docker Compose to configure the postgres service. Compose refuses to start until <code>POSTGRES_PASSWORD</code> is set.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Encryption &amp; cookies</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>ENCRYPTION_KEY</code></td><td><span class="pill req">required</span></td><td>Base64 32-byte key encrypting stored credentials <strong>and recordings</strong>. Generate: <code>openssl rand -base64 32</code>. The server refuses to start without it.</td></tr>
+              <tr><td><code>WARDEN_DEV</code></td><td><em>(unset)</em></td><td><code>1</code> permits booting with an ephemeral encryption key — local dev only; data is lost on restart.</td></tr>
+              <tr><td><code>SECURE_COOKIES</code></td><td><code>false</code></td><td>Force the cookie <code>Secure</code> flag + HSTS. Auto-enabled when <code>APP_URL</code> is <code>https://</code>.</td></tr>
+              <tr><td><code>TRUST_PROXY</code></td><td><code>false</code></td><td>Trust <code>X-Real-IP</code> / rightmost <code>X-Forwarded-For</code> (for rate limiting) only when behind a trusted proxy.</td></tr>
+              <tr><td><code>STRICT_AAD</code></td><td><code>false</code></td><td>Reject legacy unauthenticated/unbound data (requires the <code>WER1</code> header). Enable only after re-encrypting legacy data.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Sessions &amp; limits</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>SESSION_IDLE_TIMEOUT</code></td><td><code>2h</code></td><td>How long a detached session runs before the server kills it (Go duration: <code>30m</code>, <code>2h</code>, <code>8h</code>).</td></tr>
+              <tr><td><code>SESSION_MAX_PER_USER</code></td><td><code>20</code></td><td>Cap on concurrent live sessions per user.</td></tr>
+              <tr><td><code>MAX_LIVE_SESSIONS</code></td><td><code>500</code></td><td>Global cap on concurrent live sessions across all users.</td></tr>
+              <tr><td><code>CONN_RATE_PER_MIN</code></td><td><code>30</code></td><td>Per-source-IP rate limit for new connection/spawn attempts on <code>/ws</code>, <code>/ws/share</code>, and <code>/api/ecs/tasks</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>SSH &amp; ECS</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>SSH_HOST_KEY_CHECKING</code></td><td><code>accept-new</code></td><td><code>accept-new</code> (TOFU), <code>yes</code> (require known_hosts), or <code>no</code> (legacy insecure).</td></tr>
+              <tr><td><code>SSH_KNOWN_HOSTS_FILE</code></td><td><code>known_hosts</code></td><td>Path to the SSH known_hosts file (Docker: <code>/data/known_hosts</code>).</td></tr>
+              <tr><td><code>ECS_ALLOW_UNGATED</code></td><td><code>false</code></td><td>When false (fail-closed), an AWS account/cluster must live in an accessible environment before use. <code>true</code> restores legacy ungated access.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Recordings</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>RECORDINGS_DIR</code></td><td><code>recordings</code></td><td>Directory for encrypted recording files (Docker: <code>/data/recordings</code>).</td></tr>
+              <tr><td><code>RECORDING_MAX_BYTES</code></td><td><code>16777216</code></td><td>Per-recording in-memory buffer cap (16 MiB).</td></tr>
+              <tr><td><code>RECORDING_RETENTION_DAYS</code></td><td><code>0</code></td><td>Delete recordings older than N days. <code>0</code>/unset keeps them indefinitely.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>SMTP (optional — magic links print to stdout if unset)</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Variable</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>SMTP_HOST</code></td><td>—</td><td>SMTP server for magic-link emails. Unset → links printed to stdout.</td></tr>
+              <tr><td><code>SMTP_PORT</code> / <code>SMTP_USER</code> / <code>SMTP_PASS</code> / <code>SMTP_FROM</code></td><td><code>587</code> / —</td><td>SMTP delivery settings.</td></tr>
+              <tr><td><code>SMTP_TLS</code></td><td><code>require</code></td><td>Transport security: STARTTLS required by default (implicit TLS on port 465). <code>disable</code> for local testing only; <code>implicit</code> to force SMTPS on a non-465 port.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- DEPLOYMENT -->
+      <section class="doc-section" id="deployment" data-crumb="Operations">
+        <h2 class="anchor-h">Deployment &amp; HTTPS <a class="alink" href="#deployment">#</a></h2>
+        <p class="sec-lead">The recommended deployment is Docker Compose with a TLS reverse proxy in front.</p>
+
+        <h4>Compose services</h4>
+        <p>The bundled <code>docker-compose.yml</code> runs the <code>warden</code> app (read-only root FS, all caps dropped, tmpfs <code>/tmp</code> + <code>/home/warden</code>, persistent <code>/data</code> volume) and a pinned <code>postgres:16-alpine</code> with healthchecks. The app port binds to <code>${BIND_ADDR:-127.0.0.1}</code> so it isn't reachable off-host without a proxy.</p>
+
+        <h4>HTTPS with the bundled Caddy</h4>
+        <p>Uncomment the <code>caddy</code> service in <code>docker-compose.yml</code> and edit the <code>Caddyfile</code> with your domain — Caddy obtains and renews a Let's Encrypt certificate automatically. Requirements: a public domain pointing at the host, ports 80 + 443 open.</p>
+        <pre><code>ssh.yourdomain.com {
+    reverse_proxy warden:8080 {
+        # Forward the real client IP (replace, don't append, so a client-supplied
+        # X-Forwarded-For cannot survive into the chain and spoof the rate-limiter).
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        flush_interval -1          # snappier WebSocket streaming
+    }
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options    nosniff
+        X-Frame-Options           SAMEORIGIN
+        Referrer-Policy           strict-origin-when-cross-origin
+    }
+}</code></pre>
+        <p>Then set <code>APP_URL=https://ssh.yourdomain.com</code>, <code>RP_ID=ssh.yourdomain.com</code>, <code>SECURE_COOKIES=true</code>, and <code>TRUST_PROXY=true</code>.</p>
+        <div class="callout info">
+          <span class="co-tag">Split DB deployments</span>
+          <p>App↔DB traffic uses <code>sslmode=disable</code> in Compose because both containers share a private Docker network and the DB publishes no host port. If you run the database on a separate host, provision a server cert and set <code>sslmode=require</code> (or <code>verify-full</code>) so the DB password and encrypted columns aren't sent in cleartext.</p>
+        </div>
+      </section>
+
+      <!-- DATABASE -->
+      <section class="doc-section" id="database" data-crumb="Operations">
+        <h2 class="anchor-h">Database Schema <a class="alink" href="#database">#</a></h2>
+        <p class="sec-lead">Schema is applied at startup via <code>CREATE TABLE IF NOT EXISTS</code> + <code>ALTER TABLE … ADD COLUMN IF NOT EXISTS</code> — there is no separate migration tool. All of it lives in <code>db.go:schema()</code>.</p>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Table</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>users</code></td><td>Accounts (email, role <code>user</code>/<code>admin</code>/<code>admin_only</code>, disabled).</td></tr>
+              <tr><td><code>passkeys</code></td><td>WebAuthn credentials (sign counter persisted on login).</td></tr>
+              <tr><td><code>magic_tokens</code></td><td>Invite / reset / setup one-time tokens (24 h).</td></tr>
+              <tr><td><code>http_sessions</code></td><td>Browser cookies — 7-day rolling, absolute 30-day cap.</td></tr>
+              <tr><td><code>ssh_configs</code> / <code>ecs_configs</code></td><td>Saved connection profiles (SSH secrets encrypted; ECS refs an <code>account_id</code>).</td></tr>
+              <tr><td><code>aws_accounts</code></td><td>Admin-managed AWS creds (secret AES-GCM encrypted), shared across users.</td></tr>
+              <tr><td><code>ssh_sessions</code></td><td>Audit log of all terminal sessions (ECS too) + <code>recording_path</code>/<code>recording_size</code>.</td></tr>
+              <tr><td><code>session_shares</code></td><td>Live share invitations + <code>control_requested</code>.</td></tr>
+              <tr><td><code>environments</code> / <code>environment_resources</code> / <code>environment_approvers</code></td><td>Access-control configuration.</td></tr>
+              <tr><td><code>access_grants</code></td><td>Time-boxed access requests / grants (audit trail).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- API -->
+      <section class="doc-section" id="api" data-crumb="Operations">
+        <h2 class="anchor-h">HTTP API Reference <a class="alink" href="#api">#</a></h2>
+        <p class="sec-lead">All <code>/api/*</code> routes require an authenticated session cookie; <code>/api/admin/*</code> requires an admin (or <code>admin_only</code>) role. State-changing requests are CSRF-guarded. WebSocket endpoints are origin-checked and connection-rate-limited.</p>
+
+        <h4>WebSockets &amp; pages</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill get">GET</span></td><td><code>/ws</code></td><td>Terminal WebSocket — connect or reattach (<code>resumeSessionId</code>). Auth + connection-rate-limited.</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/ws/share/{id}</code></td><td>Attach to a shared session as a subscriber (view or control).</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/</code> · <code>/login</code> · <code>/admin</code></td><td>Terminal UI · auth/invite page · admin panel (admin-gated).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Auth &amp; user</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/auth/register/begin</code> · <code>/finish</code></td><td>WebAuthn registration (rate-limited).</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/auth/login/begin</code> · <code>/finish</code></td><td>WebAuthn login (rate-limited).</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/auth/logout</code></td><td>End the browser session.</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/auth/validate-token</code></td><td>Validate an invite / reset / setup token.</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/user/me</code> · <code>/api/user/passkeys</code></td><td>Current user; list own passkeys (<span class="pill del">DELETE</span> <code>/{id}</code> to remove).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Connections — SSH / ECS / AWS</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill get">GET</span><span class="pill post">POST</span></td><td><code>/api/configs</code></td><td>List / create saved SSH configs (<span class="pill get">GET</span>/<span class="pill put">PUT</span>/<span class="pill del">DEL</span> <code>/{id}</code>).</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/ecs/tasks</code></td><td>List running ECS tasks for an account/cluster (rate-limited).</td></tr>
+              <tr><td><span class="pill get">GET</span><span class="pill post">POST</span></td><td><code>/api/ecs-configs</code></td><td>List / create saved ECS configs (<span class="pill del">DEL</span> <code>/{id}</code>).</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/aws-accounts</code></td><td>List AWS accounts (names/metadata only — no secrets).</td></tr>
+              <tr><td><span class="pill get">GET</span><span class="pill post">POST</span></td><td><code>/api/admin/aws-accounts</code></td><td>Admin: full CRUD over AWS accounts (<span class="pill put">PUT</span>/<span class="pill del">DEL</span> <code>/{id}</code>).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Sharing</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/users</code></td><td>List users to share with.</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/share</code></td><td>Create a share invitation.</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/share/pending</code> · <code>/control-requests</code></td><td>Pending share invites; pending control requests.</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/share/{id}/accept</code> · <code>/decline</code></td><td>Respond to a share invite (<span class="pill del">DEL</span> <code>/{id}</code> to revoke).</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/share/{id}/request-control</code> · <code>/grant-control</code> · <code>/deny-control</code></td><td>Live view→control upgrade flow.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Environments &amp; access grants</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/environments</code> · <code>/restricted</code></td><td>List environments; list restricted ones the user can request.</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/admin/environments</code></td><td>Admin: create environments (<span class="pill put">PUT</span>/<span class="pill del">DEL</span> <code>/{id}</code>, resources, approvers).</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/access/requests</code></td><td>Request access to an environment (<span class="pill get">GET</span> <code>/my</code>, <span class="pill del">DEL</span> <code>/requests/{id}</code>).</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/access/pending</code></td><td>Approver: list pending approvals.</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/access/{id}/approve</code> · <code>/deny</code> · <code>/revoke</code></td><td>Approve / deny / revoke a grant.</td></tr>
+              <tr><td><span class="pill get">GET</span><span class="pill post">POST</span></td><td><code>/api/admin/grants</code></td><td>Admin: list all grants; create a direct grant.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Sessions &amp; admin</h4>
+        <div class="table-wrap">
+          <table class="doc-table">
+            <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/sessions/active</code></td><td>List the user's active (running) sessions.</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/sessions/{id}/end</code></td><td>End a running session (kills the PTY).</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/admin/users</code></td><td>Admin: user CRUD (<span class="pill get">GET</span>/<span class="pill put">PATCH</span>/<span class="pill del">DEL</span> <code>/{id}</code>).</td></tr>
+              <tr><td><span class="pill post">POST</span></td><td><code>/api/admin/invite</code> · <code>/users/{id}/reset-passkey</code></td><td>Invite a user; reset a user's passkey.</td></tr>
+              <tr><td><span class="pill get">GET</span></td><td><code>/api/admin/sessions</code> · <code>/{id}/recording</code></td><td>Admin: session audit log; fetch a recording for playback/download.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="doc-footer">
+          <p>This documentation covers installing, configuring, and operating Warden.
+          &middot; <a href="warden.html">Product overview</a> &middot; <a href="constable_docs.html">Constable docs</a> &middot; <a href="index.html#contact">Talk to AgileSecOps</a></p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ===== On-page TOC ===== -->
+    <aside class="doc-toc" id="pageToc">
+      <div class="toc-title">On this page</div>
+      <nav id="tocNav"></nav>
+    </aside>
+
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* ---------- Build the search index from the DOM ---------- */
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.doc-section'));
+    var index = [];
+    sections.forEach(function (sec) {
+      var crumb = sec.getAttribute('data-crumb') || '';
+      var headings = sec.querySelectorAll('h1, h2, h3');
+      headings.forEach(function (h) {
+        var title = h.textContent.replace(/#$/, '').trim();
+        var bodyText = sec.textContent.replace(/\s+/g, ' ').trim();
+        index.push({ id: sec.id, crumb: crumb, title: title, text: (title + ' ' + bodyText).toLowerCase(), raw: bodyText });
+      });
+    });
+    var seen = {};
+    index = index.filter(function (e) {
+      var k = e.id + '|' + e.title;
+      if (seen[k]) return false;
+      seen[k] = 1; return true;
+    });
+
+    var input = document.getElementById('docSearch');
+    var results = document.getElementById('docResults');
+    var sideLinks = Array.prototype.slice.call(document.querySelectorAll('#sideNav a'));
+
+    function escapeHtml(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    function escapeReg(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function highlight(text, terms) {
+      var out = escapeHtml(text);
+      terms.forEach(function (t) { if (!t) return; var re = new RegExp('(' + escapeReg(t) + ')', 'ig'); out = out.replace(re, '<mark>$1</mark>'); });
+      return out;
+    }
+    function snippetFor(raw, terms) {
+      var lower = raw.toLowerCase(); var pos = -1;
+      for (var i = 0; i < terms.length; i++) { var p = lower.indexOf(terms[i]); if (p !== -1 && (pos === -1 || p < pos)) pos = p; }
+      if (pos === -1) pos = 0;
+      var start = Math.max(0, pos - 60); var end = Math.min(raw.length, pos + 140);
+      return (start > 0 ? '…' : '') + highlight(raw.slice(start, end).trim(), terms) + (end < raw.length ? '…' : '');
+    }
+
+    var activeIdx = -1; var currentMatches = [];
+
+    function runSearch(q) {
+      q = q.trim().toLowerCase(); activeIdx = -1;
+      if (!q) { closeResults(); filterSidebar(''); return; }
+      filterSidebar(q);
+      var terms = q.split(/\s+/).filter(Boolean);
+      var scored = [];
+      index.forEach(function (e) {
+        var score = 0, ok = true;
+        terms.forEach(function (t) {
+          var inTitle = e.title.toLowerCase().indexOf(t) !== -1;
+          var inText = e.text.indexOf(t) !== -1;
+          if (!inText && !inTitle) ok = false;
+          if (inTitle) score += 10;
+          if (inText) score += 1;
+        });
+        if (ok) { if (e.title.toLowerCase().indexOf(q) !== -1) score += 25; scored.push({ e: e, score: score }); }
+      });
+      scored.sort(function (a, b) { return b.score - a.score; });
+      scored = scored.slice(0, 12);
+      currentMatches = scored.map(function (s) { return s.e; });
+      renderResults(scored, terms, q);
+    }
+
+    function renderResults(scored, terms, q) {
+      if (!scored.length) { results.innerHTML = '<div class="doc-noresults">No matches for “' + escapeHtml(q) + '”.</div>'; openResults(); return; }
+      var html = '<div class="res-meta">' + scored.length + ' result' + (scored.length > 1 ? 's' : '') + '</div>';
+      scored.forEach(function (s, i) {
+        var e = s.e;
+        html += '<a class="doc-result" href="#' + e.id + '" data-idx="' + i + '">' +
+          '<div class="r-crumb">' + escapeHtml(e.crumb) + '</div>' +
+          '<div class="r-title">' + highlight(e.title, terms) + '</div>' +
+          '<div class="r-snip">' + snippetFor(e.raw, terms) + '</div></a>';
+      });
+      results.innerHTML = html; openResults();
+      Array.prototype.forEach.call(results.querySelectorAll('.doc-result'), function (a) {
+        a.addEventListener('click', function (ev) { ev.preventDefault(); go(a.getAttribute('href')); });
+      });
+    }
+
+    function go(hash) {
+      closeResults();
+      var el = document.querySelector(hash);
+      if (el) { history.replaceState(null, '', hash); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); flash(el); }
+      closeSidebar();
+    }
+    function flash(el) { el.style.transition = 'background .2s'; el.style.background = 'rgba(32,192,115,0.07)'; setTimeout(function () { el.style.background = ''; }, 700); }
+    function openResults() { results.classList.add('open'); input.setAttribute('aria-expanded', 'true'); }
+    function closeResults() { results.classList.remove('open'); input.setAttribute('aria-expanded', 'false'); activeIdx = -1; }
+
+    function filterSidebar(q) {
+      sideLinks.forEach(function (a) {
+        if (!q) { a.classList.remove('hidden-by-filter'); return; }
+        a.classList.toggle('hidden-by-filter', a.textContent.toLowerCase().indexOf(q) === -1);
+      });
+      document.querySelectorAll('.doc-nav-group').forEach(function (g) {
+        var anyVisible = Array.prototype.some.call(g.querySelectorAll('a'), function (a) { return !a.classList.contains('hidden-by-filter'); });
+        g.style.display = (q && !anyVisible) ? 'none' : '';
+      });
+    }
+
+    var debounce;
+    input.addEventListener('input', function () { clearTimeout(debounce); var v = input.value; debounce = setTimeout(function () { runSearch(v); }, 90); });
+
+    input.addEventListener('keydown', function (ev) {
+      var items = results.querySelectorAll('.doc-result');
+      if (ev.key === 'ArrowDown') { ev.preventDefault(); if (!items.length) return; activeIdx = Math.min(activeIdx + 1, items.length - 1); setActive(items); }
+      else if (ev.key === 'ArrowUp') { ev.preventDefault(); if (!items.length) return; activeIdx = Math.max(activeIdx - 1, 0); setActive(items); }
+      else if (ev.key === 'Enter') {
+        if (activeIdx >= 0 && items[activeIdx]) { ev.preventDefault(); go(items[activeIdx].getAttribute('href')); }
+        else if (currentMatches.length) { ev.preventDefault(); go('#' + currentMatches[0].id); }
+      } else if (ev.key === 'Escape') { input.value = ''; runSearch(''); input.blur(); }
+    });
+    function setActive(items) {
+      Array.prototype.forEach.call(items, function (it, i) { it.classList.toggle('active', i === activeIdx); });
+      if (items[activeIdx]) items[activeIdx].scrollIntoView({ block: 'nearest' });
+    }
+
+    document.addEventListener('click', function (ev) { if (!document.getElementById('searchWrap').contains(ev.target)) closeResults(); });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === '/' && document.activeElement !== input && !/input|textarea/i.test(document.activeElement.tagName)) { ev.preventDefault(); input.focus(); }
+    });
+
+    /* ---------- On-page TOC ---------- */
+    var tocNav = document.getElementById('tocNav');
+    var headingEls = Array.prototype.slice.call(document.querySelectorAll('.doc-content h2'));
+    var tocLinks = [];
+    headingEls.forEach(function (h) {
+      var sec = h.closest('.doc-section'); if (!sec) return;
+      var targetId = sec.id;
+      var a = document.createElement('a');
+      a.href = '#' + targetId; a.textContent = h.textContent.replace(/#$/, '').trim();
+      a.addEventListener('click', function (ev) { ev.preventDefault(); var el = document.getElementById(targetId); if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.replaceState(null, '', '#' + targetId); } });
+      tocNav.appendChild(a); tocLinks.push({ a: a, id: targetId });
+    });
+
+    /* ---------- Scroll-spy ---------- */
+    function onScroll() {
+      var pos = window.scrollY + 110; var current = null;
+      for (var i = 0; i < sections.length; i++) { if (sections[i].offsetTop <= pos) current = sections[i].id; }
+      if (!current) return;
+      sideLinks.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+      tocLinks.forEach(function (t) { t.a.classList.toggle('active', t.id === current); });
+    }
+    var ticking = false;
+    window.addEventListener('scroll', function () { if (!ticking) { window.requestAnimationFrame(function () { onScroll(); ticking = false; }); ticking = true; } });
+    onScroll();
+
+    /* ---------- Copy buttons ---------- */
+    document.querySelectorAll('pre').forEach(function (pre) {
+      var btn = document.createElement('button');
+      btn.className = 'copy-btn'; btn.type = 'button'; btn.textContent = 'copy';
+      btn.addEventListener('click', function () {
+        var code = pre.querySelector('code'); var text = code ? code.innerText : pre.innerText;
+        navigator.clipboard.writeText(text).then(function () { btn.textContent = 'copied!'; setTimeout(function () { btn.textContent = 'copy'; }, 1400); });
+      });
+      pre.appendChild(btn);
+    });
+
+    /* ---------- Mobile sidebar ---------- */
+    var sidebar = document.getElementById('sidebar');
+    var backdrop = document.getElementById('sbBackdrop');
+    var toggle = document.getElementById('menuToggle');
+    function openSidebar() { sidebar.classList.add('open'); backdrop.classList.add('show'); }
+    function closeSidebar() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+    toggle.addEventListener('click', function () { if (sidebar.classList.contains('open')) closeSidebar(); else openSidebar(); });
+    backdrop.addEventListener('click', closeSidebar);
+    sideLinks.forEach(function (a) { a.addEventListener('click', function () { closeSidebar(); }); });
+
+    if (location.hash) { var t = document.querySelector(location.hash); if (t) setTimeout(function () { t.scrollIntoView({ block: 'start' }); }, 60); }
+  })();
+  </script>
+
+</body>
+
+</html>
